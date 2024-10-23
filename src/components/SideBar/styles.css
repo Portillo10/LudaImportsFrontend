@@ -1,0 +1,13 @@
+.sideBarElement {
+  @apply w-full py-1 px-5 flex gap-3 cursor-pointer items-center hover:bg-hover transition relative;
+}
+
+.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: #1fcc7e;
+}
