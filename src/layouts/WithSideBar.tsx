@@ -28,7 +28,9 @@ const WithSideBarLayout: React.FC = memo(() => {
   return (
     <div className="w-full h-screen flex bg-primary-default text-white">
       <SideBar />
-      <Outlet />
+      <div className="w-full h-full">
+        <Outlet />
+      </div>
     </div>
   );
 });

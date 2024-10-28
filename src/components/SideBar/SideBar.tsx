@@ -1,8 +1,17 @@
 import SideBarElement from "./SideBarElement";
-import StoreIcon from "../../assets/icons/Store.svg";
+
 import ActiveStoreIcon from "../../assets/icons/ActiveStore.svg";
+import StoreIcon from "../../assets/icons/Store.svg";
 import ActivePublihserIcon from "../../assets/icons/ActivePublisher.svg";
 import PublihserIcon from "../../assets/icons/Publisher.svg";
+import ActiveCalcPriceIcon from '../../assets/icons/ActiveCalcPrice.svg'
+import CalcPriceIcon from '../../assets/icons/CalcPrice.svg'
+import ActiveUpdatePriceIcon from '../../assets/icons/ActiveUpdatePrice.svg'
+import UpdatePriceIcon from '../../assets/icons/UpdatePrice.svg'
+
+
+
+import OffIcon from "../../assets/icons/off_icon.svg";
 
 import "./styles.css";
 import { useEffect, useState } from "react";
@@ -31,6 +40,18 @@ const SideBar: React.FC = () => {
       icon: StoreIcon,
       href: "/stores",
       text: "Tiendas",
+    },
+    {
+      activeIcon: ActiveCalcPriceIcon,
+      icon: CalcPriceIcon,
+      href: "/calc-price",
+      text: "Calcular precios",
+    },
+    {
+      activeIcon: ActiveUpdatePriceIcon,
+      icon: UpdatePriceIcon,
+      href: "/update-prices",
+      text: "Actualizar precios",
     },
   ];
 
@@ -61,7 +82,7 @@ const SideBar: React.FC = () => {
       </ul>
       <ul>
         <li className="sideBarElement" onClick={() => handleLogout()}>
-          <img src="" alt="" width={36} />
+          <img src={OffIcon} alt="" width={36} />
           <p className="font-semibold text-lg">Cerrar sesión</p>
         </li>
       </ul>

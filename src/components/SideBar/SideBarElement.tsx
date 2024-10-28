@@ -24,8 +24,8 @@ const SideBarElement: React.FC<Props> = ({
       className={`sideBarElement ${active && "active"}`}
       onClick={onClick}
     >
-      <img src={active ? activeIcon : icon} alt="" width={36} />
-      <p className="font-semibold text-lg">{text}</p>
+      <img src={active ? activeIcon : icon} alt="" width={34} />
+      <p className="font-semibold text-base">{text}</p>
     </NavLink>
   );
 };
