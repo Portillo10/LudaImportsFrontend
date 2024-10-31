@@ -1,22 +1,22 @@
 import { MouseEventHandler } from "react";
 import { NavLink } from "react-router-dom";
+import { IconName } from "../../types/iconProps";
+import Icon from "../Icon";
 
 type Props = {
-  icon: string;
-  activeIcon: string;
   text: string;
   href: string;
   active: boolean;
   onClick: MouseEventHandler<HTMLAnchorElement> | undefined;
+  iconName: IconName;
 };
 
 const SideBarElement: React.FC<Props> = ({
-  icon,
   text,
   href,
-  activeIcon,
   active,
   onClick,
+  iconName,
 }) => {
   return (
     <NavLink
@@ -24,7 +24,11 @@ const SideBarElement: React.FC<Props> = ({
       className={`sideBarElement ${active && "active"}`}
       onClick={onClick}
     >
-      <img src={active ? activeIcon : icon} alt="" width={34} />
+      <Icon
+        iconName={iconName}
+        size={34}
+        color={active ? "#1fcc7e" : undefined}
+      />
       <p className="font-semibold text-base">{text}</p>
     </NavLink>
   );

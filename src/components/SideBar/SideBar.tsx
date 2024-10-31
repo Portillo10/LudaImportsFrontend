@@ -1,59 +1,50 @@
 import SideBarElement from "./SideBarElement";
 
-import ActiveStoreIcon from "../../assets/icons/ActiveStore.svg";
-import StoreIcon from "../../assets/icons/Store.svg";
-import ActivePublihserIcon from "../../assets/icons/ActivePublisher.svg";
-import PublihserIcon from "../../assets/icons/Publisher.svg";
-import ActiveCalcPriceIcon from '../../assets/icons/ActiveCalcPrice.svg'
-import CalcPriceIcon from '../../assets/icons/CalcPrice.svg'
-import ActiveUpdatePriceIcon from '../../assets/icons/ActiveUpdatePrice.svg'
-import UpdatePriceIcon from '../../assets/icons/UpdatePrice.svg'
-
-
-
 import OffIcon from "../../assets/icons/off_icon.svg";
 
-import "./styles.css";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
+
+import "./styles.css";
+import { IconName } from "../../types/iconProps";
 
 type SiedeBarElementProps = {
   href: string;
   text: string;
-  icon: string;
-  activeIcon: string;
+  icon: IconName;
 };
+
+const elements: SiedeBarElementProps[] = [
+  {
+    icon: "publisher",
+    href: "/publisher",
+    text: "Publicador",
+  },
+  {
+    icon: "store",
+    href: "/stores",
+    text: "Tiendas",
+  },
+  {
+    icon: "calculateprice",
+    href: "/calc-price",
+    text: "Calcular precios",
+  },
+  {
+    icon: "updateprice",
+    href: "/update-prices",
+    text: "Actualizar precios",
+  },
+  {
+    icon: "users",
+    href: "/users",
+    text: "Usuarios",
+  },
+];
 
 const SideBar: React.FC = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const { handleLogout } = useAuth();
-
-  const elements: SiedeBarElementProps[] = [
-    {
-      activeIcon: ActivePublihserIcon,
-      icon: PublihserIcon,
-      href: "/publisher",
-      text: "Publicador",
-    },
-    {
-      activeIcon: ActiveStoreIcon,
-      icon: StoreIcon,
-      href: "/stores",
-      text: "Tiendas",
-    },
-    {
-      activeIcon: ActiveCalcPriceIcon,
-      icon: CalcPriceIcon,
-      href: "/calc-price",
-      text: "Calcular precios",
-    },
-    {
-      activeIcon: ActiveUpdatePriceIcon,
-      icon: UpdatePriceIcon,
-      href: "/update-prices",
-      text: "Actualizar precios",
-    },
-  ];
 
   useEffect(() => {
     const currentUrl = window.location.href;
@@ -66,12 +57,11 @@ const SideBar: React.FC = () => {
   }, []);
 
   return (
-    <aside className="h-full border-r border-black w-72 flex flex-col justify-between py-3">
+    <aside className="h-full border-r border-black w-72 flex flex-col justify-between py-3 max-w-72">
       <ul className="w-full h-full flex flex-col items-center ">
         {elements.map((element, i) => (
           <SideBarElement
-            activeIcon={element.activeIcon}
-            icon={element.icon}
+            iconName={element.icon}
             text={element.text}
             href={element.href}
             active={activeIndex == i}

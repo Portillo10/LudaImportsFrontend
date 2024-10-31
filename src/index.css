@@ -15,7 +15,15 @@
 }
 
 .basicContainer {
-  @apply w-full h-full flex flex-col items-center pt-8;
+  @apply w-full h-full flex flex-col items-center px-6;
+}
+
+.titlePageContainer {
+  @apply w-full flex justify-between pt-4 px-4;
+}
+
+.titlePageContainer h2 {
+  @apply text-3xl font-semibold;
 }
 
 input:-webkit-autofill {

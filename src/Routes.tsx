@@ -7,6 +7,8 @@ import StoresPage from "./pages/Stores/StoresPage";
 import LinkStore from "./pages/Stores/LinkStore";
 import CalcPrice from "./pages/CalcPrice/CalcPrice";
 import UpdatePrices from "./pages/UpdatePrices/UpdatePrices";
+import Users from "./pages/Users/Users";
+import RegisterUser from "./pages/Users/RegisterUser";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -20,6 +22,10 @@ const AppRoutes: React.FC = () => {
           <Route path="/stores" element={<Outlet />}>
             <Route path="/stores" element={<StoresPage />} />
             <Route path="/stores/link" element={<LinkStore />} />
+          </Route>
+          <Route path="/users" element={<Outlet />}>
+            <Route path="/users" element={<Users />} />
+            <Route path="/users/register" element={<RegisterUser />} />
           </Route>
         </Route>
       </Route>

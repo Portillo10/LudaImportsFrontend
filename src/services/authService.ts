@@ -1,5 +1,10 @@
 import { LogInRequest } from "../types/apiRequests";
-import { LogInResponse, ProfileResponse } from "../types/apiResponses";
+import {
+  LogInResponse,
+  ProfileResponse,
+  RegisterUserResponse,
+} from "../types/apiResponses";
+import { IUser } from "../types/user";
 import apiClient from "./apiClient";
 
 const auth = {
@@ -9,9 +14,21 @@ const auth = {
     return responseData;
   },
 
+  async registerUser(user: Partial<IUser>) {
+    const response = await apiClient.post("/register-user", { user });
+    const responseData: RegisterUserResponse = response.data;
+    return responseData;
+  },
+
   async getProfile() {
     const response = await apiClient.get("/profile");
     const responseData: ProfileResponse = response.data;
+    return responseData;
+  },
+
+  async getUsers() {
+    const response = await apiClient.get("/users");
+    const responseData: Partial<IUser>[] = response.data;
     return responseData;
   },
 };

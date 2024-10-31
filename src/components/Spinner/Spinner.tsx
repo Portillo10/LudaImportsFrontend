@@ -1,5 +1,11 @@
 import "./styles.css";
 
-const Spinner: React.FC = () => <div className="spinner" />;
+type SpinnerProps = {
+  size?: number;
+};
+
+const Spinner: React.FC<SpinnerProps> = ({ size = 50 }) => (
+  <div style={{ width: size, height: size }} className="spinner" />
+);
 
 export default Spinner;

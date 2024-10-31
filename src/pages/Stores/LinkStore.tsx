@@ -20,7 +20,7 @@ const LinkStore: React.FC = () => {
     return (
       <div className="basicContainer gap-8">
         {user && user.stores.length == 0 && (
-          <h2 className="font-medium text-xl w-1/2 text-center">
+          <h2 className="font-medium text-xl w-1/2 text-center mt-5">
             Aún no tienes ninguna tienda vinculada, vincula tu primera tienda.
           </h2>
         )}

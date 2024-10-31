@@ -1,0 +1,54 @@
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  font-size: 14px;
+  z-index: 1000;
+  opacity: 0;
+  transition: all;
+  animation: fadeInOut 0.3s ease-in-out forwards;
+}
+
+.toast.onclose {
+  background-color: black;
+  transition: ease-in-out 0.3s;
+  opacity: 0;
+  transform: translateY(0);
+}
+
+.toast.success {
+  background-color: #28a745; /* Verde para éxito */
+}
+
+.toast.error {
+  background-color: #dc3545; /* Rojo para error */
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(20px);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0px);
+  }
+}

@@ -6,6 +6,7 @@ import { useUserStore } from "../store/UserStore";
 import { isAxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../utils/tokenHelper";
+import { IUser } from "../types/user";
 
 export const useAuth = () => {
   const { login, isAuthenticated, logout } = useAuthStore();
@@ -64,10 +65,41 @@ export const useAuth = () => {
     }
   };
 
+  const registerUser = async (user: Partial<IUser>) => {
+    try {
+      const userId = await authService.registerUser(user);
+      return { userId };
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response?.data.error) {
+          return { error: error.response?.data.error };
+        } else {
+          return {
+            error:
+              "Hubo un problema registrando el usuario, intentelo nuevamente.",
+          };
+        }
+      } else if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  };
+
+  const getUsers = async () => {
+    try {
+      const response = await authService.getUsers();
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     handleLogin,
     handleLogout,
     checkToken,
+    registerUser,
+    getUsers,
     isAuthenticated,
     error,
     user,
