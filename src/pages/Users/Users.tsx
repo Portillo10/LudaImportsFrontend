@@ -43,6 +43,8 @@ const Users: React.FC = () => {
   useEffect(() => {
     const initUsers = async () => {
       const users = await getUsers();
+      console.log(users);
+
       if (users) {
         setRowsData(users);
       }
