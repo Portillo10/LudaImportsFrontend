@@ -17,8 +17,6 @@ export const useAuth = () => {
   const navigate = useNavigate();
 
   const handleLogin = async (data: Partial<LogInRequest>) => {
-    console.log(data);
-
     setLoading(true);
     try {
       const { access_token, user } = await authService.logIn(data);
