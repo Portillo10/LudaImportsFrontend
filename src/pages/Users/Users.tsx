@@ -44,8 +44,10 @@ const Users: React.FC = () => {
     const initUsers = async () => {
       const users = await getUsers();
 
-      if (users) {
+      if (users && Array.isArray(users)) {
         setRowsData(users);
+      } else {
+        console.log(users);
       }
       setLoadingTable(false);
     };
