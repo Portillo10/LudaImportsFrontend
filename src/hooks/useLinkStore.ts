@@ -23,6 +23,8 @@ export const useLinkStore = () => {
       }
     } catch (error) {
       if (isAxiosError(error)) {
+        console.log(error.response?.data);
+
         setError(error.response?.data);
       } else if (error instanceof Error) {
         setError(error.message);
