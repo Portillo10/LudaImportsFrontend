@@ -9,12 +9,14 @@ import CalcPrice from "./pages/CalcPrice/CalcPrice";
 import UpdatePrices from "./pages/UpdatePrices/UpdatePrices";
 import Users from "./pages/Users/Users";
 import RegisterUser from "./pages/Users/RegisterUser";
+import LinkSuccess from "./pages/Stores/LinkSuccess";
 
 const AppRoutes: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route path="/login" element={<LogIn />} />
+        <Route path="/link-success" element={<LinkSuccess />} />
         <Route path="/" element={<WithSideBarLayout />}>
           <Route path="/publisher" element={<Publisher />} />
           <Route path="/calc-price" element={<CalcPrice />} />

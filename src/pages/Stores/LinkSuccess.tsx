@@ -23,7 +23,7 @@ const LinkSuccess: React.FC = () => {
   }, []);
 
   return (
-    <div className="basicContainer">
+    <div className="basicContainer pt-10">
       Tienda vinculada con éxito, puede cerrar esta pestaña
     </div>
   );
