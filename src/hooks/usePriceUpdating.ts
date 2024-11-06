@@ -9,13 +9,17 @@ type Store = {
 
 export const usePriceUpdating = () => {
   const [stores, setStores] = useState<Store[]>([
-    {
+    
+  ]);
+
+  const loadStores = () => {
+    setStores([{
       alias: "Salud y belleza",
       lastUpdate: new Date(),
       updating: false,
       user: "Portillo",
-    },
-  ]);
+    }])
+  }
 
-  return { stores };
+  return { loadStores, stores };
 };
