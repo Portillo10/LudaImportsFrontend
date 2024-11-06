@@ -13,6 +13,8 @@ export const useLinkStore = () => {
   const handleLinkStore = async (data: any) => {
     try {
       setLoading(true);
+      console.log("enviando petición");
+
       if (user) {
         const response = await storeService.linkStore({
           ...data,
