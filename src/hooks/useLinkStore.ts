@@ -19,8 +19,7 @@ export const useLinkStore = () => {
           seller_id: user._id,
         });
 
-        // window.open(response.data.redirectUrl, "_blank");
-        window.location.replace(response.data.redirectUrl);
+        window.open(response.data.redirectUrl, "_blank");
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -33,10 +32,25 @@ export const useLinkStore = () => {
     }
   };
 
+  const handleSuccessLinkStore = async (code: string) => {
+    try {
+      const response = await storeService.linkStoreSuccess(code);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const endLinkStore = (store: IStore) => {
     pushStore(store);
     setLoading(false);
   };
 
-  return { handleLinkStore, endLinkStore, error, loading };
+  return {
+    handleSuccessLinkStore,
+    handleLinkStore,
+    endLinkStore,
+    loading,
+    error,
+  };
 };

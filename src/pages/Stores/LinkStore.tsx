@@ -1,6 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useLinkStore } from "../../hooks/useLinkStore";
 import { useAuth } from "../../hooks/useAuth";
+import testService from "../../services/testService";
 
 type Inputs = {
   client_id: string;
@@ -17,6 +18,15 @@ const LinkStore: React.FC = () => {
     await handleLinkStore(data);
   };
 
+  const sendPetition = async () => {
+    try {
+      await testService.setSessionVar();
+      await testService.getSessionVar();
+    } catch (error) {
+      console.error("error sendpetition");
+    }
+  };
+
   if (user) {
     return (
       <div className="basicContainer gap-8">
@@ -30,13 +40,13 @@ const LinkStore: React.FC = () => {
           onSubmit={handleSubmit(onSubmit)}
           className="p-10 border-black border rounded-lg flex flex-col items-center gap-10"
         >
-          <div className="flex flex-col items-center gap-3 w-full h-full">
+          <div className="flex flex-col items-center gap-3 w-full h-full min-w-80">
             <span className="inputBox">
               <label htmlFor="">Client ID:</label>
               <input
                 type="text"
                 className="input"
-                id="client_id"
+                placeholder="ID de la aplicación"
                 {...register("client_id", { required: true })}
               />
             </span>
@@ -45,16 +55,16 @@ const LinkStore: React.FC = () => {
               <input
                 type="text"
                 className="input"
-                id="client_secret"
+                placeholder="Cliente secreto de la aplicación"
                 {...register("client_secret", { required: true })}
               />
             </span>
             <span className="inputBox">
-              <label htmlFor="">Client Secret:</label>
+              <label htmlFor="">Nombre de la tienda:</label>
               <input
                 type="text"
                 className="input"
-                id="alias"
+                placeholder="Elija un nombre para su tienda"
                 {...register("alias", { required: true })}
               />
             </span>
@@ -63,6 +73,7 @@ const LinkStore: React.FC = () => {
             Vincular tienda
           </button>
         </form>
+        <button onClick={() => sendPetition()}>enviar</button>
       </div>
     );
   }

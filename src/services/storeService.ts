@@ -18,9 +18,13 @@ const store = {
       client_id,
       client_secret,
       seller_id,
-      alias
+      alias,
     });
-    return response;
+    return response.data;
+  },
+  async linkStoreSuccess(code: string) {
+    const response = await apiClient.post(`/link-store?code=${code}`);
+    return response.data;
   },
 
   async getStores() {},

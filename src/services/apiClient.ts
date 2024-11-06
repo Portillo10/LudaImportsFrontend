@@ -2,9 +2,12 @@ import axios, { AxiosInstance } from "axios";
 import { getToken } from "../utils/tokenHelper";
 
 // Crear una instancia de Axios
+console.log(window.location.host);
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3000", // La base URL de la API
+  baseURL: window.location.host.includes("localhost")
+    ? "http://localhost:8000"
+    : import.meta.env.VITE_API_URL, // La base URL de la API
   timeout: 7000, // Tiempo de espera para solicitudes
   headers: {
     "Content-Type": "application/json",

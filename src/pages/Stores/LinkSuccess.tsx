@@ -1,23 +1,25 @@
 import { useEffect } from "react";
 import { useLinkStore } from "../../hooks/useLinkStore";
 import { useSearchParams } from "react-router-dom";
-import { IStore } from "../../types/store";
+// import { IStore } from "../../types/store";
+import { sleep } from "../../utils/helpers";
 
 const LinkSuccess: React.FC = () => {
-  const { endLinkStore } = useLinkStore();
+  const { handleSuccessLinkStore } = useLinkStore();
   const [searchParams] = useSearchParams();
 
-  useEffect(() => {
-    const _id = searchParams.get("store_id");
-    const alias = searchParams.get("alias");
-    if (_id && alias) {
-      const store: IStore = {
-        _id,
-        alias,
-      };
-      endLinkStore(store);
+  const handleLoad = async () => {
+    const code = searchParams.get("code");
+    if (code) {
+      const response = await handleSuccessLinkStore(code);
+      console.log(response);
     }
+    await sleep(10000);
     window.close();
+  };
+
+  useEffect(() => {
+    handleLoad();
   }, []);
 
   return (
