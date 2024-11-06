@@ -1,0 +1,44 @@
+/* Contenedor del toggle */
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+}
+
+/* Checkbox oculto */
+.toggle-switch input[type="checkbox"] {
+  display: none;
+}
+
+/* Estilo del switch */
+.switch {
+  position: absolute;
+  cursor: pointer;
+  background-color: #3b3b3b; /* Color del fondo cuando está apagado */
+  border-radius: 24px;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.3s;
+}
+
+/* Círculo dentro del switch */
+.switch::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* Cambia el fondo y posición del círculo cuando está activo */
+input[type="checkbox"]:checked + .switch {
+  background-color: #4cd964; /* Color de fondo cuando está encendido */
+}
+
+input[type="checkbox"]:checked + .switch::before {
+  transform: translateX(26px);
+}
