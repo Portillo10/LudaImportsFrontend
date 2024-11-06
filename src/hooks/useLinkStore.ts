@@ -8,6 +8,7 @@ export const useLinkStore = () => {
   const { user, pushStore } = useUserStore();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any | null>(null);
+  // const navigate = useNavigate();
 
   const handleLinkStore = async (data: any) => {
     try {
@@ -18,7 +19,8 @@ export const useLinkStore = () => {
           seller_id: user._id,
         });
 
-        window.open(response.data.redirectUrl, "_blank");
+        // window.open(response.data.redirectUrl, "_blank");
+        window.location.replace(response.data.redirectUrl);
       }
     } catch (error) {
       if (isAxiosError(error)) {
