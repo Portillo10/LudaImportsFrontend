@@ -22,6 +22,8 @@ export const useLinkStore = () => {
         });
 
         window.open(response.data.redirectUrl, "_blank");
+      } else {
+        console.error("No hay una sesión iniciada");
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -30,6 +32,7 @@ export const useLinkStore = () => {
         setError(error.response?.data);
       } else if (error instanceof Error) {
         setError(error.message);
+        console.log(error.message);
       } else {
         console.log(error);
       }
