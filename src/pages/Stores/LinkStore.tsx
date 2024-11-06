@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 type Inputs = {
   client_id: string;
   client_secret: string;
+  alias: string;
 };
 
 const LinkStore: React.FC = () => {
@@ -46,6 +47,15 @@ const LinkStore: React.FC = () => {
                 className="input"
                 id="client_secret"
                 {...register("client_secret", { required: true })}
+              />
+            </span>
+            <span className="inputBox">
+              <label htmlFor="">Client Secret:</label>
+              <input
+                type="text"
+                className="input"
+                id="alias"
+                {...register("alias", { required: true })}
               />
             </span>
           </div>
