@@ -13,7 +13,6 @@ export const useLinkStore = () => {
   const handleLinkStore = async (data: any) => {
     try {
       setLoading(true);
-      console.log("enviando petición");
 
       if (user) {
         const response = await storeService.linkStore({
@@ -21,7 +20,7 @@ export const useLinkStore = () => {
           seller_id: user._id,
         });
 
-        window.open(response.data.redirectUrl, "_blank");
+        window.open(response.redirectUrl, "_blank");
       } else {
         console.error("No hay una sesión iniciada");
       }
