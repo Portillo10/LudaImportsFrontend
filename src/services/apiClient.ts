@@ -10,7 +10,7 @@ const apiClient: AxiosInstance = axios.create({
     "Content-Type": "application/json",
     Authorization: `Bearer ${getToken()}`,
   },
-  withCredentials: true,
+  withCredentials: false,
 });
 
 // Interceptor para agregar token de autorización a cada solicitud (si es necesario)
