@@ -2,8 +2,6 @@ import axios, { AxiosInstance } from "axios";
 import { getToken } from "../utils/tokenHelper";
 
 // Crear una instancia de Axios
-console.log(window.location.host);
-
 const apiClient: AxiosInstance = axios.create({
   baseURL: window.location.host.includes("localhost")
     ? "http://localhost:8000"

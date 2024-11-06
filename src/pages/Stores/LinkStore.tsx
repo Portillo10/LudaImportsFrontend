@@ -1,7 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useLinkStore } from "../../hooks/useLinkStore";
 import { useAuth } from "../../hooks/useAuth";
-import testService from "../../services/testService";
 
 type Inputs = {
   client_id: string;
@@ -16,15 +15,6 @@ const LinkStore: React.FC = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     await handleLinkStore(data);
-  };
-
-  const sendPetition = async () => {
-    try {
-      await testService.setSessionVar();
-      await testService.getSessionVar();
-    } catch (error) {
-      console.error("error sendpetition");
-    }
   };
 
   if (user) {
@@ -73,7 +63,6 @@ const LinkStore: React.FC = () => {
             Vincular tienda
           </button>
         </form>
-        <button onClick={() => sendPetition()}>enviar</button>
       </div>
     );
   }

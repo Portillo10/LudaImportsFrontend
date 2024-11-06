@@ -15,11 +15,12 @@ export const useLinkStore = () => {
       setLoading(true);
 
       if (user) {
-        const response = await storeService.linkStore({
+        const requestBody = {
           ...data,
           seller_id: user._id,
-        });
-
+        };
+        const response = await storeService.linkStore(requestBody);
+        localStorage.setItem("linkData", JSON.stringify(requestBody));
         window.open(response.redirectUrl, "_blank");
       } else {
         console.error("No hay una sesión iniciada");
@@ -40,8 +41,16 @@ export const useLinkStore = () => {
 
   const handleSuccessLinkStore = async (code: string) => {
     try {
-      const response = await storeService.linkStoreSuccess(code);
-      return response;
+      const dataString = localStorage.getItem("linkData");
+      if (dataString) {
+        const data = JSON.parse(dataString);
+        const response = await storeService.linkStoreSuccess(code, data);
+        return response;
+      } else {
+        throw new Error(
+          "Los datos de vinculación no se cargaron correctamente"
+        );
+      }
     } catch (error) {
       console.log(error);
     }

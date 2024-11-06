@@ -22,8 +22,8 @@ const store = {
     });
     return response.data;
   },
-  async linkStoreSuccess(code: string) {
-    const response = await apiClient.post(`/link-store?code=${code}`);
+  async linkStoreSuccess(code: string, data: any) {
+    const response = await apiClient.post(`/link-store?code=${code}`, data);
     return response.data;
   },
 
