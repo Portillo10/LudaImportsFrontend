@@ -25,5 +25,5 @@ export const useProduct = () => {
     }
   };
 
-  return { updateProduct, product, errorMsg, loading };
+  return { updateProduct, setProduct, product, errorMsg, loading };
 };

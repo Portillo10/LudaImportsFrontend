@@ -55,17 +55,9 @@ const sellerOptions: SideBarElementProps[] = [
 const SideBar: React.FC<SideBarProps> = ({ role }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const { handleLogout } = useAuth();
-  const [elements, setElements] = useState<SideBarElementProps[]>([
-    ...sellerOptions,
-    ...adminOptions,
-  ]);
+  const elements = [...sellerOptions, ...adminOptions];
 
   useEffect(() => {
-    // if (role == "admin") {
-    //   setElements([...sellerOptions, ...adminOptions]);
-    // } else if (role == "seller") {
-    //   setElements(sellerOptions);
-    // }
     const currentUrl = window.location.href;
     elements.forEach((element, i) => {
       if (currentUrl.includes(element.href)) {

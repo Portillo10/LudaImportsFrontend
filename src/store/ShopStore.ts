@@ -7,7 +7,7 @@ interface ShopState {
   toggleAllowUpdate: (storeId: string, allowUpdate: boolean) => void;
 }
 
-export const useShopStore = create<ShopState>((set, get) => ({
+export const useShopStore = create<ShopState>((set) => ({
   stores: [],
   setStores: (stores) => {
     set({ stores });
