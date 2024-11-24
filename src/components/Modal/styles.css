@@ -1,0 +1,50 @@
+/* Fondo oscuro */
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Estilos del modal */
+.modal {
+  z-index: 20; /* Asegura que esté delante del overlay */
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 100%;
+  margin: auto;
+  background-color: #3a3b40;
+  color: white;
+  scale: 0;
+  transition:
+    scale 0.15s ease,
+    display 0.15s ease allow-discrete;
+}
+
+.modal[open] {
+  scale: 1;
+  transition: scale 0.15s ease;
+
+  @starting-style {
+    scale: 0;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 8px;
+  /* margin-bottom: 16px; */
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 15px 10px;
+  border-top: rgb(39, 37, 37) solid 2px;
+}

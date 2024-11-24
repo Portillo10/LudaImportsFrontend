@@ -1,5 +1,89 @@
+import { ChangeEvent, useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import Spinner from "../../components/Spinner/Spinner";
+import SendIcon from "../../assets/icons/SendIcon.svg";
+import DropFileInput from "../../components/DropFile/DropFile";
+import "./styles.css";
+import { useScraping } from "../../hooks/useScraping";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+type Inputs = {
+  sku: string;
+};
+
 const Publisher: React.FC = () => {
-  return <div className="basicContainer"></div>;
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState<string>();
+  const { scrapeBySku } = useScraping();
+
+  const { register, handleSubmit } = useForm<Inputs>();
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setLoading(true);
+    console.log(data);
+
+    await scrapeBySku(data.sku);
+    setLoading(false);
+  };
+
+  const handleFileInput = (event: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = event.target.files?.item(0);
+    if (selectedFile) {
+      console.log(selectedFile);
+
+      setFile(selectedFile.name);
+    }
+  };
+
+  return (
+    <div className="basicContainer gap-5">
+      <span className="titlePageContainer">
+        <h2>Publicador</h2>
+      </span>
+      <div className="w-full flex flex-col px-8 gap-8">
+        <form
+          className="flex gap-4 items-end"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <span className="inputBox max-w-72">
+            <label htmlFor="">Tienda en la que desea publicar</label>
+            <select className="select">
+              {user?.stores.map((store, i) => (
+                <option key={i} value={store._id}>
+                  {store.alias}
+                </option>
+              ))}
+            </select>
+          </span>
+          <span className="inputBox max-w-52">
+            <label htmlFor="">Publicar por SKU</label>
+            <input
+              type="text"
+              className="input"
+              placeholder="SKU del producto"
+              {...register("sku", { required: true })}
+            />
+          </span>
+          <button
+            disabled={loading}
+            className={`${loading ? "bg-[#3B6541]" : "bg-[#4A7F50]"} rounded-md px-2 py-2 hover:bg-[#3B6541]`}
+          >
+            {loading ? (
+              <Spinner size={16} />
+            ) : (
+              <img src={SendIcon} alt="" width={18} height={18} />
+            )}
+          </button>
+        </form>
+        <p className="text-xl font-semibold">Publicador masivo</p>
+        <div className="w-full flex justify-center">
+          <DropFileInput onChange={handleFileInput}></DropFileInput>
+          {file && <p>{file}</p>}
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Publisher;

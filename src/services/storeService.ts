@@ -27,7 +27,10 @@ const store = {
     return response.data;
   },
 
-  async getStores() {},
+  async getStores() {
+    const response = await apiClient.get("/api/stores");
+    return response.data;
+  },
 };
 
 export default store;

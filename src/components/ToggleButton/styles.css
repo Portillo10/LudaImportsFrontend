@@ -36,7 +36,7 @@
 
 /* Cambia el fondo y posición del círculo cuando está activo */
 input[type="checkbox"]:checked + .switch {
-  background-color: #4cd964; /* Color de fondo cuando está encendido */
+  background-color: #4ab95c; /* Color de fondo cuando está encendido */
 }
 
 input[type="checkbox"]:checked + .switch::before {

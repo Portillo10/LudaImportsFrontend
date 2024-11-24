@@ -1,0 +1,7 @@
+.infoBlock {
+  @apply p-4 flex justify-between items-center rounded-lg;
+}
+
+.infoBlock span {
+  @apply font-semibold text-lg;
+}

@@ -1,5 +1,5 @@
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Spinner from "../../components/Spinner/Spinner";
 import Table from "../../components/Table/Table";
@@ -7,8 +7,9 @@ import Toast from "../../components/Toast/Toast";
 
 import SendIcon from "../../assets/icons/SendIcon.svg";
 
-import { useMLApi } from "../../hooks/useMLApi";
-import { isAxiosError } from "axios";
+import { useCalcPrice } from "../../hooks/useCalcPrice";
+import Modal from "../../components/Modal/Modal";
+import MissingFieldsForm from "./MissingFieldsForm";
 
 const tableColumns = [
   { key: "label", label: "" },
@@ -20,47 +21,52 @@ type Inputs = {
 };
 
 const CalcPrice: React.FC = () => {
-  const { calcPrice, getInitialPriceInfo, loading } = useMLApi();
-  const [errorMsg, setErrorMsg] = useState<string>("");
+  const {
+    calcPrice,
+    closeModal,
+    getInitialPriceInfo,
+    setActiveModal,
+    setErrorMsg,
+    loading,
+    priceRows,
+    missingFields,
+    activeModal,
+    errorMsg,
+  } = useCalcPrice();
   const [activeToast, setActiveToast] = useState<boolean>(false);
-  const [priceRows, setPriceRows] = useState<
-    { label: string; value: string }[]
-  >(getInitialPriceInfo() || []);
+  const [successMsg, setSuccessMsg] = useState<string>("");
 
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, watch } = useForm<Inputs>();
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    getInitialPriceInfo();
+  }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    try {
-      const calcPriceResult = await calcPrice(data.sku);
-      if (calcPriceResult) {
-        setPriceRows(calcPriceResult);
-      } else {
-        throw new Error(
-          "Error calculando precio, por favor, inténtelo más tarde"
-        );
-      }
-    } catch (error) {
+    const result = await calcPrice(data.sku);
+    if (result?.status == 200) {
+      setSuccessMsg("Operación exitosa.");
       setActiveToast(true);
-      if (error instanceof Error) {
-        if (isAxiosError(error)) {
-          if (error.response?.data.error) {
-            setErrorMsg(error.response?.data.error);
-          } else {
-            setErrorMsg(error.message);
-          }
-        } else {
-          setErrorMsg(error.message);
-        }
-      }
+    }
+  };
+
+  const onSuccessUpdate = async () => {
+    if (buttonRef.current) {
+      buttonRef.current.click();
+      setActiveModal(false);
     }
   };
 
   const onCloseToast = () => {
     setActiveToast(false);
+    setErrorMsg("");
+    setSuccessMsg("");
   };
 
   return (
-    <div className="basicContainer max-h-full gap-5">
+    <div className="basicContainer gap-5">
       <span className="titlePageContainer">
         <h2>Calcular Precios</h2>
       </span>
@@ -77,6 +83,7 @@ const CalcPrice: React.FC = () => {
               {...register("sku", { required: true })}
             />
             <button
+              ref={buttonRef}
               disabled={loading}
               className={`${loading ? "bg-[#3B6541]" : "bg-[#4A7F50]"} rounded-md px-2 py-2 hover:bg-[#3B6541]`}
             >
@@ -87,7 +94,7 @@ const CalcPrice: React.FC = () => {
               )}
             </button>
           </form>
-          <div className="max-h-96 overflow-auto max-w-md pr-2">
+          <div className="max-h-[calc(100vh-220px)] overflow-auto max-w-md pr-2">
             <Table
               columns={tableColumns}
               rowsData={priceRows}
@@ -95,10 +102,30 @@ const CalcPrice: React.FC = () => {
             />
           </div>
         </section>
+        <section>
+          <span className=""></span>
+        </section>
       </div>
       {activeToast && (
-        <Toast message={errorMsg} onClose={onCloseToast} type="error" />
+        <Toast
+          message={errorMsg != "" ? errorMsg : successMsg}
+          onClose={onCloseToast}
+          type={errorMsg != "" ? "error" : "success"}
+        />
       )}
+
+      <Modal
+        title="Atributos faltantes"
+        isOpen={activeModal}
+        onClose={closeModal}
+        className="max-w-96"
+      >
+        <MissingFieldsForm
+          onSuccess={onSuccessUpdate}
+          missingFields={missingFields}
+          sku={watch().sku}
+        />
+      </Modal>
     </div>
   );
 };

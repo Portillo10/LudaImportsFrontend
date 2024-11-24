@@ -1,25 +1,23 @@
 import { useState } from "react";
+import mercadoLibreService from "../services/mercadoLibreService";
 
-type Store = {
-  alias: string;
-  user: string;
-  lastUpdate: Date;
-  updating: boolean;
-};
+// type Store = {
+//   alias: string;
+//   user: string;
+//   lastUpdate: Date;
+//   updating: boolean;
+// };
 
 export const usePriceUpdating = () => {
-  const [stores, setStores] = useState<Store[]>([
-    
-  ]);
+  const [usdRate, setUsdRate] = useState<number | null>(null);
+  const getUsdRate = async () => {
+    try {
+      const response = await mercadoLibreService.getUsdRate();
+      setUsdRate(response.usdRate);
+    } catch (error) {
+      throw error;
+    }
+  };
 
-  const loadStores = () => {
-    setStores([{
-      alias: "Salud y belleza",
-      lastUpdate: new Date(),
-      updating: false,
-      user: "Portillo",
-    }])
-  }
-
-  return { loadStores, stores };
+  return { getUsdRate, usdRate };
 };

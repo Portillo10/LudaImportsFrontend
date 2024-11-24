@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useLinkStore } from "../../hooks/useLinkStore";
+import { useStores } from "../../hooks/useStores";
 import { useSearchParams } from "react-router-dom";
 // import { IStore } from "../../types/store";
 import { sleep } from "../../utils/helpers";
 
 const LinkSuccess: React.FC = () => {
-  const { handleSuccessLinkStore } = useLinkStore();
+  const { handleSuccessLinkStore } = useStores();
   const [searchParams] = useSearchParams();
 
   const handleLoad = async () => {

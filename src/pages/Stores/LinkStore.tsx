@@ -1,5 +1,5 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useLinkStore } from "../../hooks/useLinkStore";
+import { useStores } from "../../hooks/useStores";
 import { useAuth } from "../../hooks/useAuth";
 
 type Inputs = {
@@ -11,7 +11,7 @@ type Inputs = {
 const LinkStore: React.FC = () => {
   const { register, handleSubmit } = useForm<Inputs>();
   const { user } = useAuth();
-  const { handleLinkStore } = useLinkStore();
+  const { handleLinkStore } = useStores();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     await handleLinkStore(data);

@@ -9,6 +9,9 @@ const testService = {
     const response = await apiClient.get("/test/get-env");
     console.log(response);
   },
+  async testJson() {
+    await apiClient.post("/test/write-json");
+  },
 };
 
 export default testService;
