@@ -94,7 +94,9 @@ const CategoriesTree: React.FC = () => {
     <div className="w-full flex py-2">
       {categories.map((categoryChunk, index) => (
         <div key={index} className="flex">
-          {index > 0 && <hr className="bg-[#4b5563] w-[2px] h-full" />}
+          {index > 0 && (
+            <hr className="bg-[#4b5563] w-[2px] h-full border-none" />
+          )}
           <div className="flex flex-col">
             {categoryChunk.map((category, j) => (
               <CategoryItem
