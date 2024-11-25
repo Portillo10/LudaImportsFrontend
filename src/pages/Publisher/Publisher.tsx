@@ -6,6 +6,7 @@ import DropFileInput from "../../components/DropFile/DropFile";
 import "./styles.css";
 import { useScraping } from "../../hooks/useScraping";
 import { SubmitHandler, useForm } from "react-hook-form";
+import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
 
 type Inputs = {
   sku: string;
@@ -41,7 +42,7 @@ const Publisher: React.FC = () => {
       <span className="titlePageContainer">
         <h2>Publicador</h2>
       </span>
-      <div className="w-full flex flex-col px-8 gap-8">
+      <div className="w-full flex flex-col px-8 gap-8 min-h-[calc(100vh-180px)]">
         <form
           className="flex gap-4 items-end"
           onSubmit={handleSubmit(onSubmit)}
@@ -81,6 +82,10 @@ const Publisher: React.FC = () => {
           <DropFileInput onChange={handleFileInput}></DropFileInput>
           {file && <p>{file}</p>}
         </div>
+      </div>
+      <div className="w-full h-full flex flex-col gap-3 py-5 border-t border-gray-500">
+        <p>Categorías de MercadoLibre</p>
+        <CategoriesTree />
       </div>
     </div>
   );

@@ -85,8 +85,8 @@ const MissingFieldsForm: React.FC<MissingFieldsFormProps> = ({
           </span>
         );
       })}
-      <button type="submit" disabled={loading} className="button mt-2">
-        {loading ? <Spinner size={12} /> : "Enviar"}
+      <button type="submit" disabled={loading} className="button mt-2 min-w-24">
+        {loading ? <Spinner size={24} /> : "Enviar"}
       </button>
     </form>
   );

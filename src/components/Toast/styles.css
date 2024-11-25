@@ -27,6 +27,10 @@
   background-color: #dc3545; /* Rojo para error */
 }
 
+.toast.warning {
+  background-color: #6f6b3d; /* Rojo para error */
+}
+
 @keyframes fadeInOut {
   0% {
     opacity: 0;
