@@ -16,7 +16,7 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
   return (
     <div
       onClick={() => onClick(category_id, level)}
-      className={`text-sm font-light p-1 cursor-pointer hover:bg-[#4a4453] ${active ? "bg-[#4a4453]" : ""}`}
+      className={`text-sm font-light px-2 py-0.5 cursor-pointer hover:bg-[#4a4453] ${active ? "bg-[#4a4453]" : ""}`}
     >
       <span>
         <p className="">{`${category_name} (${category_id})`}</p>

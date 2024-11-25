@@ -82,18 +82,21 @@ const CategoriesTree: React.FC = () => {
   return (
     <div className="w-full flex py-2">
       {categories.map((categoryChunk, index) => (
-        <div className="flex flex-col" key={index}>
-          {categoryChunk.map((category, j) => (
-            <CategoryItem
-              level={index}
-              key={j}
-              category_id={category.id}
-              category_name={category.name}
-              onClick={handleClickItem}
-              active={isActive(category.id)}
-            />
-          ))}
-        </div>
+        <>
+          {index > 0 && <hr className="bg-[#4b5563] w-[2px] h-full" />}
+          <div className="flex flex-col" key={index}>
+            {categoryChunk.map((category, j) => (
+              <CategoryItem
+                level={index}
+                key={j}
+                category_id={category.id}
+                category_name={category.name}
+                onClick={handleClickItem}
+                active={isActive(category.id)}
+              />
+            ))}
+          </div>
+        </>
       ))}
       {activeToast && (
         <Toast
