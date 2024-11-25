@@ -21,6 +21,8 @@ const WithSideBarLayout: React.FC = memo(() => {
 
   if (!isAuthenticated && !loading) {
     return <Navigate to="/login" replace />;
+  } else if (window.location.pathname == "/") {
+    return <Navigate to="/publisher" replace />;
   }
 
   return (

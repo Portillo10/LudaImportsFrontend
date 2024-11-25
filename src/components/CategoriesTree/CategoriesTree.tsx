@@ -9,8 +9,12 @@ type ActiveCategory = {
   id: string;
 };
 
+interface CategoryItem extends IChildrenCategory {
+  parent: boolean;
+}
+
 const CategoriesTree: React.FC = () => {
-  const [categories, setCategories] = useState<IChildrenCategory[][]>([]);
+  const [categories, setCategories] = useState<CategoryItem[][]>([]);
   const [activeToast, setActiveToast] = useState<boolean>(false);
   const [activeCategories, setActiveCategories] = useState<ActiveCategory[]>(
     []
@@ -32,9 +36,9 @@ const CategoriesTree: React.FC = () => {
       );
       setCategoriesJson(categoriesJsonResponse);
 
-      const rootCategories = categoriesResponse.filter(
-        (category: ICategory) => category.root
-      );
+      const rootCategories = categoriesResponse
+        .filter((category: ICategory) => category.root)
+        .map((category) => ({ ...category, parent: true }));
       setCategories([rootCategories]);
     })();
   }, []);
@@ -42,8 +46,15 @@ const CategoriesTree: React.FC = () => {
   const handleClickItem = (category_id: string, level: number) => {
     try {
       if (categoriesJson) {
-        const chlidrenCategories =
-          categoriesJson[category_id]?.children_categories;
+        const chlidrenCategories = categoriesJson[
+          category_id
+        ]?.children_categories?.map((category) => {
+          if (categoriesJson[category.id]?.children_categories.length > 0) {
+            return { ...category, parent: true };
+          } else {
+            return { ...category, parent: false };
+          }
+        });
         if (chlidrenCategories && chlidrenCategories.length > 0) {
           const currentCategories = [];
           for (let i = 0; i <= level; i++) {
@@ -82,11 +93,12 @@ const CategoriesTree: React.FC = () => {
   return (
     <div className="w-full flex py-2">
       {categories.map((categoryChunk, index) => (
-        <>
+        <div key={index} className="flex">
           {index > 0 && <hr className="bg-[#4b5563] w-[2px] h-full" />}
-          <div className="flex flex-col" key={index}>
+          <div className="flex flex-col">
             {categoryChunk.map((category, j) => (
               <CategoryItem
+                parent={category.parent}
                 level={index}
                 key={j}
                 category_id={category.id}
@@ -96,7 +108,7 @@ const CategoriesTree: React.FC = () => {
               />
             ))}
           </div>
-        </>
+        </div>
       ))}
       {activeToast && (
         <Toast

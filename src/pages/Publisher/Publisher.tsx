@@ -42,7 +42,7 @@ const Publisher: React.FC = () => {
       <span className="titlePageContainer">
         <h2>Publicador</h2>
       </span>
-      <div className="w-full flex flex-col px-8 gap-8 min-h-[calc(100vh-180px)]">
+      <div className="w-full flex flex-col px-8 gap-8 h-max max-h-[calc(100vh-180px)] min-h-[440px]">
         <form
           className="flex gap-4 items-end"
           onSubmit={handleSubmit(onSubmit)}

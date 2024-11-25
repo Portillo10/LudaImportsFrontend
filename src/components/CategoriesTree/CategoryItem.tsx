@@ -3,6 +3,7 @@ type CategoryItemProps = {
   category_name: string;
   level: number;
   active?: boolean;
+  parent: boolean;
   onClick: (category_id: string, level: number) => void;
 };
 
@@ -11,12 +12,13 @@ const CategoryItem: React.FC<CategoryItemProps> = ({
   category_name,
   level,
   active = false,
+  parent,
   onClick,
 }) => {
   return (
     <div
       onClick={() => onClick(category_id, level)}
-      className={`text-sm font-light px-2 py-0.5 cursor-pointer hover:bg-[#4a4453] ${active ? "bg-[#4a4453]" : ""}`}
+      className={`text-sm font-light px-2 py-0.5 ${parent ? "cursor-pointer hover:bg-[#4a4453]" : "cursor-default"}  ${active ? "bg-[#4a4453]" : ""}`}
     >
       <span>
         <p className="">{`${category_name} (${category_id})`}</p>
