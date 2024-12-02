@@ -1,0 +1,83 @@
+.itemContainer {
+  @apply flex gap-3 py-1 px-3 bg-[#414249] rounded-xl items-center justify-between;
+}
+
+.span-1 {
+  flex: 1 1 30px; /* flex-grow: 1, flex-shrink: 1, flex-basis: 30px */
+  min-width: 30px; /* Ancho mínimo */
+  max-width: 40px; /* Ancho máximo */
+}
+
+.span-2 {
+  flex: 1 1 auto;
+  min-width: 140px;
+  font-size: 10px;
+}
+
+.span-3 {
+  flex: 0 0 50px; /* Tamaño fijo */
+  width: 50px; /* Asegura el tamaño fijo explícitamente */
+}
+
+.span-1-skeleton {
+  @apply size-[40px] animate-pulse bg-gray-500 rounded-md;
+}
+
+.span-2-skeleton {
+  @apply span-2 py-1;
+}
+
+.span-2-skeleton p {
+  @apply animate-pulse bg-gray-500 rounded-md h-2;
+}
+
+.span-2-skeleton :first-child {
+  @apply mt-px;
+}
+
+.span-2-skeleton :not(:first-child) {
+  @apply mt-1.5;
+}
+
+@media (min-width: 440px) {
+  .itemContainer {
+    @apply px-6 gap-6 py-2;
+  }
+
+  .span-2 {
+    font-size: 12px;
+    min-width: 160px;
+  }
+
+  .span-2-skeleton p {
+    @apply h-2.5;
+  }
+
+  .span-2-skeleton :first-child {
+    @apply mt-0;
+  }
+
+  .span-2-skeleton :not(:first-child) {
+    @apply mt-2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .span-2 {
+    font-size: 14px;
+    min-width: 180px;
+  }
+
+  .span-1 {
+    min-width: 40px; /* Ancho mínimo */
+    max-width: 50px;
+  }
+
+  .span-1-skeleton {
+    @apply size-[50px];
+  }
+
+  .span-2-skeleton p {
+    @apply h-[13px];
+  }
+}

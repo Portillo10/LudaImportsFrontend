@@ -1,6 +1,7 @@
 import ToggleButton from "../ToggleButton/ToggleButton";
 import ActiveStoreIcon from "../../assets/icons/ActiveStoreIcon.svg";
 import { useStores } from "../../hooks/useStores";
+import "./styles.css";
 
 type UpdateStoreItemProps = {
   store: {
@@ -20,11 +21,11 @@ const UpdateStoreItem: React.FC<UpdateStoreItemProps> = ({ store }) => {
   };
 
   return (
-    <div className="flex gap-6 py-2 px-6 bg-[#414249] rounded-xl items-center">
-      <section>
+    <div className="itemContainer">
+      <section className="span-1">
         <img src={ActiveStoreIcon} alt="" width={50} />
       </section>
-      <section className="flex flex-col gap-0.5 font-semibold min-w-64 text-sm">
+      <section className="span-2">
         <p>Tienda: {store.alias}</p>
         <p>Dueño: {store.user}</p>
         <p>
@@ -33,7 +34,7 @@ const UpdateStoreItem: React.FC<UpdateStoreItemProps> = ({ store }) => {
             : `Última vez: ${store.lastUpdate ? new Date(store.lastUpdate).toLocaleDateString() : "Nunca"}`}
         </p>
       </section>
-      <section>
+      <section className="span-3">
         <ToggleButton
           id={store._id}
           allow={store.allowUpdate}

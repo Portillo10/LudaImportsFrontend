@@ -6,6 +6,7 @@ export const useMLApi = () => {
   const { user } = useAuth();
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingTransfer, setLoadingTransfer] = useState<boolean>(false);
 
   const predictCategory = async (sku: string) => {
     setLoading(true);
@@ -25,5 +26,21 @@ export const useMLApi = () => {
     }
   };
 
-  return { predictCategory, error, loading };
+  const transferProducts = async () => {
+    setLoadingTransfer(true);
+    try {
+      await mercadoLibreService.transferProducts({
+        origin_store_id: "66cbe53b5411118da45df1a4",
+        target_store_id: "672bf6cd82f5d8168b6e2210",
+      });
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    } finally {
+      setLoadingTransfer(false);
+    }
+  };
+
+  return { predictCategory, transferProducts, error, loading, loadingTransfer };
 };

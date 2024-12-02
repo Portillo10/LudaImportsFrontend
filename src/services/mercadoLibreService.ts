@@ -11,12 +11,6 @@ const mercadoLibreService = {
     return { data: responseData, status: response.status };
   },
 
-  async getUsdRate() {
-    const response = await apiClient.get("/api/usd-rate");
-    const responseData: { usdRate: number } = response.data;
-    return responseData;
-  },
-
   async getCategories() {
     const response = await apiClient.get("/api/categories");
     return response.data;
@@ -26,6 +20,11 @@ const mercadoLibreService = {
     const response = await apiClient.get(
       `/api/store/${store_id}/predict?sku=${sku}`
     );
+    return response.data;
+  },
+
+  async transferProducts(data: any) {
+    const response = await apiClient.post("/api/store/transfer-products", data);
     return response.data;
   },
 };

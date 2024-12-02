@@ -35,3 +35,30 @@ export interface CalcPriceResponse {
   weight: number;
   profitPercent: number;
 }
+
+export interface UpdatingProgressResponse {
+  trackingProgress: TrackingProgress;
+  updatingProgress: UpdatingProgress;
+}
+
+type TrackingProgress = {
+  compareCount: number;
+  updatedCount: number;
+  usedCredits: number;
+  tasksToUpdate: number;
+  updatedTasksCount: number;
+  status: "stopped" | "running";
+};
+
+type UpdatingProgress = {
+  progress: {
+    _id: string;
+    alias: string;
+    updatedCount: number;
+    errorsCount: number;
+    updatedComplete: boolean;
+    inProgress: boolean;
+    error?: string;
+  }[];
+  status: "stopped" | "running";
+};

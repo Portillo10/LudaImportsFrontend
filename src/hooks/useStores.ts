@@ -4,14 +4,13 @@ import { useUserStore } from "../store/UserStore";
 import { useState } from "react";
 import { IStore } from "../types/store";
 import { useShopStore } from "../store/ShopStore";
+import { getStoresLength, setStoresLength } from "../utils/cacheHelper";
 
 export const useStores = () => {
   const { user, pushStore } = useUserStore();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<any | null>(null);
   const { setStores, stores, toggleAllowUpdate } = useShopStore();
-  // const [stores, setStores] = useState<IStore[]>([]);
-  // const navigate = useNavigate();
 
   const handleLinkStore = async (data: any) => {
     try {
@@ -79,20 +78,39 @@ export const useStores = () => {
 
   const getAllStores = async () => {
     try {
-      const data = await storeService.getStores();
-
-      setStores(data);
+      if (stores.length == 0) {
+        setLoading(true);
+        const data = await storeService.getStores();
+        setStoresLength(data.length);
+        setStores(data);
+      }
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
       }
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const renderSkeletons = () => {
+    const lengthString = getStoresLength();
+    let items = [0, 1, 2, 3];
+    if (lengthString) {
+      items = [];
+      const length = parseInt(lengthString);
+      for (let i = 0; i < length; i++) {
+        items.push(i);
+      }
+    }
+    return items;
   };
 
   return {
     handleSuccessLinkStore,
     toggleAllowUpdate,
     handleLinkStore,
+    renderSkeletons,
     endLinkStore,
     getAllStores,
     loading,

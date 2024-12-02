@@ -1,7 +1,43 @@
 .infoBlock {
-  @apply p-4 flex justify-between items-center rounded-lg;
+  @apply px-4 flex justify-between gap-3 items-center rounded-lg xl:text-base lg:text-sm text-sm w-full min-w-64;
 }
 
 .infoBlock span {
-  @apply font-semibold text-lg;
+  @apply font-semibold;
+}
+
+.infoBlock p {
+  @apply my-4;
+}
+
+.infoBlockContainer {
+  @apply flex flex-col w-full items-stretch;
+}
+
+.mainContainer {
+  @apply flex w-full gap-10 flex-col-reverse px-4;
+}
+
+.storesContainer {
+  @apply bg-[#232427] border border-[#5A5B60] p-4 rounded-lg flex flex-col gap-2 max-h-[calc(100vh-160px)] overflow-auto w-full min-w-72;
+}
+
+.checkItemContainer {
+  @apply flex justify-between items-center gap-3 font-normal w-full;
+}
+
+@media (min-width: 440px) {
+  .storesContainer {
+    @apply min-w-[390px];
+  }
+}
+
+@media (min-width: 920px) {
+  .mainContainer {
+    @apply flex-row gap-[36px];
+  }
+
+  .infoBlockContainer {
+    @apply min-w-64;
+  }
 }

@@ -27,6 +27,7 @@ const AppRoutes: React.FC = () => {
           </Route>
           <Route path="/users" element={<Outlet />}>
             <Route path="/users" element={<Users />} />
+            <Route path="/users/:user_id" />
             <Route path="/users/register" element={<RegisterUser />} />
           </Route>
         </Route>

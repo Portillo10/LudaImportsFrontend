@@ -68,7 +68,7 @@ const Publisher: React.FC = () => {
           </span>
           <button
             disabled={loading}
-            className={`${loading ? "bg-[#3B6541]" : "bg-[#4A7F50]"} rounded-md px-2 py-2 hover:bg-[#3B6541]`}
+            className={`${loading ? "bg-[#3B6541]" : "bg-[#4A7F50]"} rounded-md px-2 py-2 hover:bg-[#3B6541] size-[34px] min-w-[34px]`}
           >
             {loading ? (
               <Spinner size={16} />

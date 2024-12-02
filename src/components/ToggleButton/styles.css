@@ -14,7 +14,7 @@
 .switch {
   position: absolute;
   cursor: pointer;
-  background-color: #3b3b3b; /* Color del fondo cuando está apagado */
+  background-color: #2b2a2a; /* Color del fondo cuando está apagado */
   border-radius: 24px;
   width: 100%;
   height: 100%;
@@ -36,9 +36,30 @@
 
 /* Cambia el fondo y posición del círculo cuando está activo */
 input[type="checkbox"]:checked + .switch {
-  background-color: #4ab95c; /* Color de fondo cuando está encendido */
+  background-color: #2d8040; /* Color de fondo cuando está encendido */
 }
 
 input[type="checkbox"]:checked + .switch::before {
   transform: translateX(26px);
+}
+
+@media (max-width: 440px) {
+  .switch::before {
+    top: 2px;
+    left: 2px;
+    width: 15px;
+    height: 15px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+
+  input[type="checkbox"]:checked + .switch::before {
+    transform: translateX(20px);
+  }
+
+  .toggle-switch {
+    width: 40px;
+    height: 20px;
+  }
 }

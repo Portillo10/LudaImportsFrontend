@@ -1,0 +1,7 @@
+.loading-bar-container {
+  @apply w-full;
+}
+
+.loading-bar {
+  @apply w-full h-4 bg-[#F6CFA7] rounded-md;
+}

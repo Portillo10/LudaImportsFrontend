@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import AddUserIcon from "../../assets/icons/AddUserIcon.svg";
 import { useEffect, useState } from "react";
 import { IUser } from "../../types/user";
@@ -10,10 +10,17 @@ const TableColumns = [
   {
     key: "username",
     label: "Nombre de usuario",
+    class: "min-w-48",
+  },
+  {
+    key: "storeCount",
+    label: "Tiendas",
+    class: "min-w-24",
   },
   {
     key: "createdAt",
     label: "Fecha de inicio",
+    class: "min-w-44",
   },
 ];
 
@@ -21,24 +28,7 @@ const Users: React.FC = () => {
   const [rowsData, setRowsData] = useState<Partial<IUser>[]>([]);
   const [loadingTable, setLoadingTable] = useState<boolean>(true);
   const { getUsers } = useAuth();
-
-  const showTable = () => {
-    if (loadingTable) {
-      return (
-        <div className="py-10">
-          <Spinner />
-        </div>
-      );
-    } else if (rowsData.length > 0) {
-      return (
-        <div className="min-w-96">
-          <Table columns={TableColumns} rowsData={rowsData} />
-        </div>
-      );
-    } else {
-      return <></>;
-    }
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
     const initUsers = async () => {
@@ -53,6 +43,33 @@ const Users: React.FC = () => {
     };
     initUsers();
   }, []);
+
+  const onClickUser = (data: any) => {
+    navigate(`/users/${data._id}`);
+  };
+
+  const showTable = () => {
+    if (loadingTable) {
+      return (
+        <div className="py-10">
+          <Spinner />
+        </div>
+      );
+    } else if (rowsData.length > 0) {
+      return (
+        <div className="min-w-96">
+          <Table
+            rowClass="cursor-pointer hover:bg-[#414249]"
+            columns={TableColumns}
+            rowsData={rowsData}
+            onClickRow={onClickUser}
+          />
+        </div>
+      );
+    } else {
+      return <></>;
+    }
+  };
 
   return (
     <div className="basicContainer gap-10">
