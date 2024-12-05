@@ -7,9 +7,9 @@ import { useScraping } from "../../hooks/useScraping";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
 import { parseCSV } from "../../utils/csvHelper";
+import { useShopStore } from "../../store/ShopStore";
 
 import "./styles.css";
-import { useShopStore } from "../../store/ShopStore";
 
 type Inputs = {
   sku: string;
