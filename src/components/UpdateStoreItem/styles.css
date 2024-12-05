@@ -1,5 +1,5 @@
 .itemContainer {
-  @apply flex gap-3 py-1 px-3 bg-[#414249] rounded-xl items-center justify-between relative;
+  @apply flex gap-3 py-1 px-3 bg-[#414249] rounded-xl items-center justify-between relative overflow-x-hidden;
 }
 
 .span-1 {
