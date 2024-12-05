@@ -22,6 +22,8 @@ const UpdateStoreItem: React.FC<UpdateStoreItemProps> = ({ store }) => {
 
   return (
     <div className="itemContainer">
+      {store.updating ? <div className="rotate" /> : <></>}
+
       <section className="span-1">
         <img src={ActiveStoreIcon} alt="" width={50} />
       </section>

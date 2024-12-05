@@ -19,7 +19,7 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ onChange }) => {
   };
 
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
-    // e.preventDefault();
+    e.preventDefault();
     console.log("ondrop");
 
     const file = e.dataTransfer.files[0];
@@ -28,7 +28,7 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ onChange }) => {
 
   return (
     <div
-      onDrop={onDrop}
+      onDropCapture={onDrop}
       onDragOver={() => setActive(true)}
       onDragLeave={onDragLeave}
       className={`drop-area ${active && "activeDrop"}`}

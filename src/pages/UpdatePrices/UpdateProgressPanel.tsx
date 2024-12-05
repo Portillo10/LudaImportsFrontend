@@ -1,13 +1,26 @@
+import { useEffect } from "react";
 import LoadingBar from "../../components/LoadingBar/LoadingBar";
 import { UpdatingProgressResponse } from "../../types/apiResponses";
 
 type UpdateProgressPanelProps = {
   updatingProgress: UpdatingProgressResponse | null;
+  refreshUpdatingProgress: () => void;
 };
 
 const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
   updatingProgress,
+  refreshUpdatingProgress,
 }) => {
+  useEffect(() => {
+    refreshUpdatingProgress();
+
+    const intervalId = setInterval(() => {
+      refreshUpdatingProgress();
+    }, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   if (updatingProgress) {
     return (
       <div className="w-full flex flex-col gap-6 items-center px-2">
@@ -29,7 +42,7 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
             </span>
           </li>
           <li>
-            <p className="text-[12px] text-gray-300">Créditos consumidos</p>
+            <p className="text-[12px] text-gray-300">Créditos gastados</p>
             <span className="text-2xl">
               {updatingProgress.trackingProgress.usedCredits.toLocaleString(
                 "es-US"

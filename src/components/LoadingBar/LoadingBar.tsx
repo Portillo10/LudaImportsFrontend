@@ -14,12 +14,15 @@ const LoadingBar: React.FC<LoadingBarProps> = ({ total, progress }) => {
             ? "Comparando precios..."
             : "Comparación completada"}
         </p>
-        <p>{Math.round((progress / total) * 100 * 100) / 100}%</p>
+        <p>
+          {total > 0 ? Math.round((progress / total) * 100 * 100) / 100 : "100"}
+          %
+        </p>
       </span>
       <div className="loading-bar">
         <div
           style={{
-            width: `${(progress / total) * 100}%`,
+            width: `${total > 0 ? (progress / total) * 100 : "100"}%`,
             transition: "0.3s ease",
           }}
           className={`bg-[#FF9104] h-full rounded-l-md`}

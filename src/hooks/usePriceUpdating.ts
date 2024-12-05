@@ -18,13 +18,18 @@ export const usePriceUpdating = () => {
   };
 
   const updatePrices = async (store_ids: string[], data: any) => {
+    setLoadingProgress(true);
     try {
       const response = await priceService.updatePrices(store_ids, data);
       console.log(response);
+
+      setPriceUpdatingInfo(response);
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
       }
+    } finally {
+      setLoadingProgress(false);
     }
   };
 
@@ -32,8 +37,6 @@ export const usePriceUpdating = () => {
     setLoadingProgress(true);
     try {
       const response = await priceService.getUpdateProgress();
-      console.log(response);
-
       setPriceUpdatingInfo(response);
     } catch (error) {
       if (error instanceof Error) {
@@ -48,9 +51,9 @@ export const usePriceUpdating = () => {
     getUsdRate,
     updatePrices,
     getUpdateProgress,
-    usdRate,
     error,
-    priceUpdatingInfo,
+    usdRate,
     loadingProgress,
+    priceUpdatingInfo,
   };
 };

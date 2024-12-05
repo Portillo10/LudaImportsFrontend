@@ -26,12 +26,6 @@ const UpdatePrices: React.FC = () => {
     getAllStores();
     getUsdRate();
     getUpdateProgress();
-
-    const intervalId = setInterval(() => {
-      getUpdateProgress();
-    }, 5000);
-
-    return () => clearInterval(intervalId);
   }, []);
 
   const onSubmit = async (data: any) => {
@@ -83,7 +77,10 @@ const UpdatePrices: React.FC = () => {
             priceUpdatingInfo.updatingProgress.status == "stopped" ? (
             <UpdatePricesForm onSubmit={onSubmit} />
           ) : (
-            <UpdateProgressPanel updatingProgress={priceUpdatingInfo} />
+            <UpdateProgressPanel
+              refreshUpdatingProgress={getUpdateProgress}
+              updatingProgress={priceUpdatingInfo}
+            />
           )}
         </section>
       </div>

@@ -1,5 +1,5 @@
 .itemContainer {
-  @apply flex gap-3 py-1 px-3 bg-[#414249] rounded-xl items-center justify-between;
+  @apply flex gap-3 py-1 px-3 bg-[#414249] rounded-xl items-center justify-between relative overflow-hidden;
 }
 
 .span-1 {
@@ -37,6 +37,14 @@
 
 .span-2-skeleton :not(:first-child) {
   @apply mt-1.5;
+}
+
+.rotate {
+  position: absolute;
+  background-color: antiquewhite;
+  height: 2px;
+  animation: rotate 2s infinite linear;
+  border-radius: 12px;
 }
 
 @media (min-width: 440px) {
@@ -79,5 +87,20 @@
 
   .span-2-skeleton p {
     @apply h-[13px];
+  }
+}
+@keyframes rotate {
+  0% {
+    width: 0;
+    top: 0;
+    left: 0;
+  }
+  25% {
+    width: 100%;
+  }
+  50% {
+    width: 0;
+    right: 0;
+    left: auto;
   }
 }

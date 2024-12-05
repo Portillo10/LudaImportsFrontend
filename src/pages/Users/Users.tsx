@@ -36,8 +36,6 @@ const Users: React.FC = () => {
 
       if (users && Array.isArray(users)) {
         setRowsData(users);
-      } else {
-        console.log(users);
       }
       setLoadingTable(false);
     };
@@ -63,6 +61,7 @@ const Users: React.FC = () => {
             columns={TableColumns}
             rowsData={rowsData}
             onClickRow={onClickUser}
+            rowHoverColor="#414249"
           />
         </div>
       );

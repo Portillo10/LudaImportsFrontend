@@ -39,10 +39,7 @@ const Row: React.FC<RowProps> = ({
       className={`${rowClass}`}
     >
       {columns.map((col, index) => (
-        <td
-          className={`border-[#5A5B60] py-1 cursor-pointer ${col.class}`}
-          key={index}
-        >
+        <td className={`border-[#5A5B60] py-1 ${col.class}`} key={index}>
           {rowData[col.key]}
         </td>
       ))}

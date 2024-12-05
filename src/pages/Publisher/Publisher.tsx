@@ -1,39 +1,48 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import Spinner from "../../components/Spinner/Spinner";
 import SendIcon from "../../assets/icons/SendIcon.svg";
 import DropFileInput from "../../components/DropFile/DropFile";
-import "./styles.css";
 import { useScraping } from "../../hooks/useScraping";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
+import { parseCSV } from "../../utils/csvHelper";
+
+import "./styles.css";
 
 type Inputs = {
   sku: string;
+  store_id: string;
 };
 
 const Publisher: React.FC = () => {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [file, setFile] = useState<string>();
-  const { scrapeBySku } = useScraping();
+  const { scrapeBySku, initializeScraping, getScrapingProgress } =
+    useScraping();
 
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit, watch } = useForm<Inputs>();
+
+  useEffect(() => {
+    getScrapingProgress();
+  }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
-    console.log(data);
 
     await scrapeBySku(data.sku);
     setLoading(false);
   };
 
-  const handleFileInput = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileInput = async (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.item(0);
-    if (selectedFile) {
-      console.log(selectedFile);
+    if (selectedFile && watch().store_id) {
+      const parsedCsv = await parseCSV(selectedFile);
 
-      setFile(selectedFile.name);
+      await initializeScraping({
+        url_object_list: parsedCsv,
+        store_id: watch().store_id,
+      });
     }
   };
 
@@ -49,7 +58,10 @@ const Publisher: React.FC = () => {
         >
           <span className="inputBox max-w-72">
             <label htmlFor="">Tienda en la que desea publicar</label>
-            <select className="select">
+            <select
+              className="select"
+              {...register("store_id", { required: true })}
+            >
               {user?.stores.map((store, i) => (
                 <option key={i} value={store._id}>
                   {store.alias}
@@ -80,7 +92,6 @@ const Publisher: React.FC = () => {
         <p className="text-xl font-semibold">Publicador masivo</p>
         <div className="w-full flex justify-center">
           <DropFileInput onChange={handleFileInput}></DropFileInput>
-          {file && <p>{file}</p>}
         </div>
       </div>
       <div className="w-full h-full flex flex-col gap-3 py-5 border-t border-gray-500">

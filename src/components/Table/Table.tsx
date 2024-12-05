@@ -14,7 +14,7 @@ const Table: React.FC<TableProps> = ({
   rowsData,
   withHeader = true,
   rowClass = "font-medium text-[#E7EBEC]",
-  rowHoverColor = "#414249",
+  rowHoverColor,
   onClickRow,
 }) => {
   return (
