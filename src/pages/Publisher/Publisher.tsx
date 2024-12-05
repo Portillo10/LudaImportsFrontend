@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
+// import { useAuth } from "../../hooks/useAuth";
 import Spinner from "../../components/Spinner/Spinner";
 import SendIcon from "../../assets/icons/SendIcon.svg";
 import DropFileInput from "../../components/DropFile/DropFile";
@@ -9,6 +9,7 @@ import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
 import { parseCSV } from "../../utils/csvHelper";
 
 import "./styles.css";
+import { useShopStore } from "../../store/ShopStore";
 
 type Inputs = {
   sku: string;
@@ -16,7 +17,8 @@ type Inputs = {
 };
 
 const Publisher: React.FC = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
+  const { stores } = useShopStore();
   const [loading, setLoading] = useState(false);
   const { scrapeBySku, initializeScraping, getScrapingProgress } =
     useScraping();
@@ -62,7 +64,7 @@ const Publisher: React.FC = () => {
               className="select"
               {...register("store_id", { required: true })}
             >
-              {user?.stores.map((store, i) => (
+              {stores.map((store, i) => (
                 <option key={i} value={store._id}>
                   {store.alias}
                 </option>
