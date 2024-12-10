@@ -18,7 +18,6 @@ export function parseCSV(file: File): Promise<ParsedData[]> {
 
       // Usamos PapaParse para parsear el archivo CSV
       Papa.parse(csvText, {
-        quoteChar: "'",
         complete: function (results: any) {
           // Convertimos las filas CSV en objetos con las propiedades deseadas
           const parsedData: ParsedData[] = results.data.map((row: any[]) => {
