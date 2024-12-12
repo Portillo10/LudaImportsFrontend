@@ -22,6 +22,16 @@ export const useScraping = () => {
     }
   };
 
+  const runTasks = async (store_id: string) => {
+    try {
+      const response = await scrapeService.runTasks(store_id);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
+  };
+
   const getScrapingProgress = async () => {
     try {
       const response = await scrapeService.getScrapingProgress();
@@ -29,5 +39,5 @@ export const useScraping = () => {
     } catch (error) {}
   };
 
-  return { scrapeBySku, initializeScraping, getScrapingProgress };
+  return { scrapeBySku, initializeScraping, getScrapingProgress, runTasks };
 };

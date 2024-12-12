@@ -3,9 +3,8 @@ import { useParams } from "react-router-dom";
 import { useStores } from "../../hooks/useStores";
 import LargeTable from "../../components/LargeTable/LargeTable";
 import LargeRow from "../../components/LargeTable/LargeRow";
-import Modal from "../../components/Modal/Modal";
-import { sleep } from "../../utils/helpers";
 import Spinner from "../../components/Spinner/Spinner";
+import ModalStore from "./Modal/ModalStore";
 
 const columns = [
   { key: "alias", class: "px-6 w-40", label: "Tienda" },
@@ -37,37 +36,6 @@ const UsersInfoPage: React.FC = () => {
     string,
     string | number
   > | null>(null);
-  const [loadingActions, setLoadingActions] = useState<Record<string, boolean>>(
-    {
-      posting: false,
-      scraping: false,
-      sincronize: false,
-    }
-  );
-
-  const actions = [
-    {
-      name: "sincronize",
-      label: "Sincronizar productos",
-    },
-    {
-      name: "posting",
-      label: "Publicar pendientes",
-    },
-    {
-      name: "scraping",
-      label: "Scrapear pendientes",
-    },
-  ];
-
-  const handleClickAction = async (name: string) => {
-    const currentLoading = loadingActions;
-    currentLoading[name] = true;
-    setLoadingActions(currentLoading);
-    await sleep(2000);
-    currentLoading[name] = false;
-    setLoadingActions(currentLoading);
-  };
 
   useEffect(() => {
     const loadStores = async () => {
@@ -101,6 +69,12 @@ const UsersInfoPage: React.FC = () => {
             ---
           </li>
         );
+      } else if (column.key == "reputation") {
+        if (store[column.key]) {
+          label = store[column.key].toString();
+        } else {
+          label = "Sin reputación";
+        }
       } else if (column.key == "publicationStartDate") {
         if (store[column.key]) {
           label = new Date(store[column.key].toString()).toLocaleDateString();
@@ -133,25 +107,11 @@ const UsersInfoPage: React.FC = () => {
       ) : (
         <Spinner />
       )}
-      <Modal
-        isOpen={openModal}
-        onClose={() => setOpenModal(false)}
-        title={currentStore ? currentStore["alias"].toString() : undefined}
-      >
-        <div className="w-full h-full flex flex-col items-center">
-          <section className="w-full flex flex-col items-center">
-            {actions.map((action) => (
-              <span
-                onClick={() => handleClickAction(action.name)}
-                className="flex justify-between p-4 w-full cursor-pointer border-t border-slate-600 hover:bg-slate-700"
-              >
-                <p>{action.label}</p>
-                {loadingActions[action.name] ? <Spinner size={16} /> : <></>}
-              </span>
-            ))}
-          </section>
-        </div>
-      </Modal>
+      <ModalStore
+        close={() => setOpenModal(false)}
+        openModal={openModal}
+        store={currentStore}
+      ></ModalStore>
     </div>
   );
 };
