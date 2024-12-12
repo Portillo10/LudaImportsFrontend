@@ -11,6 +11,7 @@ import Users from "./pages/Users/Users";
 import RegisterUser from "./pages/Users/RegisterUser";
 import UsersInfo from "./pages/Users/UsersInfo";
 import LinkSuccess from "./pages/Stores/LinkSuccess";
+import ScrapingPage from "./pages/Scraping/ScrapingPage";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -19,6 +20,9 @@ const AppRoutes: React.FC = () => {
         <Route path="/login" element={<LogIn />} />
         <Route path="/link-success" element={<LinkSuccess />} />
         <Route path="/" element={<WithSideBarLayout />}>
+          <Route path="/scraping" element={<Outlet />}>
+            <Route path="/scraping" element={<ScrapingPage />}></Route>
+          </Route>
           <Route path="/publisher" element={<Publisher />} />
           <Route path="/calc-price" element={<CalcPrice />} />
           <Route path="/update-prices" element={<UpdatePrices />} />

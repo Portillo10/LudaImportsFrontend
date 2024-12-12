@@ -8,4 +8,5 @@ export type IconName =
   | "store"
   | "users"
   | "updateprice"
-  | "calculateprice";
+  | "calculateprice"
+  | "scraping";

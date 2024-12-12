@@ -42,5 +42,22 @@ export const useMLApi = () => {
     }
   };
 
-  return { predictCategory, transferProducts, error, loading, loadingTransfer };
+  const postPendingProducts = async (store_id: string) => {
+    try {
+      await mercadoLibreService.postPending(store_id);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  };
+
+  return {
+    predictCategory,
+    transferProducts,
+    postPendingProducts,
+    error,
+    loading,
+    loadingTransfer,
+  };
 };

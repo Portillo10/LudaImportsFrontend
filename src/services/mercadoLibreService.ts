@@ -27,6 +27,14 @@ const mercadoLibreService = {
     const response = await apiClient.post("/api/store/transfer-products", data);
     return response.data;
   },
+
+  async postPending(store_id: string) {
+    const response = await apiClient.post(
+      `/api/store/${store_id}/post-pending`
+    );
+
+    return response.data;
+  },
 };
 
 export default mercadoLibreService;

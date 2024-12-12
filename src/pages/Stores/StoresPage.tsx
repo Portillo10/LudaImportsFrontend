@@ -16,7 +16,7 @@ const StoresPage: React.FC = () => {
           <span className="titlePageContainer">
             <h2>Mis tiendas</h2>
             <NavLink
-              to="/users/register"
+              to="/stores/link"
               className="border border-[#A8C0C8] rounded-md px-3 text-center py-1 hover:bg-slate-600 transition flex items-center gap-2"
             >
               <img src={ShopIcon} alt="" width={24} />

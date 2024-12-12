@@ -30,6 +30,12 @@ const adminOptions: SideBarElementProps[] = [
     text: "Usuarios",
     allowRoles: ["admin"],
   },
+  {
+    icon: "scraping",
+    href: "/scraping",
+    text: "Scraping",
+    allowRoles: ["admin"],
+  },
 ];
 const sellerOptions: SideBarElementProps[] = [
   {

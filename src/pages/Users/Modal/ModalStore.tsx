@@ -3,6 +3,7 @@ import Modal from "../../../components/Modal/Modal";
 import { sleep } from "../../../utils/helpers";
 import Spinner from "../../../components/Spinner/Spinner";
 import { useScraping } from "../../../hooks/useScraping";
+import { useMLApi } from "../../../hooks/useMLApi";
 
 type ModalProps = {
   openModal: boolean;
@@ -38,6 +39,7 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     }
   );
   const { runTasks, pauseScraping } = useScraping();
+  const { postPendingProducts } = useMLApi();
 
   const handleClickAction = async (name: string) => {
     const currentLoading = loadingActions;
@@ -50,6 +52,8 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
       await runTasks(store["_id"].toString());
     } else if (name == "pause") {
       await pauseScraping();
+    } else if (name == "posting" && store) {
+      await postPendingProducts(store["_id"].toString());
     }
   };
 
