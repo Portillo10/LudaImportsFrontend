@@ -101,7 +101,7 @@ const UsersInfoPage: React.FC = () => {
             ---
           </li>
         );
-      } else if (column.key == "publicationStartDate" && store[column.key]) {
+      } else if (column.key == "publicationStartDate") {
         if (store[column.key]) {
           label = new Date(store[column.key].toString()).toLocaleDateString();
         } else {
