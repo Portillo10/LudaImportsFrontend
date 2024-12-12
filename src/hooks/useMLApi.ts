@@ -52,10 +52,22 @@ export const useMLApi = () => {
     }
   };
 
+  const getPostingProgress = async () => {
+    try {
+      const response = await mercadoLibreService.getPostingProgress();
+      console.log(response);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  };
+
   return {
     predictCategory,
     transferProducts,
     postPendingProducts,
+    getPostingProgress,
     error,
     loading,
     loadingTransfer,

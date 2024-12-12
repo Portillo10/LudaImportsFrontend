@@ -35,6 +35,11 @@ const mercadoLibreService = {
 
     return response.data;
   },
+
+  async getPostingProgress() {
+    const response = await apiClient.get("/api/post-progress");
+    return response.data;
+  },
 };
 
 export default mercadoLibreService;

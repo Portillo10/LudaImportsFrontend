@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../../components/Modal/Modal";
 import { sleep } from "../../../utils/helpers";
 import Spinner from "../../../components/Spinner/Spinner";
@@ -39,7 +39,17 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     }
   );
   const { runTasks, pauseScraping } = useScraping();
-  const { postPendingProducts } = useMLApi();
+  const { postPendingProducts, getPostingProgress } = useMLApi();
+
+  useEffect(() => {
+    const getProgress = async () => {
+      if (openModal) {
+        await getPostingProgress();
+      }
+    };
+
+    getProgress();
+  }, [openModal]);
 
   const handleClickAction = async (name: string) => {
     const currentLoading = loadingActions;
