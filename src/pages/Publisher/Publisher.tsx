@@ -1,13 +1,13 @@
 import { ChangeEvent, useEffect, useState } from "react";
-// import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import Spinner from "../../components/Spinner/Spinner";
 import SendIcon from "../../assets/icons/SendIcon.svg";
 import DropFileInput from "../../components/DropFile/DropFile";
 import { useScraping } from "../../hooks/useScraping";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
-import { parseCSV } from "../../utils/csvHelper";
-import { useShopStore } from "../../store/ShopStore";
+import { parseCSV, validateObjects } from "../../utils/csvHelper";
+// import { useShopStore } from "../../store/ShopStore";
 
 import "./styles.css";
 
@@ -17,11 +17,10 @@ type Inputs = {
 };
 
 const Publisher: React.FC = () => {
-  // const { user } = useAuth();
-  const { stores } = useShopStore();
+  const { user } = useAuth();
+  // const { stores } = useShopStore();
   const [loading, setLoading] = useState(false);
-  const { scrapeBySku, initializeScraping, getScrapingProgress } =
-    useScraping();
+  const { scrapeBySku, getScrapingProgress } = useScraping();
 
   const { register, handleSubmit, watch } = useForm<Inputs>();
 
@@ -40,11 +39,17 @@ const Publisher: React.FC = () => {
     const selectedFile = event.target.files?.item(0);
     if (selectedFile && watch().store_id) {
       const parsedCsv = await parseCSV(selectedFile);
+      const { valid } = validateObjects(parsedCsv);
 
-      await initializeScraping({
-        url_object_list: parsedCsv,
-        store_id: watch().store_id,
-      });
+      if (valid) {
+        console.log("archivo válido");
+      } else {
+        console.log("archivo inválido");
+      }
+      // await initializeScraping({
+      //   url_object_list: parsedCsv,
+      //   store_id: watch().store_id,
+      // });
     }
   };
 
@@ -64,7 +69,7 @@ const Publisher: React.FC = () => {
               className="select"
               {...register("store_id", { required: true })}
             >
-              {stores.map((store, i) => (
+              {user?.stores.map((store, i) => (
                 <option key={i} value={store._id}>
                   {store.alias}
                 </option>

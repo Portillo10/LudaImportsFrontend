@@ -9,6 +9,7 @@ import CalcPrice from "./pages/CalcPrice/CalcPrice";
 import UpdatePrices from "./pages/UpdatePrices/UpdatePrices";
 import Users from "./pages/Users/Users";
 import RegisterUser from "./pages/Users/RegisterUser";
+import UsersInfo from "./pages/Users/UsersInfo";
 import LinkSuccess from "./pages/Stores/LinkSuccess";
 
 const AppRoutes: React.FC = () => {
@@ -27,7 +28,7 @@ const AppRoutes: React.FC = () => {
           </Route>
           <Route path="/users" element={<Outlet />}>
             <Route path="/users" element={<Users />} />
-            <Route path="/users/:user_id" />
+            <Route path="/users/:user_id" element={<UsersInfo />} />
             <Route path="/users/register" element={<RegisterUser />} />
           </Route>
         </Route>

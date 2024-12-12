@@ -41,19 +41,6 @@ export const useStores = () => {
     }
   };
 
-  // const toggleAllowUpdate = async (store: IStore) => {
-  //   try {
-  //     console.log(stores);
-  //     const currentStores = stores.filter((val) => val._id != store._id);
-  //     store.allowUpdate = !store.allowUpdate;
-  //     currentStores.push(store);
-
-  //     setStores(currentStores);
-  //   } catch (error) {
-  //     if (error instanceof Error) setError(error.message);
-  //   }
-  // };
-
   const handleSuccessLinkStore = async (code: string) => {
     try {
       const dataString = localStorage.getItem("linkData");
@@ -106,9 +93,31 @@ export const useStores = () => {
     return items;
   };
 
+  const getStoresByUser = async (
+    user_id: string
+  ): Promise<Record<string, string | number>[] | undefined> => {
+    try {
+      const stores = await storeService.getStoresByUser(user_id);
+      return stores;
+    } catch (error) {
+      if (error instanceof Error) setError(error.message);
+    }
+  };
+
+  const sincronizeStore = async (store_id: string) => {
+    try {
+      const response = await storeService.sincronizeStore(store_id);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) setError(error.message);
+    }
+  };
+
   return {
     handleSuccessLinkStore,
     toggleAllowUpdate,
+    sincronizeStore,
+    getStoresByUser,
     handleLinkStore,
     renderSkeletons,
     endLinkStore,

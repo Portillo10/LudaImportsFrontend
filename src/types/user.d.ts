@@ -5,6 +5,11 @@ export interface IUser {
   username: string;
   email?: string;
   role: "admin" | "seller";
-  stores: IStore[];
+  stores: Store[];
   createdAt: string;
 }
+
+type Store = {
+  _id: string;
+  alias: string;
+};

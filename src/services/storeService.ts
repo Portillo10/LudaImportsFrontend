@@ -31,6 +31,16 @@ const store = {
     const response = await apiClient.get("/api/stores");
     return response.data;
   },
+
+  async getStoresByUser(user_id: string) {
+    const response = await apiClient.get(`/api/user/${user_id}/stores`);
+    return response.data;
+  },
+
+  async sincronizeStore(store_id: string) {
+    const response = await apiClient.put(`/api/store/${store_id}/sincronize`);
+    return response.data;
+  },
 };
 
 export default store;

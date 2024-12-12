@@ -16,7 +16,7 @@ const scrape = {
   },
 
   async getScrapingProgress() {
-    const response = await apiClient.get("/scrape/progress");
+    const response = await apiClient.get("/scrape/tasks");
     return response.data;
   },
 };

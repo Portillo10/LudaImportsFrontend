@@ -1,4 +1,7 @@
-import { UpdatingProgressResponse } from "../types/apiResponses";
+import {
+  CalcPriceResponse,
+  UpdatingProgressResponse,
+} from "../types/apiResponses";
 import apiClient from "./apiClient";
 
 const priceService = {
@@ -19,6 +22,14 @@ const priceService = {
     const response = await apiClient.get("/price/update");
     const responseData: UpdatingProgressResponse = response.data;
     return responseData;
+  },
+
+  async calcPrice(store_id: string, sku: string) {
+    const response = await apiClient.get(
+      `/price/store/${store_id}/calc-price?sku=${sku}`
+    );
+    const responseData: CalcPriceResponse | any = response.data;
+    return { data: responseData, status: response.status };
   },
 };
 

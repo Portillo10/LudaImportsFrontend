@@ -4,6 +4,7 @@ import { CalcPriceResponse } from "../types/apiResponses";
 import { formatCurrency } from "../utils/helpers";
 import { useAuth } from "./useAuth";
 import { isAxiosError } from "axios";
+import priceService from "../services/priceService";
 
 const initialPriceInfo = {
   amazonShipment: 0,
@@ -53,7 +54,7 @@ export const useCalcPrice = () => {
       if (!user || user?.stores.length == 0) {
         throw new Error("Debe tener por lo menos una tienda vinculada");
       }
-      const { data, status } = await mlService.calcPrice(
+      const { data, status } = await priceService.calcPrice(
         user.stores[0]._id,
         sku
       );
@@ -66,8 +67,11 @@ export const useCalcPrice = () => {
         const priceInfo = convertPriceToRows(data);
         setPriceRows(priceInfo);
       }
+
       return { data, status };
     } catch (error) {
+      console.log(error);
+
       if (error instanceof Error) {
         if (isAxiosError(error)) {
           if (error.response?.data.error) {

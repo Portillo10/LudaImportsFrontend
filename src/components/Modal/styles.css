@@ -1,6 +1,7 @@
 /* Fondo oscuro */
 dialog::backdrop {
   background-color: rgba(0, 0, 0, 0.5);
+  transition: all 500ms ease;
 }
 
 /* Estilos del modal */
