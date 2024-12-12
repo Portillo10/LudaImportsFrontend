@@ -107,7 +107,7 @@ const UsersInfoPage: React.FC = () => {
         } else {
           label = "Nunca";
         }
-      } else if (store[column.key]) {
+      } else if (store[column.key] !== undefined) {
         label = store[column.key].toString();
       }
 
