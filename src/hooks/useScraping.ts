@@ -25,6 +25,7 @@ export const useScraping = () => {
   const runTasks = async (store_id: string) => {
     try {
       const response = await scrapeService.runTasks(store_id);
+      return response;
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
