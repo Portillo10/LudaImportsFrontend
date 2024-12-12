@@ -40,5 +40,19 @@ export const useScraping = () => {
     } catch (error) {}
   };
 
-  return { scrapeBySku, initializeScraping, getScrapingProgress, runTasks };
+  const pauseScraping = async () => {
+    try {
+      await scrapeService.pauseTasks();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return {
+    scrapeBySku,
+    pauseScraping,
+    initializeScraping,
+    getScrapingProgress,
+    runTasks,
+  };
 };

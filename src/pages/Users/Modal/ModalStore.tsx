@@ -23,6 +23,10 @@ const actions = [
     name: "scraping",
     label: "Scrapear pendientes",
   },
+  {
+    name: "pause",
+    label: "Pausar scraping",
+  },
 ];
 
 const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
@@ -33,7 +37,7 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
       sincronize: false,
     }
   );
-  const { runTasks } = useScraping();
+  const { runTasks, pauseScraping } = useScraping();
 
   const handleClickAction = async (name: string) => {
     const currentLoading = loadingActions;
@@ -44,6 +48,8 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     setLoadingActions(currentLoading);
     if (name == "scraping" && store) {
       await runTasks(store["_id"].toString());
+    } else if (name == "pause") {
+      await pauseScraping();
     }
   };
 

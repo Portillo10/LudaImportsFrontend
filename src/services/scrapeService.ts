@@ -24,6 +24,11 @@ const scrape = {
     const response = await apiClient.put("/scrape/tasks/run", { store_id });
     return response.data;
   },
+
+  async pauseTasks() {
+    const response = await apiClient.put("/scrape/tasks/pause");
+    return response.data;
+  },
 };
 
 export default scrape;
