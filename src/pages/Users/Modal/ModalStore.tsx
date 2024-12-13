@@ -69,6 +69,8 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     const progress = await getSyncStoreProgress(store_id);
     if (!progress || !progress.inProgress) {
       await sincronizeStore(store_id);
+    } else {
+      console.log(progress);
     }
   };
 
