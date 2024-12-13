@@ -28,6 +28,10 @@ const actions = [
     name: "pause",
     label: "Pausar scraping",
   },
+  {
+    name: "delete-forbbiden",
+    label: "Eliminar marcas prohibidas",
+  },
 ];
 
 const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
@@ -45,6 +49,7 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     getPostingProgressByStore,
     getSyncStoreProgress,
     sincronizeStore,
+    deleteForbbidenProducts,
     progress,
   } = useMLApi();
 
@@ -74,6 +79,10 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     console.log(progress);
   };
 
+  const handleDeleteProducts = async (store_id: string) => {
+    await deleteForbbidenProducts(store_id);
+  };
+
   const handleClickAction = async (name: string) => {
     const currentLoading = loadingActions;
     currentLoading[name] = true;
@@ -81,14 +90,17 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     await sleep(2000);
     currentLoading[name] = false;
     setLoadingActions(currentLoading);
-    if (name == "scraping" && store) {
+    if (!store) return null;
+    if (name == "scraping") {
       await handleScraping(store["_id"].toString());
     } else if (name == "pause") {
       await pauseScraping();
-    } else if (name == "posting" && store) {
+    } else if (name == "posting") {
       await postPendingProducts(store["_id"].toString());
-    } else if (name == "sincronize" && store) {
+    } else if (name == "sincronize") {
       await handleSync(store["_id"].toString());
+    } else if (name == "delete-forbbiden") {
+      await handleDeleteProducts(store["_id"].toString());
     }
   };
 

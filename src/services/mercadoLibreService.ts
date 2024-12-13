@@ -53,6 +53,13 @@ const mercadoLibreService = {
     const response = await apiClient.get(`/api/store/${store_id}/sincronize`);
     return response.data;
   },
+
+  async deleteForbbidenProducts(store_id: string) {
+    const response = await apiClient.post(
+      `/api/store/${store_id}/delete-forbbiden`
+    );
+    return response.data;
+  },
 };
 
 export default mercadoLibreService;

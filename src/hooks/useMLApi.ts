@@ -107,6 +107,16 @@ export const useMLApi = () => {
     }
   };
 
+  const deleteForbbidenProducts = async (store_id: string) => {
+    try {
+      await mercadoLibreService.deleteForbbidenProducts(store_id);
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  };
+
   return {
     error,
     loading,
@@ -118,6 +128,7 @@ export const useMLApi = () => {
     getPostingProgress,
     postPendingProducts,
     getSyncStoreProgress,
+    deleteForbbidenProducts,
     getPostingProgressByStore,
   };
 };
