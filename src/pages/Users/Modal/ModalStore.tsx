@@ -70,8 +70,8 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     if (!progress || !progress.inProgress) {
       await sincronizeStore(store_id);
     } else {
-      console.log(progress);
     }
+    console.log(progress);
   };
 
   const handleClickAction = async (name: string) => {
