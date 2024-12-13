@@ -39,7 +39,14 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     }
   );
   const { runTasks, pauseScraping } = useScraping();
-  const { postPendingProducts, getPostingProgress } = useMLApi();
+  const {
+    postPendingProducts,
+    getPostingProgress,
+    getPostingProgressByStore,
+    getSyncStoreProgress,
+    sincronizeStore,
+    progress,
+  } = useMLApi();
 
   useEffect(() => {
     const getProgress = async () => {
@@ -51,6 +58,20 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     getProgress();
   }, [openModal]);
 
+  const handleScraping = async (store_id: string) => {
+    const progress = await getPostingProgressByStore(store_id);
+    if (!progress) {
+      await runTasks(store_id);
+    }
+  };
+
+  const handleSync = async (store_id: string) => {
+    const progress = await getSyncStoreProgress(store_id);
+    if (!progress || !progress.inProgress) {
+      await sincronizeStore(store_id);
+    }
+  };
+
   const handleClickAction = async (name: string) => {
     const currentLoading = loadingActions;
     currentLoading[name] = true;
@@ -59,11 +80,13 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     currentLoading[name] = false;
     setLoadingActions(currentLoading);
     if (name == "scraping" && store) {
-      await runTasks(store["_id"].toString());
+      await handleScraping(store["_id"].toString());
     } else if (name == "pause") {
       await pauseScraping();
     } else if (name == "posting" && store) {
       await postPendingProducts(store["_id"].toString());
+    } else if (name == "sincronize" && store) {
+      await handleSync(store["_id"].toString());
     }
   };
 
@@ -76,13 +99,20 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
       <div className="w-full h-full flex flex-col items-center">
         <section className="w-full flex flex-col items-center">
           {actions.map((action) => (
-            <span
-              onClick={() => handleClickAction(action.name)}
-              className="flex justify-between p-4 w-full cursor-pointer border-t border-slate-600 hover:bg-slate-700"
-            >
-              <p>{action.label}</p>
-              {loadingActions[action.name] ? <Spinner size={16} /> : <></>}
-            </span>
+            <div className="w-full flex flex-col items-center transition-all">
+              <span
+                onClick={() => handleClickAction(action.name)}
+                className="flex justify-between p-4 w-full cursor-pointer border-t border-slate-600 hover:bg-slate-700"
+              >
+                <p>{action.label}</p>
+                {loadingActions[action.name] ? <Spinner size={16} /> : <></>}
+              </span>
+              {progress[action.name]?.inProgress ? (
+                <div className="flex flex-col"></div>
+              ) : (
+                <></>
+              )}
+            </div>
           ))}
         </section>
       </div>

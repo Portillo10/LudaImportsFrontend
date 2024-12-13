@@ -7,6 +7,10 @@ export const useMLApi = () => {
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingTransfer, setLoadingTransfer] = useState<boolean>(false);
+  const [progress, setProgress] = useState<Record<string, any | null>>({
+    posting: null,
+    sincronize: null,
+  });
 
   const predictCategory = async (sku: string) => {
     setLoading(true);
@@ -63,13 +67,57 @@ export const useMLApi = () => {
     }
   };
 
+  const getPostingProgressByStore = async (store_id: string) => {
+    try {
+      const response =
+        await mercadoLibreService.getPostingProgressByStore(store_id);
+      const currentProgress = progress;
+      currentProgress["posting"] = response;
+      setProgress(currentProgress);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  };
+
+  const sincronizeStore = async (store_id: string) => {
+    try {
+      const response = await mercadoLibreService.syncStore(store_id);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  };
+
+  const getSyncStoreProgress = async (store_id: string) => {
+    try {
+      const response = await mercadoLibreService.getSyncStoreProgress(store_id);
+      const currentProgress = progress;
+      currentProgress["sync"] = response;
+      setProgress(currentProgress);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  };
+
   return {
-    predictCategory,
-    transferProducts,
-    postPendingProducts,
-    getPostingProgress,
     error,
     loading,
+    progress,
     loadingTransfer,
+    sincronizeStore,
+    predictCategory,
+    transferProducts,
+    getPostingProgress,
+    postPendingProducts,
+    getSyncStoreProgress,
+    getPostingProgressByStore,
   };
 };

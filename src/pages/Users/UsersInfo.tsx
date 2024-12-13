@@ -26,6 +26,17 @@ const columns = [
   { key: "actions", class: "px-3 w-16 cursor-pointer", label: "" },
 ];
 
+const reputationColors: Record<string, { class: string; label: string }> = {
+  "1_red": { class: "bg-[#FBB3C0] text-[#CC2020]", label: "Rojo" },
+  "2_orange": { class: "bg-[#F0B790] text-[#E35F04]", label: "Naranja" },
+  "3_yellow": { class: "bg-[#EEDDB4] text-[#D2B300]", label: "Amarillo" },
+  "4_light_green": {
+    class: "bg-[#D5E8CF] text-[#37A316]",
+    label: "Verde claro",
+  },
+  "5_green": { class: "bg-[#A8F0A2] text-[#128408]", label: "Verde" },
+};
+
 const UsersInfoPage: React.FC = () => {
   const { user_id } = useParams();
   const { getStoresByUser } = useStores();
@@ -70,8 +81,16 @@ const UsersInfoPage: React.FC = () => {
           </li>
         );
       } else if (column.key == "reputation") {
-        if (store[column.key]) {
-          label = store[column.key].toString();
+        if (store[column.key] && reputationColors[store[column.key]]) {
+          return (
+            <li className={column.class}>
+              <p
+                className={`${reputationColors[store[column.key]].class} text-sm py-0.5 rounded-md font-semibold`}
+              >
+                {reputationColors[store[column.key]].label}
+              </p>
+            </li>
+          );
         } else {
           label = "Sin reputación";
         }

@@ -29,15 +29,28 @@ const mercadoLibreService = {
   },
 
   async postPending(store_id: string) {
-    const response = await apiClient.post(
-      `/api/store/${store_id}/post-pending`
-    );
+    const response = await apiClient.post(`/api/store/${store_id}/posting`);
 
     return response.data;
   },
 
   async getPostingProgress() {
-    const response = await apiClient.get("/api/post-progress");
+    const response = await apiClient.get("/api/store/posting");
+    return response.data;
+  },
+
+  async getPostingProgressByStore(store_id: string) {
+    const response = await apiClient.get(`/api/store/${store_id}/posting`);
+    return response.data;
+  },
+
+  async syncStore(store_id: string) {
+    const response = await apiClient.post(`/api/store/${store_id}/sincronize`);
+    return response.data;
+  },
+
+  async getSyncStoreProgress(store_id: string) {
+    const response = await apiClient.get(`/api/store/${store_id}/sincronize`);
     return response.data;
   },
 };
