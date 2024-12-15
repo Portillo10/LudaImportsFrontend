@@ -41,6 +41,19 @@ const store = {
     const response = await apiClient.put(`/api/store/${store_id}/sincronize`);
     return response.data;
   },
+
+  async transferProducts(origin_store_id: string, target_store_id: string) {
+    const response = await apiClient.post("/api/store/transfer-products", {
+      origin_store_id,
+      target_store_id,
+    });
+    return response.data;
+  },
+
+  async deleteAllItems(store_id: string) {
+    const response = await apiClient.delete(`/api/store/${store_id}/items/all`);
+    return response.data;
+  },
 };
 
 export default store;

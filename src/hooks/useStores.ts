@@ -113,9 +113,19 @@ export const useStores = () => {
     }
   };
 
+  const deleteAllProducts = async (store_id: string) => {
+    try {
+      const response = await storeService.deleteAllItems(store_id);
+      return response;
+    } catch (error) {
+      if (error instanceof Error) setError(error.message);
+    }
+  };
+
   return {
     handleSuccessLinkStore,
     toggleAllowUpdate,
+    deleteAllProducts,
     sincronizeStore,
     getStoresByUser,
     handleLinkStore,

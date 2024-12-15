@@ -5,6 +5,7 @@ interface ShopState {
   stores: IStore[];
   setStores: (stores: IStore[]) => void;
   toggleAllowUpdate: (storeId: string, allowUpdate: boolean) => void;
+  toggleUpdateInProgress: (storeId: string, updateInProgress: boolean) => void;
 }
 
 export const useShopStore = create<ShopState>((set) => ({
@@ -17,6 +18,13 @@ export const useShopStore = create<ShopState>((set) => ({
     set((state) => ({
       stores: state.stores.map((store) =>
         store._id === storeId ? { ...store, allowUpdate } : store
+      ),
+    })),
+
+  toggleUpdateInProgress: (storeId, updateInProgress) =>
+    set((state) => ({
+      stores: state.stores.map((store) =>
+        store._id === storeId ? { ...store, updateInProgress } : store
       ),
     })),
 }));

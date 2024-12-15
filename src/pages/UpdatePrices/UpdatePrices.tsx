@@ -73,7 +73,7 @@ const UpdatePrices: React.FC = () => {
               <Spinner />
             </div>
           ) : priceUpdatingInfo &&
-            priceUpdatingInfo?.trackingProgress.status == "stopped" &&
+            priceUpdatingInfo.trackingProgress.status == "stopped" &&
             priceUpdatingInfo.updatingProgress.status == "stopped" ? (
             <UpdatePricesForm onSubmit={onSubmit} />
           ) : (

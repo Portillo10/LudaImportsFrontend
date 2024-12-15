@@ -4,6 +4,7 @@ import { sleep } from "../../../utils/helpers";
 import Spinner from "../../../components/Spinner/Spinner";
 import { useScraping } from "../../../hooks/useScraping";
 import { useMLApi } from "../../../hooks/useMLApi";
+import { useStores } from "../../../hooks/useStores";
 
 type ModalProps = {
   openModal: boolean;
@@ -21,16 +22,16 @@ const actions = [
     label: "Publicar pendientes",
   },
   {
-    name: "scraping",
-    label: "Scrapear pendientes",
-  },
-  {
-    name: "pause",
-    label: "Pausar scraping",
-  },
-  {
     name: "delete-forbbiden",
     label: "Eliminar marcas prohibidas",
+  },
+  {
+    name: "delete-all",
+    label: "Eliminar todos los productos",
+  },
+  {
+    name: "transfer-products",
+    label: "Transferir productos",
   },
 ];
 
@@ -52,6 +53,8 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     deleteForbbidenProducts,
     progress,
   } = useMLApi();
+
+  const { deleteAllProducts } = useStores();
 
   useEffect(() => {
     const getProgress = async () => {
@@ -83,6 +86,10 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
     await deleteForbbidenProducts(store_id);
   };
 
+  const handleDeleteAllProducts = async (store_id: string) => {
+    await deleteAllProducts(store_id);
+  };
+
   const handleClickAction = async (name: string) => {
     const currentLoading = loadingActions;
     currentLoading[name] = true;
@@ -101,6 +108,9 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
       await handleSync(store["_id"].toString());
     } else if (name == "delete-forbbiden") {
       await handleDeleteProducts(store["_id"].toString());
+    } else if (name == "delete-all") {
+      await handleDeleteAllProducts(store["_id"].toString());
+    } else if (name == "transfer-products") {
     }
   };
 

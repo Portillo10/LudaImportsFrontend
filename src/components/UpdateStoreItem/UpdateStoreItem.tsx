@@ -9,7 +9,7 @@ type UpdateStoreItemProps = {
     alias: string;
     user?: string;
     lastUpdate?: string;
-    updating?: boolean;
+    inProgress?: boolean;
     allowUpdate: boolean;
   };
 };
@@ -22,7 +22,7 @@ const UpdateStoreItem: React.FC<UpdateStoreItemProps> = ({ store }) => {
 
   return (
     <div className="itemContainer">
-      {store.updating ? <div className="rotate" /> : <></>}
+      {store.inProgress ? <div className="rotate" /> : <></>}
 
       <section className="span-1">
         <img src={ActiveStoreIcon} alt="" width={50} />
@@ -31,7 +31,7 @@ const UpdateStoreItem: React.FC<UpdateStoreItemProps> = ({ store }) => {
         <p>Tienda: {store.alias}</p>
         <p>Dueño: {store.user}</p>
         <p>
-          {store.updating
+          {store.inProgress
             ? "Actualizando..."
             : `Última vez: ${store.lastUpdate ? new Date(store.lastUpdate).toLocaleDateString() : "Nunca"}`}
         </p>
