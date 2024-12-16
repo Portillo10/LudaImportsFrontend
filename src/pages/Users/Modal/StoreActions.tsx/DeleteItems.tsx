@@ -1,3 +1,5 @@
-const DeleteItems = () => {};
+const DeleteItems: React.FC = () => {
+  return <></>;
+};
 
 export default DeleteItems;
