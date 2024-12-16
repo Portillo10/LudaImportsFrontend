@@ -86,9 +86,17 @@ export const useAuth = () => {
   const getUsers = async () => {
     try {
       const response = await authService.getUsers();
-      return response;
+      const users = response.map((user) => {
+        const storeCount = user.stores?.length;
+        return {
+          ...user,
+          storeCount,
+        };
+      });
+      return users;
     } catch (error) {
       console.log(error);
+      return null;
     }
   };
 

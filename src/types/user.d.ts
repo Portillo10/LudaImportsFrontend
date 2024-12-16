@@ -7,6 +7,7 @@ export interface IUser {
   role: "admin" | "seller";
   stores: Store[];
   createdAt: string;
+  storeCount?: number;
 }
 
 type Store = {

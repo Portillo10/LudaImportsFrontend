@@ -28,7 +28,7 @@ const auth = {
 
   async getUsers() {
     const response = await apiClient.get("/users-info");
-    const responseData: Partial<IUser>[] = response.data;
+    const responseData: IUser[] = response.data;
     return responseData;
   },
 };

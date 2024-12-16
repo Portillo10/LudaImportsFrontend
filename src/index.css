@@ -20,6 +20,10 @@
   @apply flex flex-col gap-2 w-full;
 }
 
+.inputBox select {
+  @apply rounded-md bg-input-background border-input-border border px-2 py-1.5 outline-none focus:border-[#5CBAFF] transition;
+}
+
 .basicContainer {
   @apply w-full h-full flex flex-col items-center px-6 overflow-y-auto max-h-[calc(100vh-63px)];
 }

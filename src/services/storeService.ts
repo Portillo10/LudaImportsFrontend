@@ -51,7 +51,10 @@ const store = {
   },
 
   async deleteAllItems(store_id: string) {
-    const response = await apiClient.delete(`/api/store/${store_id}/items/all`);
+    const response = await apiClient.delete(
+      `/api/store/${store_id}/items/all`,
+      { timeout: 60000 }
+    );
     return response.data;
   },
 };

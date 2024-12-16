@@ -122,10 +122,27 @@ export const useStores = () => {
     }
   };
 
+  const transferProducts = async (
+    target_store_id: string,
+    origin_store_id: string
+  ) => {
+    try {
+      const response = await storeService.transferProducts(
+        origin_store_id,
+        target_store_id
+      );
+
+      return response;
+    } catch (error) {
+      if (error instanceof Error) setError(error.message);
+    }
+  };
+
   return {
     handleSuccessLinkStore,
     toggleAllowUpdate,
     deleteAllProducts,
+    transferProducts,
     sincronizeStore,
     getStoresByUser,
     handleLinkStore,
