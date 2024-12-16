@@ -60,9 +60,7 @@ const TransferProducts: React.FC<{ store_id: string }> = ({ store_id }) => {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const { target_store_id } = data;
     setLoading(true);
-    console.log(target_store_id, store_id);
-
-    // await transferProducts(target_store_id, store_id);
+    await transferProducts(target_store_id, store_id);
     setLoading(false);
   };
 
