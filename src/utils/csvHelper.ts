@@ -51,7 +51,7 @@ const isValidAmazonUrl = (url: string): boolean => {
 
 const isValidDimensions = (dimensions: string): boolean => {
   const dimensionsPattern =
-    /^(\d+(\.\d+)?\s*x\s*\d+(\.\d+)?\s*x\s*\d+(\.\d+)?(\s*pulgadas)?)|\d+\"al\s*x\s*\d+\"prof\s*x\s*\d+\"an\s*pulgadas$/;
+    /^(\d+([.,]\d+)?\s*x\s*\d+([.,]\d+)?\s*x\s*\d+([.,]\d+)?(\s*pulgadas)?)|\d+\"al\s*x\s*\d+\"prof\s*x\s*\d+\"an\s*pulgadas$/;
   return dimensionsPattern.test(dimensions);
 };
 
