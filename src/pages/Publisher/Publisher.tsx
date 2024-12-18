@@ -41,16 +41,16 @@ const Publisher: React.FC = () => {
 
       if (valid) {
         console.log("archivo válido");
-        await initializeScraping({
-          url_object_list: parsedCsv,
-          store_id: watch().store_id,
-        });
       } else {
         console.log("archivo inválido");
         for (const error of errors) {
           console.log(error);
         }
       }
+      await initializeScraping({
+        url_object_list: parsedCsv,
+        store_id: watch().store_id,
+      });
     }
   };
 
