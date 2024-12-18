@@ -1,3 +1,4 @@
+import { IScrapingProgress } from "../types/scrapingProgress";
 import apiClient from "./apiClient";
 
 const scrape = {
@@ -17,7 +18,11 @@ const scrape = {
 
   async getScrapingProgress() {
     const response = await apiClient.get("/scrape/tasks");
-    return response.data;
+    const responseData: {
+      queueInfo: any;
+      scrapingProgress: IScrapingProgress;
+    } = response.data;
+    return responseData;
   },
 
   async runTasks(store_id: string) {

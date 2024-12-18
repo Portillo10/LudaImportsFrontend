@@ -1,5 +1,13 @@
+import { useParams } from "react-router-dom";
+
 const ScrapingPage: React.FC = () => {
-  return <div className="basicContainer"></div>;
+  const { store_id, alias } = useParams();
+
+  return (
+    <div className="basicContainer">
+      <span className="titlePageContainer">{alias}</span>
+    </div>
+  );
 };
 
 export default ScrapingPage;

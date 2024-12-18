@@ -20,13 +20,11 @@ const Publisher: React.FC = () => {
   const { user } = useAuth();
   // const { stores } = useShopStore();
   const [loading, setLoading] = useState(false);
-  const { scrapeBySku, getScrapingProgress } = useScraping();
+  const { scrapeBySku, initializeScraping } = useScraping();
 
   const { register, handleSubmit, watch } = useForm<Inputs>();
 
-  useEffect(() => {
-    getScrapingProgress();
-  }, []);
+  useEffect(() => {}, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
@@ -43,13 +41,13 @@ const Publisher: React.FC = () => {
 
       if (valid) {
         console.log("archivo válido");
+        await initializeScraping({
+          url_object_list: parsedCsv,
+          store_id: watch().store_id,
+        });
       } else {
         console.log("archivo inválido");
       }
-      // await initializeScraping({
-      //   url_object_list: parsedCsv,
-      //   store_id: watch().store_id,
-      // });
     }
   };
 

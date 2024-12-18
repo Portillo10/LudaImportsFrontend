@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Modal from "../../../components/Modal/Modal";
 import { useMLApi } from "../../../hooks/useMLApi";
 import TransferProducts from "./StoreActions.tsx/TransferProducts";
+import DeleteItems from "./StoreActions.tsx/DeleteItems";
 
 type ModalProps = {
   openModal: boolean;
@@ -95,6 +96,7 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
         <div className="w-full h-full flex flex-col items-center">
           <section className="w-full flex flex-col items-center">
             <TransferProducts store_id={store["_id"].toString()} />
+            <DeleteItems></DeleteItems>
             {/* {actions.map((action) => (
             <div className="w-full flex flex-col items-center transition-all">
               <span

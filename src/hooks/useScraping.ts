@@ -36,8 +36,12 @@ export const useScraping = () => {
   const getScrapingProgress = async () => {
     try {
       const response = await scrapeService.getScrapingProgress();
-      console.log(response);
-    } catch (error) {}
+      return response;
+    } catch (error) {
+      if (error instanceof Error) {
+        console.log(error.message);
+      }
+    }
   };
 
   const pauseScraping = async () => {
