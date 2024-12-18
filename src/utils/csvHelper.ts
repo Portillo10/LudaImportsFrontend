@@ -60,6 +60,8 @@ export const validateObjects = (
 ): { valid: boolean; errors: string[] } => {
   const errors: string[] = [];
 
+  console.log(objects);
+
   const allValid = objects.every((obj, index) => {
     const objKeys = Object.keys(obj);
     const expectedKeys = ["weight", "category", "url", "dimensions"];
