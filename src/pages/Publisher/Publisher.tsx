@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
+// import { useAuth } from "../../hooks/useAuth";
 import Spinner from "../../components/Spinner/Spinner";
 import SendIcon from "../../assets/icons/SendIcon.svg";
 import DropFileInput from "../../components/DropFile/DropFile";
@@ -17,7 +17,7 @@ type Inputs = {
 };
 
 const Publisher: React.FC = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
   const { stores } = useShopStore();
   const [loading, setLoading] = useState(false);
   const { scrapeBySku, initializeScraping } = useScraping();
