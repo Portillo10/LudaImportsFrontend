@@ -19,8 +19,8 @@ const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
     }
   };
 
-  const handleClickShop = (store_id: string) => {
-    navigate(`/scraping/${store_id}`);
+  const handleClickShop = (store_id: string, alias: string) => {
+    navigate(`/scraping/${store_id}/${alias}`);
   };
 
   return users.map((user, i) =>
@@ -35,7 +35,7 @@ const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
           <button
             key={store._id}
             className="w-full bg-[#414249] py-2 text-left px-6 hover:bg-zinc-800"
-            onClick={() => handleClickShop(store._id)}
+            onClick={() => handleClickShop(store._id, store.alias)}
           >
             {store.alias}
           </button>
@@ -49,7 +49,7 @@ const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
 
 const SelectShop: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [loading, setLoading] = useState<boolean>(false);
 
   const { getUsers } = useAuth();
   const { getScrapingProgress } = useScraping();
@@ -58,7 +58,7 @@ const SelectShop: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      setLoading(true);
+      // setLoading(true);
       const progress = await getScrapingProgress();
       if (
         progress?.scrapingProgress.status == "running" &&
@@ -71,7 +71,7 @@ const SelectShop: React.FC = () => {
           setUsers(response);
         }
       }
-      setLoading(false);
+      // setLoading(false);
     })();
   }, []);
 

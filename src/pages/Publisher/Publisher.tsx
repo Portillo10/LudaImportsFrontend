@@ -7,7 +7,6 @@ import { useScraping } from "../../hooks/useScraping";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
 import { parseCSV, validateObjects } from "../../utils/csvHelper";
-// import { useShopStore } from "../../store/ShopStore";
 
 import "./styles.css";
 

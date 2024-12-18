@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../../hooks/useAuth";
 import { IUser } from "../../../../types/user";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-import { useStores } from "../../../../hooks/useStores";
+// import { useStores } from "../../../../hooks/useStores";
 import Action from "./Action";
 import { sleep } from "../../../../utils/helpers";
 
@@ -42,13 +42,13 @@ const TransferProducts: React.FC<{
   store_id: string;
   index: number;
   displayed: boolean;
-}> = ({ store_id, index, displayed }) => {
+}> = ({ index, displayed }) => {
   const { getUsers } = useAuth();
   const [users, setUsers] = useState<IUser[]>([]);
-  const { register, handleSubmit } = useForm<Inputs>();
-  const [loading, setLoading] = useState<boolean>(false);
+  const { register } = useForm<Inputs>();
+  // const [loading, setLoading] = useState<boolean>(false);
 
-  const { transferProducts } = useStores();
+  // const { transferProducts } = useStores();
 
   useEffect(() => {
     const loadUsers = async () => {
@@ -60,12 +60,12 @@ const TransferProducts: React.FC<{
     loadUsers();
   }, []);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const { target_store_id } = data;
-    setLoading(true);
-    await transferProducts(target_store_id, store_id);
-    setLoading(false);
-  };
+  // const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  //   const { target_store_id } = data;
+  //   setLoading(true);
+  //   await transferProducts(target_store_id, store_id);
+  //   setLoading(false);
+  // };
 
   return (
     <Action
