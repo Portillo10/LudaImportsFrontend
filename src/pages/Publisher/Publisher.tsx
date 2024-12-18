@@ -9,6 +9,7 @@ import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
 import { parseCSV, validateObjects } from "../../utils/csvHelper";
 
 import "./styles.css";
+import { useShopStore } from "../../store/ShopStore";
 
 type Inputs = {
   sku: string;
@@ -17,7 +18,7 @@ type Inputs = {
 
 const Publisher: React.FC = () => {
   const { user } = useAuth();
-  // const { stores } = useShopStore();
+  const { stores } = useShopStore();
   const [loading, setLoading] = useState(false);
   const { scrapeBySku, initializeScraping } = useScraping();
 
@@ -69,7 +70,7 @@ const Publisher: React.FC = () => {
               className="select"
               {...register("store_id", { required: true })}
             >
-              {user?.stores.map((store, i) => (
+              {stores?.map((store, i) => (
                 <option key={i} value={store._id}>
                   {store.alias}
                 </option>
