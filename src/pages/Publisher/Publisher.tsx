@@ -36,7 +36,7 @@ const Publisher: React.FC = () => {
     const selectedFile = event.target.files?.item(0);
     if (selectedFile && watch().store_id) {
       const parsedCsv = await parseCSV(selectedFile);
-      const { valid } = validateObjects(parsedCsv);
+      const { valid, errors } = validateObjects(parsedCsv);
 
       if (valid) {
         console.log("archivo válido");
@@ -46,6 +46,9 @@ const Publisher: React.FC = () => {
         });
       } else {
         console.log("archivo inválido");
+        for (const error of errors) {
+          console.log(error);
+        }
       }
     }
   };
