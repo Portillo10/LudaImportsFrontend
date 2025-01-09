@@ -6,10 +6,10 @@ import DropFileInput from "../../components/DropFile/DropFile";
 import { useScraping } from "../../hooks/useScraping";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
-import { parseCSV, validateObjects } from "../../utils/csvHelper";
 
 import "./styles.css";
 import { useShopStore } from "../../store/ShopStore";
+import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
 
 type Inputs = {
   sku: string;
@@ -36,21 +36,20 @@ const Publisher: React.FC = () => {
   const handleFileInput = async (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.item(0);
     if (selectedFile && watch().store_id) {
-      const parsedCsv = await parseCSV(selectedFile);
+      const parsedCsv = await parseTSVFromFile(selectedFile);
       const { valid, errors } = validateObjects(parsedCsv);
 
       if (valid) {
-        console.log("archivo válido");
+        await initializeScraping({
+          url_object_list: parsedCsv,
+          store_id: watch().store_id,
+        });
       } else {
         console.log("archivo inválido");
         for (const error of errors) {
           console.log(error);
         }
       }
-      await initializeScraping({
-        url_object_list: parsedCsv,
-        store_id: watch().store_id,
-      });
     }
   };
 

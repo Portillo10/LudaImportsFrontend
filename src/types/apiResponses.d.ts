@@ -39,6 +39,7 @@ export interface CalcPriceResponse {
 export interface UpdatingProgressResponse {
   trackingProgress: TrackingProgress;
   updatingProgress: UpdatingProgress;
+  singleProgress: ISingleTrackingProgress;
 }
 
 type TrackingProgress = {
@@ -49,6 +50,13 @@ type TrackingProgress = {
   updatedTasksCount: number;
   status: "stopped" | "running";
 };
+
+interface ISingleTrackingProgress {
+  updatedCount: number;
+  productsToUpdate: number;
+  status: string;
+  errors: any[];
+}
 
 type UpdatingProgress = {
   progress: {

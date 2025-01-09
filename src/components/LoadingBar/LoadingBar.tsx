@@ -3,17 +3,14 @@ import "./styles.css";
 type LoadingBarProps = {
   total: number;
   progress: number;
+  label: string;
 };
 
-const LoadingBar: React.FC<LoadingBarProps> = ({ total, progress }) => {
+const LoadingBar: React.FC<LoadingBarProps> = ({ total, progress, label }) => {
   return (
     <div className="loading-bar-container">
       <span className="w-full flex justify-between">
-        <p className="">
-          {progress < total
-            ? "Comparando precios..."
-            : "Comparación completada"}
-        </p>
+        <p className="">{label}</p>
         <p>
           {total > 0 ? Math.round((progress / total) * 100 * 100) / 100 : "100"}
           %

@@ -4,10 +4,11 @@ import { useScraping } from "../../hooks/useScraping";
 import { useNavigate } from "react-router-dom";
 import { IUser } from "../../types/user";
 import Accordeon from "../../components/Accordeon/Accordeon";
+import Spinner from "../../components/Spinner/Spinner";
+import { sleep } from "../../utils/helpers";
 
 const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  console.log("algo");
 
   const navigate = useNavigate();
 
@@ -49,7 +50,6 @@ const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
 
 const SelectShop: React.FC = () => {
   const [users, setUsers] = useState<IUser[]>([]);
-  // const [loading, setLoading] = useState<boolean>(false);
 
   const { getUsers } = useAuth();
   const { getScrapingProgress } = useScraping();
@@ -58,7 +58,6 @@ const SelectShop: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      // setLoading(true);
       const progress = await getScrapingProgress();
       if (
         progress?.scrapingProgress.status == "running" &&
@@ -71,7 +70,6 @@ const SelectShop: React.FC = () => {
           setUsers(response);
         }
       }
-      // setLoading(false);
     })();
   }, []);
 
@@ -81,7 +79,13 @@ const SelectShop: React.FC = () => {
         <h2>Seleccione una tienda</h2>
       </span>
       <div className="flex flex-col w-4/5 mt-8">
-        <SelectAccordeon users={users} />
+        {users.length > 0 ? (
+          <SelectAccordeon users={users} />
+        ) : (
+          <div className="w-full flex justify-center pt-14">
+            <Spinner />
+          </div>
+        )}
       </div>
     </div>
   );

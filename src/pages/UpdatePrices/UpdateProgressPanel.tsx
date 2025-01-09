@@ -53,7 +53,17 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
         <LoadingBar
           progress={updatingProgress.trackingProgress.updatedTasksCount}
           total={updatingProgress.trackingProgress.tasksToUpdate}
+          label="Analizando por link..."
         />
+        {updatingProgress.singleProgress.status == "running" ? (
+          <LoadingBar
+            progress={updatingProgress.singleProgress.updatedCount}
+            total={updatingProgress.singleProgress.productsToUpdate}
+            label="Analizando por producto..."
+          />
+        ) : (
+          <></>
+        )}
         <button className="px-4 py-2 font-semibold text-base rounded-md hover:bg-[#B71C1C] transition flex justify-center bg-[#D32F2F]">
           Cancelar
         </button>
