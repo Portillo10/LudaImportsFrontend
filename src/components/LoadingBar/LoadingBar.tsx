@@ -12,8 +12,8 @@ const LoadingBar: React.FC<LoadingBarProps> = ({ total, progress, label }) => {
       <span className="w-full flex justify-between">
         <p className="">{label}</p>
         <p>
-          {total > 0 ? Math.round((progress / total) * 100 * 100) / 100 : "100"}
-          %
+          {/* {total > 0 ? Math.round((progress / total) * 100 * 100) / 100 : "100"} */}
+          {progress}/{total}
         </p>
       </span>
       <div className="loading-bar">
