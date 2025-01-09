@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { IUser } from "../../types/user";
 import Accordeon from "../../components/Accordeon/Accordeon";
 import Spinner from "../../components/Spinner/Spinner";
-import { sleep } from "../../utils/helpers";
 
 const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
