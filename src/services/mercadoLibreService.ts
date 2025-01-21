@@ -16,9 +16,14 @@ const mercadoLibreService = {
     return response.data;
   },
 
-  async predictCategory(sku: string, store_id: string) {
+  async predictCategory(
+    store_id: string,
+    q?: string,
+    sku?: string,
+    limit: number = 1
+  ) {
     const response = await apiClient.get(
-      `/api/store/${store_id}/predict?sku=${sku}`
+      `/api/store/${store_id}/predict?${sku ? `sku=${sku}` : ""}${q && !sku ? `q=${q}` : ""}&limit=${limit}`
     );
     return response.data;
   },

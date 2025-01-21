@@ -10,6 +10,7 @@ import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
 import "./styles.css";
 import { useShopStore } from "../../store/ShopStore";
 import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
+import CategoryPredictor from "../../components/CategoryPredictor/CategoryPredictor";
 
 type Inputs = {
   sku: string;
@@ -102,6 +103,9 @@ const Publisher: React.FC = () => {
         </div>
       </div>
       <div className="w-full h-full flex flex-col gap-3 py-5 border-t border-gray-500">
+        <p>Predictor de categorías</p>
+        <CategoryPredictor />
+        <hr className="border-t border-gray-500 w-full" />
         <p>Categorías de MercadoLibre</p>
         <CategoriesTree />
       </div>

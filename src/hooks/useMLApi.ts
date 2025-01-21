@@ -12,15 +12,16 @@ export const useMLApi = () => {
     sincronize: null,
   });
 
-  const predictCategory = async (sku: string) => {
+  const predictCategory = async (sku?: string, q?: string, limit?: number) => {
     setLoading(true);
     try {
       if (user) {
         const response = await mercadoLibreService.predictCategory(
+          user.stores[0]._id,
+          q,
           sku,
-          user.stores[0]._id
+          limit
         );
-        console.log(response);
         return response;
       }
     } catch (error) {

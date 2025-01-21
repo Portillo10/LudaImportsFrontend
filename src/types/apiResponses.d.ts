@@ -70,3 +70,20 @@ type UpdatingProgress = {
   }[];
   status: "stopped" | "running";
 };
+
+type Attribute = {
+  id: string;
+  name?: string;
+  value_id: string | null;
+  value_name: string;
+  values?: AttributeValue[];
+  value_type?: string;
+};
+
+export interface ICategoryOption {
+  domain_id: string;
+  domain_name: string;
+  category_id: string;
+  category_name: string;
+  attributes: Attribute[];
+}
