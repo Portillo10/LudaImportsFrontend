@@ -3,5 +3,5 @@
 }
 
 .loading-bar {
-  @apply w-full h-4 bg-[#F6CFA7] rounded-md;
+  @apply w-full h-4 bg-[#F6CFA7] rounded-md overflow-hidden;
 }
