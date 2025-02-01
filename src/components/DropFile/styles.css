@@ -1,15 +1,17 @@
 .drop-area {
-  border: 2px dashed #ddd;
+  border: 2px solid #44464d;
+  background-color: #2c2c2c;
   text-align: center;
   color: #ddd;
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
+  border-radius: 15px;
   align-items: center;
   justify-content: center;
   height: 150px;
-  width: 400px;
+  width: 340px;
   gap: 5px;
+  cursor: pointer;
 }
 
 .drop-area h2 {
@@ -18,7 +20,8 @@
 }
 
 .drop-area p {
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .drop-area button {

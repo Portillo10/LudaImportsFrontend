@@ -1,4 +1,7 @@
 import { ChangeEvent, useRef, useState } from "react";
+import UploadIcon from "../../assets/icons/UploadIcon.svg";
+
+import "./styles.css";
 
 type DropFileInputProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -28,22 +31,19 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ onChange }) => {
 
   return (
     <div
+      onClick={onClick}
       onDropCapture={onDrop}
       onDragOver={() => setActive(true)}
       onDragLeave={onDragLeave}
-      className={`drop-area ${active && "activeDrop"}`}
+      className={`drop-area  ${active && "activeDrop"}`}
     >
-      <h2 className="">
-        {active ? "Suelta para subir el archivo" : "Arrastra tu archivo aquí"}
-      </h2>
-      <p>O</p>
-      <button
-        onClick={() => {
-          onClick();
-        }}
-      >
-        Carga tu archivo
-      </button>
+      <img src={UploadIcon} width={42} alt="" />
+      <h2>Sube tus links</h2>
+      <p className="">
+        {active
+          ? "Suelta para subir el archivo"
+          : "Selecciona un archivo o arrastralo aquí"}
+      </p>
       <input ref={inputRef} hidden type="file" onChange={onChange} />
     </div>
   );

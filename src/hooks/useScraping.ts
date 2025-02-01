@@ -2,9 +2,9 @@ import { isAxiosError } from "axios";
 import scrapeService from "../services/scrapeService";
 
 export const useScraping = () => {
-  const scrapeBySku = async (sku: string) => {
+  const scrapeBySku = async (sku: string, store_id: string) => {
     try {
-      const response = await scrapeService.scrapeBySku(sku);
+      const response = await scrapeService.scrapeBySku(sku, store_id);
       console.log(response);
     } catch (error) {
       console.log(error);

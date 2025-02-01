@@ -5,13 +5,29 @@ import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
 import { useScraping } from "../../hooks/useScraping";
 import { IScrapingProgress } from "../../types/scrapingProgress";
 
+const ScrapingStats: React.FC = () => {
+  return (
+    <div className="bg-[#393B41] border-2 border-[#44464D] shadow-zinc-900 shadow-md">
+      <section>
+        <span></span>
+        <span></span>
+        <span></span>
+      </section>
+      <form action="">
+        <button></button>
+        <button></button>
+      </form>
+    </div>
+  );
+};
+
 const ScrapingPage: React.FC = () => {
   const [progress, setProgress] = useState<{
     queueInfo: any;
     scrapingProgress: IScrapingProgress;
   } | null>();
 
-  const { alias } = useParams();
+  const { alias, store_id } = useParams();
   const { initializeScraping, getScrapingProgress } = useScraping();
 
   useEffect(() => {
@@ -32,8 +48,8 @@ const ScrapingPage: React.FC = () => {
 
       if (valid) {
         await initializeScraping({
+          store_id,
           url_object_list: parsedCsv,
-          store_id: "",
         });
       } else {
         console.log("archivo inválido");
@@ -49,12 +65,9 @@ const ScrapingPage: React.FC = () => {
       <span className="titlePageContainer">
         <h2>{alias}</h2>
       </span>
-      <div className="w-full flex justify-center">
-        {progress?.scrapingProgress.status != "running" ? (
-          <DropFileInput onChange={handleFileInput}></DropFileInput>
-        ) : (
-          <></>
-        )}
+      <div className="w-full flex justify-between">
+        <ScrapingStats />
+        <DropFileInput onChange={handleFileInput} />
       </div>
     </div>
   );

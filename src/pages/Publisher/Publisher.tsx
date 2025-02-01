@@ -7,7 +7,6 @@ import { useScraping } from "../../hooks/useScraping";
 import { SubmitHandler, useForm } from "react-hook-form";
 import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
 
-import "./styles.css";
 import { useShopStore } from "../../store/ShopStore";
 import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
 import CategoryPredictor from "../../components/CategoryPredictor/CategoryPredictor";
@@ -29,8 +28,7 @@ const Publisher: React.FC = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setLoading(true);
-
-    await scrapeBySku(data.sku);
+    await scrapeBySku(data.sku, data.store_id);
     setLoading(false);
   };
 
