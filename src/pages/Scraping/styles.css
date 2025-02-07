@@ -1,0 +1,45 @@
+.grid {
+  @apply flex w-full;
+}
+
+.stats h3 {
+  @apply text-[#D8C6C6] font-normal text-sm;
+}
+
+.stats p {
+  @apply text-3xl font-light;
+}
+
+.stats {
+  @apply flex justify-around p-4;
+}
+
+.action-button {
+  @apply p-1.5 rounded-md flex gap-2 items-center min-w-28 transition-all;
+}
+
+.scraping-container {
+  @apply bg-[#393B41] border-2 border-[#44464D] shadow-zinc-900 shadow-md rounded-xl flex flex-col;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas de igual tamaño */
+  gap: 10px;
+}
+
+.card {
+  @apply p-3 rounded-md bg-[#232427] flex items-center gap-5 border border-[#5A5B60];
+}
+
+.card h3 {
+  @apply text-sm;
+}
+
+.card p {
+  @apply text-2xl;
+}
+
+.card > :nth-child(1) {
+  @apply rounded-full bg-[#393B41] p-3;
+}

@@ -5,11 +5,11 @@
   color: #ddd;
   display: flex;
   flex-direction: column;
-  border-radius: 15px;
+  border-radius: 12px;
   align-items: center;
   justify-content: center;
   height: 150px;
-  width: 340px;
+  min-width: 340px;
   gap: 5px;
   cursor: pointer;
 }

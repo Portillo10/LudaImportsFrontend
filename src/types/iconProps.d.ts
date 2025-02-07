@@ -9,4 +9,10 @@ export type IconName =
   | "users"
   | "updateprice"
   | "calculateprice"
-  | "scraping";
+  | "scraping"
+  | "no-cash"
+  | "image"
+  | "title"
+  | "tag-error"
+  | "warning"
+  | "error";

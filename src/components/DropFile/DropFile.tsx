@@ -5,9 +5,13 @@ import "./styles.css";
 
 type DropFileInputProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
 };
 
-const DropFileInput: React.FC<DropFileInputProps> = ({ onChange }) => {
+const DropFileInput: React.FC<DropFileInputProps> = ({
+  onChange,
+  className,
+}) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [active, setActive] = useState<boolean>(false);
 
@@ -35,7 +39,7 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ onChange }) => {
       onDropCapture={onDrop}
       onDragOver={() => setActive(true)}
       onDragLeave={onDragLeave}
-      className={`drop-area  ${active && "activeDrop"}`}
+      className={`drop-area ${active && "activeDrop"} ${className}`}
     >
       <img src={UploadIcon} width={42} alt="" />
       <h2>Sube tus links</h2>

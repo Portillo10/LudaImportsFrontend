@@ -4,19 +4,177 @@ import { ChangeEvent, useEffect, useState } from "react";
 import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
 import { useScraping } from "../../hooks/useScraping";
 import { IScrapingProgress } from "../../types/scrapingProgress";
+import PlayIcon from "../../components/Icons/PlayIcon";
+import StopIcon from "../../components/Icons/StopIcon";
+import { IconName } from "../../types/iconProps";
+import Icon from "../../components/Icon";
+import PauseIcon from "../../assets/icons/PauseIcon2.svg";
+import "./styles.css";
 
-const ScrapingStats: React.FC = () => {
+type OmitedProductCardProps = {
+  children: any;
+  label: string;
+  value: number;
+};
+
+const OmitedProductCard: React.FC<OmitedProductCardProps> = ({
+  children,
+  label,
+  value,
+}) => {
   return (
-    <div className="bg-[#393B41] border-2 border-[#44464D] shadow-zinc-900 shadow-md">
-      <section>
-        <span></span>
-        <span></span>
-        <span></span>
+    <span className="card">
+      <div>{children}</div>
+      <div>
+        <h3>{label}</h3>
+        <p>{value}</p>
+      </div>
+    </span>
+  );
+};
+
+type CardProps = { icon: IconName; label: string; value: number };
+
+const OmitedProductsPanel: React.FC = () => {
+  const cards: CardProps[] = [
+    {
+      label: "Precio no disponible",
+      icon: "no-cash",
+      value: 0,
+    },
+    {
+      icon: "image",
+      label: "Sin imagenes",
+      value: 0,
+    },
+    {
+      icon: "title",
+      label: "Título no disponible",
+      value: 0,
+    },
+    {
+      icon: "tag-error",
+      label: "Sin características",
+      value: 0,
+    },
+    {
+      icon: "warning",
+      label: "Errores inesperados",
+      value: 0,
+    },
+    {
+      icon: "error",
+      label: "Omitidos en total",
+      value: 0,
+    },
+  ];
+
+  const [cardsInfo, setCardsInfo] = useState<CardProps[]>([]);
+
+  useEffect(() => {
+    setCardsInfo(cards);
+  }, []);
+
+  return (
+    <div className="scraping-container p-3 gap-4">
+      <h2>Productos omitidos</h2>
+      <div className="grid">
+        {cardsInfo.map((card) => (
+          <OmitedProductCard label={card.label} value={card.value}>
+            <Icon iconName={card.icon} size={28} color="#FFFFFF"></Icon>
+          </OmitedProductCard>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+type Stat = {
+  label: string;
+  value: number;
+};
+
+const ScrapingPanel: React.FC = () => {
+  const initialStats: Stat[] = [
+    {
+      label: "Productos restantes",
+      value: 0,
+    },
+    {
+      label: "Productos extraídos",
+      value: 0,
+    },
+    {
+      label: "Créditos usados",
+      value: 0,
+    },
+  ];
+  const [stats, setStats] = useState<Stat[]>(initialStats);
+  const { getScrapingProgress } = useScraping();
+
+  const formatAndSetStats = async (progress: IScrapingProgress) => {
+    const currentStats: Stat[] = [
+      {
+        label: "Productos restantes",
+        value: progress.productsToScrape - progress.scrapedProductsCount,
+      },
+      {
+        label: "Productos extraídos",
+        value: progress.scrapedProductsCount,
+      },
+      {
+        label: "Créditos usados",
+        value: progress.usedCredits,
+      },
+    ];
+
+    setStats(currentStats);
+  };
+
+  const updateStats = async () => {
+    const progress = await getScrapingProgress();
+    if (progress) {
+      formatAndSetStats(progress.scrapingProgress);
+    }
+  };
+
+  useEffect(() => {
+    updateStats();
+  }, []);
+
+  return (
+    <div className="scraping-container w-full gap-2">
+      <section className="stats">
+        {stats.map((stat) => (
+          <span>
+            <h3>{stat.label}</h3>
+            <p>{stat.value}</p>
+          </span>
+        ))}
       </section>
-      <form action="">
-        <button></button>
-        <button></button>
+      <form className="flex gap-2 justify-center">
+        <button className="bg-[#2E7D32] hover:bg-[#255F28] action-button">
+          <PlayIcon size={20} color="#FFFFFF" />
+          <p>Iniciar</p>
+        </button>
+        <button className="bg-[#D32F2F] hover:bg-[#B71C1C] action-button">
+          <StopIcon size={20} color="#FFFFFF" />
+          <p>Detener</p>
+        </button>
       </form>
+    </div>
+  );
+};
+
+const statusEnum: Record<string, string> = {
+  paused: "Pausado",
+};
+
+const Status: React.FC<{ status: string }> = ({ status }) => {
+  return (
+    <div className="flex gap-2 items-center">
+      <img src={PauseIcon} width={20} alt="" />
+      <p className="text-xl">{statusEnum[status]}</p>
     </div>
   );
 };
@@ -61,13 +219,20 @@ const ScrapingPage: React.FC = () => {
   };
 
   return (
-    <div className="basicContainer">
+    <div className="basicContainer gap-5">
       <span className="titlePageContainer">
         <h2>{alias}</h2>
+        <Status status="paused" />
       </span>
-      <div className="w-full flex justify-between">
-        <ScrapingStats />
-        <DropFileInput onChange={handleFileInput} />
+      <div className="flex flex-col gap-5 w-full px-8">
+        <div className="w-full flex justify-between gap-5">
+          <ScrapingPanel />
+          <DropFileInput
+            className="shadow-zinc-900 shadow-md"
+            onChange={handleFileInput}
+          />
+        </div>
+        <OmitedProductsPanel />
       </div>
     </div>
   );

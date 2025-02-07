@@ -3,8 +3,10 @@ export interface IScrapingProgress {
   scrapedSkuCount: number;
   scrapedProductsCount: number;
   omitedProducts: OmitedProduct[];
+  productsToScrape: number;
   status: "running" | "loading" | "paused" | "stopped";
   targetStore?: ObjectId;
+  usedCredits: number;
 }
 
 type OmitedProduct = {
