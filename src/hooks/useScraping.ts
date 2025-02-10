@@ -33,9 +33,9 @@ export const useScraping = () => {
     }
   };
 
-  const getScrapingProgress = async () => {
+  const getScrapingProgress = async (store_id?: string) => {
     try {
-      const response = await scrapeService.getScrapingProgress();
+      const response = await scrapeService.getScrapingProgress(store_id);
       return response;
     } catch (error) {
       if (error instanceof Error) {

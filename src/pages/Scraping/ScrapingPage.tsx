@@ -94,7 +94,7 @@ type Stat = {
   value: number;
 };
 
-const ScrapingPanel: React.FC = () => {
+const ScrapingPanel: React.FC<{ store_id?: string }> = ({ store_id }) => {
   const initialStats: Stat[] = [
     {
       label: "Productos restantes",
@@ -132,7 +132,7 @@ const ScrapingPanel: React.FC = () => {
   };
 
   const updateStats = async () => {
-    const progress = await getScrapingProgress();
+    const progress = await getScrapingProgress(store_id);
     console.log(progress);
     if (progress) {
       formatAndSetStats(progress.scrapingProgress);
@@ -228,7 +228,7 @@ const ScrapingPage: React.FC = () => {
       </span>
       <div className="flex flex-col gap-5 w-full px-8">
         <div className="w-full flex justify-between gap-5">
-          <ScrapingPanel />
+          <ScrapingPanel store_id={store_id} />
           <DropFileInput
             className="shadow-zinc-900 shadow-md"
             onChange={handleFileInput}
