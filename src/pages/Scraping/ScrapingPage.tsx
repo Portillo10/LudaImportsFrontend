@@ -159,7 +159,7 @@ const ScrapingPanel: React.FC<{
           </span>
         ))}
       </section>
-      <form className="flex gap-2 justify-center">
+      <div className="flex gap-2 justify-center">
         <button
           disabled={progress.status == "running"}
           onClick={run}
@@ -176,7 +176,7 @@ const ScrapingPanel: React.FC<{
           <StopIcon size={20} color="#FFFFFF" />
           <p>Detener</p>
         </button>
-      </form>
+      </div>
     </div>
   );
 };
