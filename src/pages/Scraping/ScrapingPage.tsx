@@ -10,6 +10,7 @@ import { IconName } from "../../types/iconProps";
 import Icon from "../../components/Icon";
 import PauseIcon from "../../components/Icons/PauseIcon";
 import "./styles.css";
+import Spinner from "../../components/Spinner/Spinner";
 
 type OmitedProductCardProps = {
   children: any;
@@ -239,18 +240,28 @@ const ScrapingPage: React.FC = () => {
     }
   };
 
-  return progress ? (
+  return (
     <div className="basicContainer gap-5">
       <span className="titlePageContainer">
         <h2>{alias}</h2>
-        <Status status={progress.scrapingProgress.status} />
+        {progress ? (
+          <Status status={progress.scrapingProgress.status} />
+        ) : (
+          <></>
+        )}
       </span>
       <div className="flex flex-col gap-5 w-full px-8">
         <div className="w-full flex justify-between gap-5">
-          <ScrapingPanel
-            progress={progress?.scrapingProgress}
-            store_id={store_id}
-          />
+          {progress ? (
+            <ScrapingPanel
+              progress={progress?.scrapingProgress}
+              store_id={store_id}
+            />
+          ) : (
+            <div className="w-full flex items-center">
+              <Spinner size={25} />
+            </div>
+          )}
           <DropFileInput
             className="shadow-zinc-900 shadow-md"
             onChange={handleFileInput}
@@ -259,8 +270,6 @@ const ScrapingPage: React.FC = () => {
         <OmitedProductsPanel />
       </div>
     </div>
-  ) : (
-    <></>
   );
 };
 
