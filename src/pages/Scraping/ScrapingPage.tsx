@@ -210,7 +210,7 @@ const ScrapingPage: React.FC = () => {
 
   useEffect(() => {
     const init = async () => {
-      const scrapingProgress = await getScrapingProgress();
+      const scrapingProgress = await getScrapingProgress(store_id);
       console.log(scrapingProgress);
       if (scrapingProgress) {
         setProgress(scrapingProgress);
