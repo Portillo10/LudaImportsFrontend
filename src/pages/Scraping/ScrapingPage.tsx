@@ -244,23 +244,27 @@ const ScrapingPage: React.FC = () => {
     <div className="basicContainer gap-5">
       <span className="titlePageContainer">
         <h2>{alias}</h2>
-        {progress ? (
-          <Status status={progress.scrapingProgress.status} />
-        ) : (
+        {progress == null ? (
           <></>
+        ) : (
+          <Status status={progress.scrapingProgress.status} />
         )}
       </span>
       <div className="flex flex-col gap-5 w-full px-8">
         <div className="w-full flex justify-between gap-5">
-          {progress != null ? (
+          {progress == null ? (
+            <>
+              <div></div>
+              <div className="w-full flex items-center">
+                <Spinner size={25} />
+              </div>
+              <div></div>
+            </>
+          ) : (
             <ScrapingPanel
-              progress={progress?.scrapingProgress}
+              progress={progress.scrapingProgress}
               store_id={store_id}
             />
-          ) : (
-            <div className="w-full flex items-center">
-              <Spinner size={25} />
-            </div>
           )}
           <DropFileInput
             className="shadow-zinc-900 shadow-md"
