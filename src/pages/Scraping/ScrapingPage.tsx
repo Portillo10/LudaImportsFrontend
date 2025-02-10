@@ -114,7 +114,6 @@ const ScrapingPanel: React.FC<{
     },
   ];
   const [stats, setStats] = useState<Stat[]>(initialStats);
-  const [status, setStatus] = useState<string>("");
   const { runTasks, pauseScraping } = useScraping();
 
   const formatAndSetStats = async (progress: IScrapingProgress) => {
@@ -148,7 +147,6 @@ const ScrapingPanel: React.FC<{
 
   useEffect(() => {
     formatAndSetStats(progress);
-    setStatus(progress.status);
   }, []);
 
   return (
@@ -163,16 +161,17 @@ const ScrapingPanel: React.FC<{
       </section>
       <form className="flex gap-2 justify-center">
         <button
+          disabled={progress.status == "running"}
           onClick={run}
-          className="bg-[#2E7D32] hover:bg-[#255F28] action-button"
+          className={`bg-[#2E7D32] ${progress.status == "running" ? "" : "hover:bg-[#255F28]"} action-button`}
         >
           <PlayIcon size={20} color="#FFFFFF" />
           <p>Iniciar</p>
         </button>
         <button
           onClick={pause}
-          disabled={status == "stopped"}
-          className="bg-[#D32F2F] hover:bg-[#B71C1C] action-button"
+          disabled={progress.status == "stopped"}
+          className={`bg-[#D32F2F] ${progress.status == "stopped" ? "" : "hover:bg-[#B71C1C]"} action-button`}
         >
           <StopIcon size={20} color="#FFFFFF" />
           <p>Detener</p>
