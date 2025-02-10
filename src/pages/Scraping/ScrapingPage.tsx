@@ -110,7 +110,8 @@ const ScrapingPanel: React.FC<{ store_id?: string }> = ({ store_id }) => {
     },
   ];
   const [stats, setStats] = useState<Stat[]>(initialStats);
-  const { getScrapingProgress } = useScraping();
+  const [status, setStatus] = useState<string>("");
+  const { getScrapingProgress, runTasks, pauseScraping } = useScraping();
 
   const formatAndSetStats = async (progress: IScrapingProgress) => {
     const currentStats: Stat[] = [
@@ -136,8 +137,19 @@ const ScrapingPanel: React.FC<{ store_id?: string }> = ({ store_id }) => {
 
     const progress = await getScrapingProgress(store_id);
     if (progress) {
+      setStatus(progress.scrapingProgress.status);
       formatAndSetStats(progress.scrapingProgress);
     }
+  };
+
+  const run = async () => {
+    if (store_id) {
+      await runTasks(store_id);
+    }
+  };
+
+  const pause = async () => {
+    pauseScraping();
   };
 
   useEffect(() => {
@@ -155,11 +167,18 @@ const ScrapingPanel: React.FC<{ store_id?: string }> = ({ store_id }) => {
         ))}
       </section>
       <form className="flex gap-2 justify-center">
-        <button className="bg-[#2E7D32] hover:bg-[#255F28] action-button">
+        <button
+          onClick={run}
+          className="bg-[#2E7D32] hover:bg-[#255F28] action-button"
+        >
           <PlayIcon size={20} color="#FFFFFF" />
           <p>Iniciar</p>
         </button>
-        <button className="bg-[#D32F2F] hover:bg-[#B71C1C] action-button">
+        <button
+          onClick={pause}
+          disabled={status == "stopped"}
+          className="bg-[#D32F2F] hover:bg-[#B71C1C] action-button"
+        >
           <StopIcon size={20} color="#FFFFFF" />
           <p>Detener</p>
         </button>
