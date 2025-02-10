@@ -16,8 +16,10 @@ const scrape = {
     return response.data;
   },
 
-  async getScrapingProgress() {
-    const response = await apiClient.get("/scrape/tasks");
+  async getScrapingProgress(store_id?: string) {
+    const response = await apiClient.get(
+      `/scrape/tasks${store_id ? `?store_id=${store_id}` : ""}`
+    );
     const responseData: {
       queueInfo: any;
       scrapingProgress: IScrapingProgress;

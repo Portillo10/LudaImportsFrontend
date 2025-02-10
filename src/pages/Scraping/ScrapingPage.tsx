@@ -133,6 +133,7 @@ const ScrapingPanel: React.FC = () => {
 
   const updateStats = async () => {
     const progress = await getScrapingProgress();
+    console.log(progress);
     if (progress) {
       formatAndSetStats(progress.scrapingProgress);
     }
@@ -191,6 +192,7 @@ const ScrapingPage: React.FC = () => {
   useEffect(() => {
     const init = async () => {
       const scrapingProgress = await getScrapingProgress();
+      console.log(scrapingProgress);
       if (scrapingProgress) {
         setProgress(progress);
       }
