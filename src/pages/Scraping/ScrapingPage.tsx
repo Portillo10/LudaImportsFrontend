@@ -94,7 +94,10 @@ type Stat = {
   value: number;
 };
 
-const ScrapingPanel: React.FC<{ store_id?: string }> = ({ store_id }) => {
+const ScrapingPanel: React.FC<{
+  store_id?: string;
+  progress: IScrapingProgress;
+}> = ({ store_id, progress }) => {
   const initialStats: Stat[] = [
     {
       label: "Productos restantes",
@@ -111,7 +114,7 @@ const ScrapingPanel: React.FC<{ store_id?: string }> = ({ store_id }) => {
   ];
   const [stats, setStats] = useState<Stat[]>(initialStats);
   const [status, setStatus] = useState<string>("");
-  const { getScrapingProgress, runTasks, pauseScraping } = useScraping();
+  const { runTasks, pauseScraping } = useScraping();
 
   const formatAndSetStats = async (progress: IScrapingProgress) => {
     const currentStats: Stat[] = [
@@ -132,16 +135,6 @@ const ScrapingPanel: React.FC<{ store_id?: string }> = ({ store_id }) => {
     setStats(currentStats);
   };
 
-  const updateStats = async () => {
-    console.log(store_id);
-
-    const progress = await getScrapingProgress(store_id);
-    if (progress) {
-      setStatus(progress.scrapingProgress.status);
-      formatAndSetStats(progress.scrapingProgress);
-    }
-  };
-
   const run = async () => {
     if (store_id) {
       await runTasks(store_id);
@@ -153,7 +146,8 @@ const ScrapingPanel: React.FC<{ store_id?: string }> = ({ store_id }) => {
   };
 
   useEffect(() => {
-    updateStats();
+    formatAndSetStats(progress);
+    setStatus(progress.status);
   }, []);
 
   return (
@@ -240,6 +234,8 @@ const ScrapingPage: React.FC = () => {
     }
   };
 
+  if (!progress) return <></>;
+
   return (
     <div className="basicContainer gap-5">
       <span className="titlePageContainer">
@@ -248,7 +244,10 @@ const ScrapingPage: React.FC = () => {
       </span>
       <div className="flex flex-col gap-5 w-full px-8">
         <div className="w-full flex justify-between gap-5">
-          <ScrapingPanel store_id={store_id} />
+          <ScrapingPanel
+            progress={progress?.scrapingProgress}
+            store_id={store_id}
+          />
           <DropFileInput
             className="shadow-zinc-900 shadow-md"
             onChange={handleFileInput}
