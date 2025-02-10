@@ -132,8 +132,9 @@ const ScrapingPanel: React.FC<{ store_id?: string }> = ({ store_id }) => {
   };
 
   const updateStats = async () => {
+    console.log(store_id);
+
     const progress = await getScrapingProgress(store_id);
-    console.log(progress);
     if (progress) {
       formatAndSetStats(progress.scrapingProgress);
     }
