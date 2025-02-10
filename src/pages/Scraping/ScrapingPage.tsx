@@ -204,7 +204,7 @@ const ScrapingPage: React.FC = () => {
   const [progress, setProgress] = useState<{
     queueInfo: any;
     scrapingProgress: IScrapingProgress;
-  } | null>();
+  } | null>(null);
 
   const { alias, store_id } = useParams();
   const { initializeScraping, getScrapingProgress } = useScraping();
@@ -252,7 +252,7 @@ const ScrapingPage: React.FC = () => {
       </span>
       <div className="flex flex-col gap-5 w-full px-8">
         <div className="w-full flex justify-between gap-5">
-          {progress ? (
+          {progress != null ? (
             <ScrapingPanel
               progress={progress?.scrapingProgress}
               store_id={store_id}
