@@ -239,9 +239,7 @@ const ScrapingPage: React.FC = () => {
     }
   };
 
-  if (!progress) return <></>;
-
-  return (
+  return progress ? (
     <div className="basicContainer gap-5">
       <span className="titlePageContainer">
         <h2>{alias}</h2>
@@ -261,6 +259,8 @@ const ScrapingPage: React.FC = () => {
         <OmitedProductsPanel />
       </div>
     </div>
+  ) : (
+    <></>
   );
 };
 
