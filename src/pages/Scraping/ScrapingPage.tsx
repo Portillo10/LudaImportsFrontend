@@ -214,7 +214,7 @@ const ScrapingPage: React.FC = () => {
       const scrapingProgress = await getScrapingProgress();
       console.log(scrapingProgress);
       if (scrapingProgress) {
-        setProgress(progress);
+        setProgress(scrapingProgress);
       }
     };
     init();
@@ -253,13 +253,9 @@ const ScrapingPage: React.FC = () => {
       <div className="flex flex-col gap-5 w-full px-8">
         <div className="w-full flex justify-between gap-5">
           {progress == null ? (
-            <>
-              <div></div>
-              <div className="w-full flex items-center">
-                <Spinner size={25} />
-              </div>
-              <div></div>
-            </>
+            <div className="w-full flex items-center">
+              <Spinner size={25} />
+            </div>
           ) : (
             <ScrapingPanel
               progress={progress.scrapingProgress}
