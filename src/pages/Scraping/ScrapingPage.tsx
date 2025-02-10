@@ -8,7 +8,7 @@ import PlayIcon from "../../components/Icons/PlayIcon";
 import StopIcon from "../../components/Icons/StopIcon";
 import { IconName } from "../../types/iconProps";
 import Icon from "../../components/Icon";
-import PauseIcon from "../../assets/icons/PauseIcon2.svg";
+import PauseIcon from "../../components/Icons/PauseIcon";
 import "./styles.css";
 
 type OmitedProductCardProps = {
@@ -181,14 +181,19 @@ const ScrapingPanel: React.FC<{
   );
 };
 
-const statusEnum: Record<string, string> = {
-  paused: "Pausado",
+const statusEnum: Record<string, any> = {
+  paused: { label: "Pausado", icon: PauseIcon },
+  running: { label: "Extrayendo productos" },
 };
 
 const Status: React.FC<{ status: string }> = ({ status }) => {
   return (
     <div className="flex gap-2 items-center">
-      <img src={PauseIcon} width={20} alt="" />
+      {status == "running" ? (
+        <PlayIcon size={20} color="#FFFFFF" />
+      ) : (
+        <PauseIcon size={20} color="#FFFFFF" />
+      )}
       <p className="text-xl">{statusEnum[status]}</p>
     </div>
   );
@@ -240,7 +245,7 @@ const ScrapingPage: React.FC = () => {
     <div className="basicContainer gap-5">
       <span className="titlePageContainer">
         <h2>{alias}</h2>
-        <Status status="paused" />
+        <Status status={progress.scrapingProgress.status} />
       </span>
       <div className="flex flex-col gap-5 w-full px-8">
         <div className="w-full flex justify-between gap-5">
