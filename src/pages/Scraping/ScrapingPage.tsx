@@ -93,6 +93,7 @@ const OmitedProductsPanel: React.FC = () => {
 const statusEnum: Record<string, any> = {
   paused: { label: "Pausado" },
   running: { label: "Extrayendo productos" },
+  stopped: { label: "Pausado" },
 };
 
 const Status: React.FC<{ status: string }> = ({ status }) => {
@@ -103,7 +104,7 @@ const Status: React.FC<{ status: string }> = ({ status }) => {
       ) : (
         <PauseIcon size={20} color="#FFFFFF" />
       )}
-      <p className="text-xl">{statusEnum[status].label}</p>
+      <p className="text-xl">{statusEnum[status]?.label}</p>
     </div>
   );
 };
