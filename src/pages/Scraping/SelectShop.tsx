@@ -19,8 +19,8 @@ const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
     }
   };
 
-  const handleClickShop = (store_id: string, alias: string) => {
-    navigate(`/scraping/${store_id}/${alias}`);
+  const handleClickShop = (store_id: string) => {
+    navigate(`/scraping/${store_id}`);
   };
 
   return users.map((user, i) =>
@@ -35,7 +35,7 @@ const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
           <button
             key={store._id}
             className="w-full bg-[#414249] py-2 text-left px-6 hover:bg-zinc-800"
-            onClick={() => handleClickShop(store._id, store.alias)}
+            onClick={() => handleClickShop(store._id)}
           >
             {store.alias}
           </button>

@@ -6,6 +6,7 @@ export interface IScrapingProgress {
   productsToScrape: number;
   status: "running" | "loading" | "paused" | "stopped";
   targetStore?: ObjectId;
+  storeAlias?: string;
   usedCredits: number;
 }
 

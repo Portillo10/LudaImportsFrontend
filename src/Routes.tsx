@@ -24,7 +24,7 @@ const AppRoutes: React.FC = () => {
           <Route path="/scraping" element={<Outlet />}>
             <Route path="/scraping" element={<SelectShop />}></Route>
             <Route
-              path="/scraping/:store_id/:alias"
+              path="/scraping/:store_id"
               element={<ScrapingPage />}
             ></Route>
           </Route>

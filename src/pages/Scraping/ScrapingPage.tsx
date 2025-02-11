@@ -5,12 +5,12 @@ import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
 import { useScraping } from "../../hooks/useScraping";
 import { IScrapingProgress } from "../../types/scrapingProgress";
 import PlayIcon from "../../components/Icons/PlayIcon";
-import StopIcon from "../../components/Icons/StopIcon";
 import { IconName } from "../../types/iconProps";
 import Icon from "../../components/Icon";
 import PauseIcon from "../../components/Icons/PauseIcon";
 import "./styles.css";
 import Spinner from "../../components/Spinner/Spinner";
+import ScrapingPanel from "./ScrapingPanel";
 
 type OmitedProductCardProps = {
   children: any;
@@ -90,97 +90,6 @@ const OmitedProductsPanel: React.FC = () => {
   );
 };
 
-type Stat = {
-  label: string;
-  value: number;
-};
-
-const ScrapingPanel: React.FC<{
-  store_id?: string;
-  progress: IScrapingProgress;
-}> = ({ store_id, progress }) => {
-  const initialStats: Stat[] = [
-    {
-      label: "Productos restantes",
-      value: 0,
-    },
-    {
-      label: "Productos extraídos",
-      value: 0,
-    },
-    {
-      label: "Créditos usados",
-      value: 0,
-    },
-  ];
-  const [stats, setStats] = useState<Stat[]>(initialStats);
-  const { runTasks, pauseScraping } = useScraping();
-
-  const formatAndSetStats = async (progress: IScrapingProgress) => {
-    const currentStats: Stat[] = [
-      {
-        label: "Productos restantes",
-        value: progress.productsToScrape - progress.scrapedProductsCount,
-      },
-      {
-        label: "Productos extraídos",
-        value: progress.scrapedProductsCount,
-      },
-      {
-        label: "Créditos usados",
-        value: progress.usedCredits,
-      },
-    ];
-
-    setStats(currentStats);
-  };
-
-  const run = async () => {
-    if (store_id) {
-      await runTasks(store_id);
-    }
-  };
-
-  const pause = async () => {
-    pauseScraping();
-  };
-
-  useEffect(() => {
-    formatAndSetStats(progress);
-  }, []);
-
-  return (
-    <div className="scraping-container w-full gap-2">
-      <section className="stats">
-        {stats.map((stat) => (
-          <span>
-            <h3>{stat.label}</h3>
-            <p>{stat.value}</p>
-          </span>
-        ))}
-      </section>
-      <div className="flex gap-2 justify-center">
-        <button
-          disabled={progress.status == "running"}
-          onClick={run}
-          className={`bg-[#2E7D32] ${progress.status == "running" ? "" : "hover:bg-[#255F28]"} action-button`}
-        >
-          <PlayIcon size={20} color="#FFFFFF" />
-          <p>Iniciar</p>
-        </button>
-        <button
-          onClick={pause}
-          disabled={progress.status == "stopped"}
-          className={`bg-[#D32F2F] ${progress.status == "stopped" ? "" : "hover:bg-[#B71C1C]"} action-button`}
-        >
-          <StopIcon size={20} color="#FFFFFF" />
-          <p>Detener</p>
-        </button>
-      </div>
-    </div>
-  );
-};
-
 const statusEnum: Record<string, any> = {
   paused: { label: "Pausado", icon: PauseIcon },
   running: { label: "Extrayendo productos" },
@@ -205,13 +114,12 @@ const ScrapingPage: React.FC = () => {
     scrapingProgress: IScrapingProgress;
   } | null>(null);
 
-  const { alias, store_id } = useParams();
+  const { store_id } = useParams();
   const { initializeScraping, getScrapingProgress } = useScraping();
 
   useEffect(() => {
     const init = async () => {
       const scrapingProgress = await getScrapingProgress(store_id);
-      console.log(scrapingProgress);
       if (scrapingProgress) {
         setProgress(scrapingProgress);
       }
@@ -241,33 +149,30 @@ const ScrapingPage: React.FC = () => {
 
   return (
     <div className="basicContainer gap-5">
-      <span className="titlePageContainer">
-        <h2>{alias}</h2>
-        {progress == null ? (
-          <></>
-        ) : (
-          <Status status={progress.scrapingProgress.status} />
-        )}
-      </span>
-      <div className="flex flex-col gap-5 w-full px-8">
-        <div className="w-full flex justify-between gap-5">
-          {progress == null ? (
-            <div className="w-full flex items-center">
-              <Spinner size={25} />
+      {progress ? (
+        <>
+          <span className="titlePageContainer">
+            <h2>{progress.scrapingProgress.storeAlias}</h2>
+
+            <Status status={progress.scrapingProgress.status} />
+          </span>
+          <div className="flex flex-col gap-5 w-full px-8">
+            <div className="w-full flex justify-between gap-5">
+              <ScrapingPanel
+                progress={progress.scrapingProgress}
+                store_id={store_id}
+              />
+              <DropFileInput
+                className="shadow-zinc-900 shadow-md"
+                onChange={handleFileInput}
+              />
             </div>
-          ) : (
-            <ScrapingPanel
-              progress={progress.scrapingProgress}
-              store_id={store_id}
-            />
-          )}
-          <DropFileInput
-            className="shadow-zinc-900 shadow-md"
-            onChange={handleFileInput}
-          />
-        </div>
-        <OmitedProductsPanel />
-      </div>
+            <OmitedProductsPanel />
+          </div>
+        </>
+      ) : (
+        <Spinner size={36} />
+      )}
     </div>
   );
 };
