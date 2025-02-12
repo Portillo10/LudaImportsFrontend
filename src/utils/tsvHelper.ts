@@ -20,7 +20,7 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
         const values = line.split("\t");
         return {
           dimensions: values[0],
-          weight: parseFloat(values[1]),
+          weight: parseFloat(values[1].split(" ")[0]),
           category: values[2],
           url: values[3],
         };
