@@ -138,8 +138,17 @@ export const useStores = () => {
     }
   };
 
+  const getPendingPublications = async () => {
+    try {
+      return await storeService.getPendingPublications();
+    } catch (error) {
+      if (error instanceof Error) setError(error.message);
+    }
+  };
+
   return {
     handleSuccessLinkStore,
+    getPendingPublications,
     toggleAllowUpdate,
     deleteAllProducts,
     transferProducts,

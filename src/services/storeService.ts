@@ -57,6 +57,10 @@ const store = {
     );
     return response.data;
   },
+
+  async getPendingPublications() {
+    return await apiClient.get(`/stores/pending-products`);
+  },
 };
 
 export default store;

@@ -1,18 +1,20 @@
 import { Outlet, Route, Routes } from "react-router-dom";
+
 import Layout from "./layouts/Layout";
 import LogIn from "./pages/LogIn/LogIn";
-import WithSideBarLayout from "./layouts/WithSideBar";
-import Publisher from "./pages/Publisher/Publisher";
-import StoresPage from "./pages/Stores/StoresPage";
-import LinkStore from "./pages/Stores/LinkStore";
-import CalcPrice from "./pages/CalcPrice/CalcPrice";
-import UpdatePrices from "./pages/UpdatePrices/UpdatePrices";
 import Users from "./pages/Users/Users";
-import RegisterUser from "./pages/Users/RegisterUser";
 import UsersInfo from "./pages/Users/UsersInfo";
+import LinkStore from "./pages/Stores/LinkStore";
+import StoresPage from "./pages/Stores/StoresPage";
+import Publisher from "./pages/Publisher/Publisher";
+import CalcPrice from "./pages/CalcPrice/CalcPrice";
 import LinkSuccess from "./pages/Stores/LinkSuccess";
 import SelectShop from "./pages/Scraping/SelectShop";
+import WithSideBarLayout from "./layouts/WithSideBar";
+import RegisterUser from "./pages/Users/RegisterUser";
 import ScrapingPage from "./pages/Scraping/ScrapingPage";
+import UpdatePrices from "./pages/UpdatePrices/UpdatePrices";
+import PendingPosting from "./pages/Publisher/PendingPosting";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -22,13 +24,13 @@ const AppRoutes: React.FC = () => {
         <Route path="/link-success" element={<LinkSuccess />} />
         <Route path="/" element={<WithSideBarLayout />}>
           <Route path="/scraping" element={<Outlet />}>
-            <Route path="/scraping" element={<SelectShop />}></Route>
-            <Route
-              path="/scraping/:store_id"
-              element={<ScrapingPage />}
-            ></Route>
+            <Route path="/scraping" element={<SelectShop />} />
+            <Route path="/scraping/:store_id" element={<ScrapingPage />} />
           </Route>
-          <Route path="/publisher" element={<Publisher />} />
+          <Route path="/publisher" element={<Outlet />}>
+            <Route path="/publisher" element={<Publisher />} />
+            <Route path="/publisher/pending" element={<PendingPosting />} />
+          </Route>
           <Route path="/calc-price" element={<CalcPrice />} />
           <Route path="/update-prices" element={<UpdatePrices />} />
           <Route path="/stores" element={<Outlet />}>

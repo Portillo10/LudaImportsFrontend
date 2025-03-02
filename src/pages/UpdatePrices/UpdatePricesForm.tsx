@@ -5,6 +5,7 @@ type Inputs = {
   update_stores: boolean;
   update_all: boolean;
   tracking: boolean;
+  track_all: boolean;
 };
 
 type UpdatePriceFormProps = {
@@ -16,6 +17,7 @@ const UpdatePricesForm: React.FC<UpdatePriceFormProps> = ({ onSubmit }) => {
       update_all: true,
       tracking: true,
       update_stores: true,
+      track_all: false,
     },
   });
 
@@ -24,7 +26,12 @@ const UpdatePricesForm: React.FC<UpdatePriceFormProps> = ({ onSubmit }) => {
   };
 
   const handleChangeChecked = (checked: boolean, name: string) => {
-    if (name == "update_stores" || name == "update_all" || name == "tracking") {
+    if (
+      name == "update_stores" ||
+      name == "update_all" ||
+      name == "tracking" ||
+      name == "track_all"
+    ) {
       setValue(name, checked);
     }
   };
@@ -56,6 +63,14 @@ const UpdatePricesForm: React.FC<UpdatePriceFormProps> = ({ onSubmit }) => {
           checked={watch().tracking}
           onChange={handleChangeChecked}
           name="tracking"
+        />
+      </span>
+      <span className="checkItemContainer">
+        <p>Comparar precios no actualizados</p>
+        <CheckBox
+          checked={watch().track_all}
+          onChange={handleChangeChecked}
+          name="track_all"
         />
       </span>
       <button className="button mt-2">Iniciar actualización</button>

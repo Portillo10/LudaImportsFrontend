@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState } from "react";
-// import { useAuth } from "../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import Spinner from "../../components/Spinner/Spinner";
 import SendIcon from "../../assets/icons/SendIcon.svg";
 import DropFileInput from "../../components/DropFile/DropFile";
@@ -10,6 +10,7 @@ import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
 import { useShopStore } from "../../store/ShopStore";
 import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
 import CategoryPredictor from "../../components/CategoryPredictor/CategoryPredictor";
+import { NavLink } from "react-router-dom";
 
 type Inputs = {
   sku: string;
@@ -17,7 +18,7 @@ type Inputs = {
 };
 
 const Publisher: React.FC = () => {
-  // const { user } = useAuth();
+  const { user } = useAuth();
   const { stores } = useShopStore();
   const [loading, setLoading] = useState(false);
   const { scrapeBySku, initializeScraping } = useScraping();
@@ -56,7 +57,13 @@ const Publisher: React.FC = () => {
     <div className="basicContainer gap-5">
       <span className="titlePageContainer">
         <h2>Publicador</h2>
+        {user?.role == "admin" ? (
+          <NavLink to="/publisher/pending">Publicaciones pendientes</NavLink>
+        ) : (
+          <></>
+        )}
       </span>
+
       <div className="w-full flex flex-col px-8 gap-8 h-max max-h-[calc(100vh-180px)] min-h-[440px]">
         <form
           className="flex gap-4 items-end"
