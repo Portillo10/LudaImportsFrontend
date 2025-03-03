@@ -26,12 +26,12 @@ function PendingPosting() {
   const [pendingPublications, setPendingPublications] = useState<any[]>([]);
 
   useEffect(() => {
-    async () => {
+    (async () => {
       const response = await getPendingPublications();
       console.log(response);
 
       if (response) setPendingPublications(response);
-    };
+    })();
   }, []);
   return (
     <div className="basicContainer pt-8">
