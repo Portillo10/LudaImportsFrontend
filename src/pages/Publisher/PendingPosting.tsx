@@ -42,7 +42,7 @@ function PendingPosting() {
         {pendingPublications.map((store, i) => (
           <LargeRow index={i} key={i}>
             {columns.map((column) => (
-              <li className={`${column.class} py-2 h-7`}>
+              <li className={`${column.class} py-2 h-9`}>
                 {store[column.key]}
               </li>
             ))}
