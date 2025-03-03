@@ -28,6 +28,8 @@ function PendingPosting() {
   useEffect(() => {
     async () => {
       const response = await getPendingPublications();
+      console.log(response);
+
       if (response) setPendingPublications(response);
     };
   }, []);
