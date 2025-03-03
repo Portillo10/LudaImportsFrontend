@@ -10,12 +10,12 @@ const columns = [
     class: "px-6 w-36",
   },
   {
-    key: "publicatedProducts",
+    key: "publicatedCount",
     label: "Productos publicados",
     class: "px-6 w-44 text-right leading-tight",
   },
   {
-    key: "pendingProducts",
+    key: "pendingCount",
     label: "Publicaciones pendientes",
     class: "px-6 w-44 text-right leading-tight",
   },
