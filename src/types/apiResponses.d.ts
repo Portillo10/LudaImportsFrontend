@@ -53,7 +53,7 @@ type TrackingProgress = {
 
 interface ISingleTrackingProgress {
   updatedCount: number;
-  productsToUpdate: number;
+  total: number;
   status: string;
   errors: any[];
 }

@@ -58,7 +58,7 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
         {updatingProgress.singleProgress.status == "running" ? (
           <LoadingBar
             progress={updatingProgress.singleProgress.updatedCount}
-            total={updatingProgress.singleProgress.productsToUpdate}
+            total={updatingProgress.singleProgress.total}
             label="Analizando por producto..."
           />
         ) : (

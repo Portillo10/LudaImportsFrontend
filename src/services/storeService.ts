@@ -59,7 +59,7 @@ const store = {
   },
 
   async getPendingPublications() {
-    return await apiClient.get(`/stores/pending-products`);
+    return (await apiClient.get(`/stores/pending-products`)).data;
   },
 };
 
