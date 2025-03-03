@@ -8,16 +8,19 @@ const columns = [
     key: "alias",
     label: "Tienda",
     class: "px-6 w-36",
+    rowClass: "w-36",
   },
   {
     key: "publicatedCount",
     label: "Productos publicados",
     class: "px-6 w-44 text-right leading-tight",
+    rowClass: "text-right w-44",
   },
   {
     key: "pendingCount",
     label: "Publicaciones pendientes",
     class: "px-6 w-44 text-right leading-tight",
+    rowClass: "text-right w-44",
   },
 ];
 
@@ -39,7 +42,9 @@ function PendingPosting() {
         {pendingPublications.map((store, i) => (
           <LargeRow index={i} key={i}>
             {columns.map((column) => (
-              <li className={column.class}>{store[column.key]}</li>
+              <li className={`${column.class} py-2 h-7`}>
+                {store[column.key]}
+              </li>
             ))}
           </LargeRow>
         ))}

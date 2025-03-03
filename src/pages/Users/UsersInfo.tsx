@@ -75,7 +75,7 @@ const UsersInfoPage: React.FC = () => {
         return (
           <li
             onClick={() => handleClickDetails(store)}
-            className={column.class}
+            className={`${column.class} py-4 h-14`}
           >
             ---
           </li>
@@ -83,7 +83,7 @@ const UsersInfoPage: React.FC = () => {
       } else if (column.key == "reputation") {
         if (store[column.key] && reputationColors[store[column.key]]) {
           return (
-            <li className={column.class}>
+            <li className={`${column.class} py-4 h-14`}>
               <p
                 className={`${reputationColors[store[column.key]].class} text-sm py-0.5 rounded-md font-semibold`}
               >
@@ -107,7 +107,7 @@ const UsersInfoPage: React.FC = () => {
         label = store[column.key].toString();
       }
 
-      return <li className={column.class}>{label}</li>;
+      return <li className={`${column.class} py-4 h-14`}>{label}</li>;
     });
 
     return items;
