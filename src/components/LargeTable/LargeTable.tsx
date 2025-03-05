@@ -7,10 +7,12 @@ type TableProps = {
 
 const LargeTable: React.FC<TableProps> = ({ columns, children }) => {
   return (
-    <div className="overflow-hidden rounded-sm">
+    <div className="rounded-sm">
       <ul className="py-6 h-16 flex items-center bg-[#232427] px-2">
-        {columns.map((column) => (
-          <li className={column.class}>{column.label}</li>
+        {columns.map((column, i) => (
+          <li key={i} className={column.class}>
+            {column.label}
+          </li>
         ))}
       </ul>
       {children}
