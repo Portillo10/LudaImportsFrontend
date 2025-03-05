@@ -9,25 +9,25 @@ const pendingPubsColumns = [
     key: "alias",
     label: "Tienda",
     class: "px-6 w-36",
-    rowClass: "w-36",
+    rowClass: "",
   },
   {
     key: "publishedCount",
     label: "Publicaciones",
     class: "px-6 w-44 text-right leading-tight",
-    rowClass: "text-right w-44",
+    rowClass: "",
   },
   {
     key: "activeCount",
     label: "Publicaciones activas",
     class: "px-6 w-44 text-right leading-tight",
-    rowClass: "text-right w-44",
+    rowClass: "text-green-400",
   },
   {
     key: "pendingCount",
     label: "Publicaciones pendientes",
     class: "px-6 w-44 text-right leading-tight",
-    rowClass: "text-right w-44",
+    rowClass: "text-red-400",
   },
   { key: "actions", class: "pl-3 w-16 flex items-center", label: "" },
 ];
@@ -118,7 +118,10 @@ function PendingPosting() {
             {pendingPubsColumns.map((column, j) => {
               if (column.key != "actions")
                 return (
-                  <li className={`${column.class} py-2`} key={j}>
+                  <li
+                    className={`${column.class} py-2 ${column.rowClass}`}
+                    key={j}
+                  >
                     {store[column.key]}
                   </li>
                 );
