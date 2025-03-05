@@ -59,21 +59,21 @@ function PendingPosting() {
   const { getPendingPublications } = useStores();
   const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
   const [pendingPublications, setPendingPublications] = useState<any[]>([
-    {
-      alias: "aalgo",
-      pendingCount: 12,
-      publishedCount: 10,
-    },
-    {
-      alias: "aalgo",
-      pendingCount: 12,
-      publishedCount: 10,
-    },
-    {
-      alias: "aalgo",
-      pendingCount: 12,
-      publishedCount: 10,
-    },
+    // {
+    //   alias: "aalgo",
+    //   pendingCount: 12,
+    //   publishedCount: 10,
+    // },
+    // {
+    //   alias: "aalgo",
+    //   pendingCount: 12,
+    //   publishedCount: 10,
+    // },
+    // {
+    //   alias: "aalgo",
+    //   pendingCount: 12,
+    //   publishedCount: 10,
+    // },
   ]);
 
   const onClickMenu = (index: number) => {
