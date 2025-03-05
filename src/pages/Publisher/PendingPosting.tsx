@@ -21,13 +21,13 @@ const pendingPubsColumns = [
     key: "activeCount",
     label: "Publicaciones activas",
     class: "px-6 w-44 text-right leading-tight",
-    rowClass: "text-green-400",
+    rowClass: "text-green-300",
   },
   {
     key: "pendingCount",
     label: "Publicaciones pendientes",
     class: "px-6 w-44 text-right leading-tight",
-    rowClass: "text-red-400",
+    rowClass: "text-red-300",
   },
   { key: "actions", class: "pl-3 w-16 flex items-center", label: "" },
 ];
