@@ -51,7 +51,7 @@ const pendingPubsColumns = [
     class: "px-6 w-44 text-right leading-tight",
     rowClass: "text-red-300",
   },
-  { key: "actions", class: "pl-3 w-7 flex items-center", label: "" },
+  { key: "actions", class: "pl-3 w-8 flex items-center", label: "" },
 ];
 
 function PendingPosting() {
