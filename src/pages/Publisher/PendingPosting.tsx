@@ -4,6 +4,28 @@ import LargeTable from "../../components/LargeTable/LargeTable";
 import LargeRow from "../../components/LargeTable/LargeRow";
 import { useMLApi } from "../../hooks/useMLApi";
 
+const Menu: React.FC<{
+  postPending: (store_id: string) => void;
+  store_id: string;
+  classname?: string;
+}> = ({ postPending, store_id, classname = "" }) => {
+  return (
+    <ul
+      className={`${classname} z-50 absolute -right-36 w-44 bg-[#3a3b40] flex flex-col py-1 text-sm`}
+    >
+      <li
+        onClick={() => postPending(store_id)}
+        className="py-1 px-3 hover:bg-[#5d5f66] cursor-pointer"
+      >
+        Iniciar publicación
+      </li>
+      <li className="py-1 px-3 hover:bg-[#5d5f66] cursor-pointer">
+        Eliminar pendientes
+      </li>
+    </ul>
+  );
+};
+
 const pendingPubsColumns = [
   {
     key: "alias",
@@ -31,28 +53,6 @@ const pendingPubsColumns = [
   },
   { key: "actions", class: "pl-3 w-5 flex items-center", label: "" },
 ];
-
-const Menu: React.FC<{
-  postPending: (store_id: string) => void;
-  store_id: string;
-  classname?: string;
-}> = ({ postPending, store_id, classname = "" }) => {
-  return (
-    <ul
-      className={`${classname} z-50 absolute -right-36 w-44 bg-[#3a3b40] flex flex-col py-1 text-sm`}
-    >
-      <li
-        onClick={() => postPending(store_id)}
-        className="py-1 px-3 hover:bg-[#5d5f66] cursor-pointer"
-      >
-        Iniciar publicación
-      </li>
-      <li className="py-1 px-3 hover:bg-[#5d5f66] cursor-pointer">
-        Eliminar pendientes
-      </li>
-    </ul>
-  );
-};
 
 function PendingPosting() {
   const { postPendingProducts } = useMLApi();
