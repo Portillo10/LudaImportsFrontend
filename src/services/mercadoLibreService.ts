@@ -39,11 +39,6 @@ const mercadoLibreService = {
     return response.data;
   },
 
-  async getPostingProgress() {
-    const response = await apiClient.get("/api/store/posting");
-    return response.data;
-  },
-
   async getPostingProgressByStore(store_id: string) {
     const response = await apiClient.get(`/api/store/${store_id}/posting`);
     return response.data;

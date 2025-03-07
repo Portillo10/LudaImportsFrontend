@@ -1,6 +1,7 @@
 import { Outlet, Route, Routes } from "react-router-dom";
 
 import Layout from "./layouts/Layout";
+//Pages
 import LogIn from "./pages/LogIn/LogIn";
 import Users from "./pages/Users/Users";
 import UsersInfo from "./pages/Users/UsersInfo";

@@ -57,17 +57,6 @@ export const useMLApi = () => {
     }
   };
 
-  const getPostingProgress = async () => {
-    try {
-      const response = await mercadoLibreService.getPostingProgress();
-      console.log(response);
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
-    }
-  };
-
   const getPostingProgressByStore = async (store_id: string) => {
     try {
       const response =
@@ -126,7 +115,6 @@ export const useMLApi = () => {
     sincronizeStore,
     predictCategory,
     transferProducts,
-    getPostingProgress,
     postPendingProducts,
     getSyncStoreProgress,
     deleteForbbidenProducts,

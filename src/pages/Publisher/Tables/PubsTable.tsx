@@ -1,0 +1,67 @@
+import LargeTable from "../../../components/LargeTable/LargeTable";
+import LargeRow from "../../../components/LargeTable/LargeRow";
+import Menu from "../../../components/Menu/Menu";
+import { useEffect } from "react";
+
+type PubsTableProps = {
+  pubs: any[];
+  columns: { label: string; class: string; key: string; rowClass: string }[];
+  activeMenuIndex: number;
+  handleClickMenu: (index: number) => void;
+  menuOptions: { label: string; click: (store_id: string) => void }[];
+};
+
+const PubsTable: React.FC<PubsTableProps> = ({
+  pubs,
+  columns,
+  menuOptions,
+  activeMenuIndex,
+  handleClickMenu,
+}) => {
+  useEffect(() => {}, []);
+
+  return (
+    <LargeTable columns={columns} rowsData={[]}>
+      {pubs.map((store, i) => (
+        <LargeRow index={i} key={i}>
+          {columns.map((column, j) => {
+            if (column.key != "actions")
+              return (
+                <li
+                  className={`${column.class} py-2 ${column.rowClass}`}
+                  key={j}
+                >
+                  {store[column.key]}
+                </li>
+              );
+            else
+              return (
+                <li
+                  className={`${column.class}`}
+                  key={j}
+                  onClick={() => handleClickMenu(i)}
+                >
+                  <span className="cursor-pointer flex gap-1 justify-between py-2">
+                    <span className="size-1 rounded-full bg-white"></span>
+                    <span className="size-1 rounded-full bg-white"></span>
+                    <span className="size-1 rounded-full bg-white"></span>
+                  </span>
+                </li>
+              );
+          })}
+          {i == activeMenuIndex ? (
+            <Menu
+              options={menuOptions}
+              store_id={store["_id"]}
+              classname={i == pubs.length - 1 ? "bottom-3" : "top-3"}
+            />
+          ) : (
+            <></>
+          )}
+        </LargeRow>
+      ))}
+    </LargeTable>
+  );
+};
+
+export default PubsTable;

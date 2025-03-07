@@ -146,9 +146,18 @@ export const useStores = () => {
     }
   };
 
+  const getPostingProgress = async () => {
+    try {
+      return await storeService.getPostingProgress();
+    } catch (error) {
+      if (error instanceof Error) setError(error.message);
+    }
+  };
+
   return {
     handleSuccessLinkStore,
     getPendingPublications,
+    getPostingProgress,
     toggleAllowUpdate,
     deleteAllProducts,
     transferProducts,

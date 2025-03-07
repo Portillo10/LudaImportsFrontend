@@ -58,8 +58,12 @@ const store = {
   },
 
   async getPendingPublications() {
-    return (await apiClient.get(`/stores/pending-products`, { timeout: 12000 }))
+    return (await apiClient.get(`/stores/posting/pending`, { timeout: 12000 }))
       .data;
+  },
+  async getPostingProgress() {
+    const response = await apiClient.get("/stores/posting/progress");
+    return response.data;
   },
 };
 
