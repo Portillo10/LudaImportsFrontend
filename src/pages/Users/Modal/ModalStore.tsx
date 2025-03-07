@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import Modal from "../../../components/Modal/Modal";
-import { useMLApi } from "../../../hooks/useMLApi";
+import { useStores } from "../../../hooks/useStores";
 // import TransferProducts from "./StoreActions.tsx/TransferProducts";
 // import DeleteItems from "./StoreActions.tsx/DeleteItems";
 
@@ -41,7 +41,7 @@ const ModalStore: React.FC<ModalProps> = ({ store, openModal, close }) => {
   //     sincronize: false,
   //   }
   // );
-  const { getPostingProgress } = useMLApi();
+  const { getPostingProgress } = useStores();
 
   useEffect(() => {
     const getProgress = async () => {
