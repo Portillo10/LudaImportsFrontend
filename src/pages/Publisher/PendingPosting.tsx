@@ -4,11 +4,11 @@ import PendingTable from "./Tables/PendingPubsTable";
 function PendingPostingPage() {
   return (
     <div className="basicContainer pt-4">
-      <div className="flex flex-col gap-4 w-full">
-        <section>
+      <div className="flex flex-col gap-4 w-full items-center">
+        <section className="w-full">
           <InProgressTable />
         </section>
-        <section>
+        <section className="w-full">
           <PendingTable />
         </section>
       </div>

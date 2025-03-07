@@ -67,7 +67,12 @@ const InProgressTable: React.FC = () => {
   return (
     <>
       {loading ? (
-        <Spinner />
+        <>
+          <div className="w-full text-left py-4">
+            <h2 className="text-lg">Publicaciones en progreso</h2>
+          </div>
+          <Spinner />
+        </>
       ) : inProgressPublications.length == 0 ? (
         <></>
       ) : (
