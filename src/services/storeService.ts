@@ -33,7 +33,7 @@ const store = {
   },
 
   async getStoresByUser(user_id: string) {
-    const response = await apiClient.get(`/api/user/${user_id}/stores`);
+    const response = await apiClient.get(`/stores/user/${user_id}`);
     return response.data;
   },
 
@@ -51,10 +51,9 @@ const store = {
   },
 
   async deleteAllItems(store_id: string) {
-    const response = await apiClient.delete(
-      `/api/store/${store_id}/items/all`,
-      { timeout: 60000 }
-    );
+    const response = await apiClient.delete(`/stores/${store_id}/items/all`, {
+      timeout: 60000,
+    });
     return response.data;
   },
 
