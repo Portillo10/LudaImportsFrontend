@@ -25,5 +25,19 @@ export const useProduct = () => {
     }
   };
 
-  return { updateProduct, setProduct, product, errorMsg, loading };
+  const getItems = async (filter: any) => {
+    try {
+      const response = await productService.getItems(filter);
+      return response;
+    } catch (error) {
+      if (isAxiosError(error) && error.response?.data) {
+        setErrorMsg(error.response.data.error);
+      } else if (error instanceof Error) {
+        setErrorMsg(error.message);
+      }
+      return null;
+    }
+  };
+
+  return { updateProduct, setProduct, getItems, product, errorMsg, loading };
 };

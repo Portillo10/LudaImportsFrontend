@@ -26,17 +26,17 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
       <div className="w-full flex flex-col gap-6 items-center px-2">
         <ul className="p-3 bg-[#3b3f4e] flex justify-around items-center gap-6 rounded-md shadow-md shadow-slate-900">
           <li>
-            <p className="text-[12px] text-gray-300">Precios comparados</p>
+            <p className="text-[12px] text-gray-300">Precios actualizados</p>
             <span className="text-2xl">
-              {updatingProgress.trackingProgress.compareCount.toLocaleString(
+              {updatingProgress.trackingProgress.updatedCount.toLocaleString(
                 "es-US"
               )}
             </span>
           </li>
           <li>
-            <p className="text-[12px] text-gray-300">Precios actualizados</p>
+            <p className="text-[12px] text-gray-300">Productos omitidos</p>
             <span className="text-2xl">
-              {updatingProgress.trackingProgress.updatedCount.toLocaleString(
+              {updatingProgress.singleProgress.errors.length.toLocaleString(
                 "es-US"
               )}
             </span>

@@ -3,6 +3,7 @@ import { useMLApi } from "../../../hooks/useMLApi";
 import { useStores } from "../../../hooks/useStores";
 import PubsTable from "./PubsTable";
 import Spinner from "../../../components/Spinner/Spinner";
+import Toast from "../../../components/Toast/Toast";
 
 const pendingPubsColumns = [
   {
@@ -35,18 +36,29 @@ const pendingPubsColumns = [
 const PendingTable: React.FC = () => {
   const { postPendingProducts } = useMLApi();
   const { getPendingPublications } = useStores();
-  const [loading, setLoading] = useState<boolean>(false);
+
   const [pendingPublications, setPendingPublications] = useState<any[]>([]);
+  const [toastType, setToastType] = useState<"success" | "error">("success");
   const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
+  const [activeToast, setActiveToast] = useState<boolean>(false);
+  const [toastMessage, setToastMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
   const clickPostPending = async (store_id: string) => {
-    await postPendingProducts(store_id);
+    if (await postPendingProducts(store_id)) {
+      setToastType("success");
+      setToastMessage("Publicación iniciada.");
+    } else {
+      setToastType("error");
+      setToastMessage("Ocurrió un error iniciando la publicación");
+    }
+    setActiveToast(true);
     setActiveMenuIndex(-1);
   };
 
   const pendingOptions = [
     { label: "Iniciar publicación", click: clickPostPending },
-    { label: "Eliminar pendientes", click: () => {} },
+    { label: "Eliminar pendientes", click: async () => {} },
   ];
 
   const onClickMenu = (index: number) => {
@@ -94,6 +106,13 @@ const PendingTable: React.FC = () => {
           handleClickMenu={onClickMenu}
           menuOptions={pendingOptions}
           pubs={pendingPublications}
+        />
+      )}
+      {activeToast && (
+        <Toast
+          type={toastType}
+          message={toastMessage}
+          onClose={() => setActiveToast(false)}
         />
       )}
     </>

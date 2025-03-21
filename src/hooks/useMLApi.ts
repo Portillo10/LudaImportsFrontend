@@ -50,10 +50,12 @@ export const useMLApi = () => {
   const postPendingProducts = async (store_id: string) => {
     try {
       await mercadoLibreService.postPending(store_id);
+      return true;
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
       }
+      return false;
     }
   };
 

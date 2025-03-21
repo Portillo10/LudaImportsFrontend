@@ -10,3 +10,11 @@ export const formatCurrency = (currency: "USD" | "COP", number: number) => {
 
   return currencyFormatter.format(number);
 };
+
+export const convertToQueryParams = (obj: any) => {
+  const queryParams = [];
+  for (const key of Object.keys(obj)) {
+    queryParams.push(`${key}=${obj[key]}`);
+  }
+  return queryParams.join("&");
+};

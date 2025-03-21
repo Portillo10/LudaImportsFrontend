@@ -33,7 +33,9 @@ const InProgressTable: React.FC = () => {
   );
   const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
 
-  const inProgressOptions = [{ label: "Detener publicación", click: () => {} }];
+  const inProgressOptions = [
+    { label: "Detener publicación", click: async () => {} },
+  ];
 
   const onClickMenu = (index: number) => {
     if (activeMenuIndex == index) {

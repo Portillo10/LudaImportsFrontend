@@ -8,7 +8,7 @@ type PubsTableProps = {
   columns: { label: string; class: string; key: string; rowClass: string }[];
   activeMenuIndex: number;
   handleClickMenu: (index: number) => void;
-  menuOptions: { label: string; click: (store_id: string) => void }[];
+  menuOptions: { label: string; click: (store_id: string) => Promise<void> }[];
 };
 
 const PubsTable: React.FC<PubsTableProps> = ({
@@ -41,23 +41,15 @@ const PubsTable: React.FC<PubsTableProps> = ({
                   key={j}
                   onClick={() => handleClickMenu(i)}
                 >
-                  <span className="cursor-pointer flex gap-1 justify-between py-2">
-                    <span className="size-1 rounded-full bg-white"></span>
-                    <span className="size-1 rounded-full bg-white"></span>
-                    <span className="size-1 rounded-full bg-white"></span>
-                  </span>
+                  <Menu
+                    options={menuOptions}
+                    store_id={store["_id"]}
+                    active={i == activeMenuIndex}
+                    classname={i == pubs.length - 1 ? "bottom-3" : "top-3"}
+                  />
                 </li>
               );
           })}
-          {i == activeMenuIndex ? (
-            <Menu
-              options={menuOptions}
-              store_id={store["_id"]}
-              classname={i == pubs.length - 1 ? "bottom-3" : "top-3"}
-            />
-          ) : (
-            <></>
-          )}
         </LargeRow>
       ))}
     </LargeTable>
