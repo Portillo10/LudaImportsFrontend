@@ -34,17 +34,17 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
             </span>
           </li>
           <li>
-            <p className="text-[12px] text-gray-300">Productos omitidos</p>
+            <p className="text-[12px] text-gray-300">Créditos gastados</p>
             <span className="text-2xl">
-              {updatingProgress.singleProgress.errors.length.toLocaleString(
+              {updatingProgress.trackingProgress.usedCredits.toLocaleString(
                 "es-US"
               )}
             </span>
           </li>
           <li>
-            <p className="text-[12px] text-gray-300">Créditos gastados</p>
+            <p className="text-[12px] text-gray-300">Productos omitidos</p>
             <span className="text-2xl">
-              {updatingProgress.trackingProgress.usedCredits.toLocaleString(
+              {updatingProgress.singleProgress.errors.length.toLocaleString(
                 "es-US"
               )}
             </span>
