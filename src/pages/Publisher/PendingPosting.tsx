@@ -19,7 +19,7 @@ function PendingPostingPage() {
 
   useEffect(() => {
     updatedInProgressPubs();
-  });
+  }, []);
 
   return (
     <div className="basicContainer pt-4 pb-8">
