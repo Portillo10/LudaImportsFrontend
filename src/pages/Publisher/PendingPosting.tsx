@@ -4,21 +4,24 @@ import InProgressTable from "./Tables/InProgressPubsTable";
 import PendingTable from "./Tables/PendingPubsTable";
 
 function PendingPostingPage() {
-  const [loadingInProgress, setLoadingInProgress] = useState<boolean>(false);
+  const [loadingInProgress, setLoadingInProgress] = useState<boolean>(true);
   const [inProgressPubs, setInProgressPubs] = useState<any[]>([]);
   const { getPostingProgress } = useStores();
 
-  const updatedInProgressPubs = async () => {
+  const getAndSetInProgressPubs = async () => {
     setLoadingInProgress(true);
-    const response = await getPostingProgress();
-    console.log(response);
-
-    if (response) setInProgressPubs(response.progress);
+    await updateInProgressPubs();
     setLoadingInProgress(false);
   };
 
+  const updateInProgressPubs = async () => {
+    const response = await getPostingProgress();
+
+    if (response) setInProgressPubs(response.progress);
+  };
+
   useEffect(() => {
-    updatedInProgressPubs();
+    getAndSetInProgressPubs();
   }, []);
 
   return (
@@ -28,10 +31,10 @@ function PendingPostingPage() {
           <InProgressTable
             inProgressPubs={inProgressPubs}
             loading={loadingInProgress}
-            updatePubs={updatedInProgressPubs}
+            updatePubs={updateInProgressPubs}
           />
         )}
-        <PendingTable onPublish={updatedInProgressPubs} />
+        <PendingTable onPublish={updateInProgressPubs} />
       </div>
     </div>
   );
