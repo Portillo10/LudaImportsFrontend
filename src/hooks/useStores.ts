@@ -150,7 +150,7 @@ export const useStores = () => {
     try {
       return await storeService.getPostingProgress();
     } catch (error) {
-      if (error instanceof Error) setError(error.message);
+      if (error instanceof Error) console.log(error.message);
     }
   };
 
