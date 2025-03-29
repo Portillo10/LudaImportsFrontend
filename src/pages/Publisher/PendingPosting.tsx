@@ -13,7 +13,7 @@ function PendingPostingPage() {
     const response = await getPostingProgress();
     console.log(response);
 
-    if (response) setInProgressPubs(response);
+    if (response) setInProgressPubs(response.progress);
     setLoadingInProgress(false);
   };
 
