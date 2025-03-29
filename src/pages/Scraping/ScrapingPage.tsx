@@ -152,13 +152,13 @@ const ScrapingPage: React.FC = () => {
     <div className="basicContainer gap-5">
       {progress ? (
         <>
-          <span className="titlePageContainer">
+          <span className="titlePageContainer fade-in">
             <h2>{progress.scrapingProgress.storeAlias}</h2>
 
             <Status status={progress.scrapingProgress.status} />
           </span>
-          <div className="flex flex-col gap-5 w-full px-8">
-            <div className="w-full flex justify-between gap-5">
+          <div className="flex flex-col gap-5 w-full px-8 fade-in">
+            <div className="w-full flex justify-between gap-5 ">
               <ScrapingPanel
                 progress={progress.scrapingProgress}
                 store_id={store_id}
@@ -172,7 +172,9 @@ const ScrapingPage: React.FC = () => {
           </div>
         </>
       ) : (
-        <Spinner size={36} />
+        <div className="w-full flex justify-center mt-48">
+          <Spinner size={46} />
+        </div>
       )}
     </div>
   );

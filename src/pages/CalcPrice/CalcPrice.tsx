@@ -66,7 +66,7 @@ const CalcPrice: React.FC = () => {
   };
 
   return (
-    <div className="basicContainer gap-5">
+    <div className="basicContainer gap-5 fade-in">
       <span className="titlePageContainer">
         <h2>Calcular Precios</h2>
       </span>

@@ -40,7 +40,7 @@ const reputationColors: Record<string, { class: string; label: string }> = {
 const UsersInfoPage: React.FC = () => {
   const { user_id } = useParams();
   const { getStoresByUser } = useStores();
-  const [loadingStores, setLoadingStores] = useState<boolean>(false);
+  const [loadingStores, setLoadingStores] = useState<boolean>(true);
   const [stores, setStores] = useState<Record<string, string | number>[]>([]);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [currentStore, setCurrentStore] = useState<Record<
@@ -116,7 +116,7 @@ const UsersInfoPage: React.FC = () => {
   return (
     <div className="basicContainer pt-8">
       {!loadingStores ? (
-        <LargeTable columns={columns} rowsData={[]}>
+        <LargeTable classname="fade-in" columns={columns} rowsData={[]}>
           {stores.map((store, i) => (
             <LargeRow index={i} key={i}>
               {renderRow(store)}
@@ -124,7 +124,9 @@ const UsersInfoPage: React.FC = () => {
           ))}
         </LargeTable>
       ) : (
-        <Spinner />
+        <div className="w-full flex justify-center mt-16">
+          <Spinner />
+        </div>
       )}
       <ModalStore
         close={() => setOpenModal(false)}

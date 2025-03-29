@@ -54,7 +54,7 @@ const Publisher: React.FC = () => {
   };
 
   return (
-    <div className="basicContainer gap-5">
+    <div className="basicContainer gap-5 fade-in">
       <span className="titlePageContainer">
         <h2>Publicador</h2>
         {user?.role == "admin" ? (

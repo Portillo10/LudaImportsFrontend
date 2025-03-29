@@ -55,7 +55,7 @@ const Users: React.FC = () => {
       );
     } else if (rowsData.length > 0) {
       return (
-        <div className="min-w-96">
+        <div className="min-w-96 fade-in">
           <Table
             rowClass="cursor-pointer hover:bg-[#414249]"
             columns={TableColumns}
@@ -72,7 +72,7 @@ const Users: React.FC = () => {
 
   return (
     <div className="basicContainer gap-10">
-      <span className="titlePageContainer">
+      <span className="titlePageContainer fade-in">
         <h2>Usuarios</h2>
         <NavLink
           to="/users/register"

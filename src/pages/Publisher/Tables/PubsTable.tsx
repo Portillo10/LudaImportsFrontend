@@ -21,7 +21,7 @@ const PubsTable: React.FC<PubsTableProps> = ({
   useEffect(() => {}, []);
 
   return (
-    <LargeTable columns={columns} rowsData={[]}>
+    <LargeTable columns={columns} rowsData={[]} classname="fade-in">
       {pubs.map((store, i) => (
         <LargeRow index={i} key={i}>
           {columns.map((column, j) => {
