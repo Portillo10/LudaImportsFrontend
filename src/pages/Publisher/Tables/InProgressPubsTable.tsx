@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import PubsTable from "./PubsTable";
-import { useStores } from "../../../hooks/useStores";
 import Spinner from "../../../components/Spinner/Spinner";
 
 const inProgressPubsColumns = [
@@ -25,12 +24,11 @@ const inProgressPubsColumns = [
   { key: "actions", class: "px-3 flex items-center", label: "", rowClass: "" },
 ];
 
-const InProgressTable: React.FC = () => {
-  const { getPostingProgress } = useStores();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [inProgressPublications, setInProgressPublications] = useState<any[]>(
-    []
-  );
+const InProgressTable: React.FC<{
+  inProgressPubs: any[];
+  loading: boolean;
+  updatePubs: () => Promise<void>;
+}> = ({ inProgressPubs, loading, updatePubs }) => {
   const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
 
   const inProgressOptions = [
@@ -45,24 +43,20 @@ const InProgressTable: React.FC = () => {
     }
   };
 
-  const updatePubs = async () => {
-    setLoading(true);
-    const response = await getPostingProgress();
-    if (response) setInProgressPublications(response.progress);
-
-    setLoading(false);
-  };
-
   useEffect(() => {
-    updatePubs();
     const handleClickWindow = (ev: MouseEvent) => {
       if (ev.target instanceof HTMLElement && ev.target.tagName !== "SPAN")
         setActiveMenuIndex(-1);
     };
     document.addEventListener("click", handleClickWindow);
 
+    const intervalId = setInterval(() => {
+      updatePubs();
+    }, 5000);
+
     return () => {
       document.removeEventListener("click", handleClickWindow);
+      clearInterval(intervalId);
     };
   }, []);
 
@@ -75,7 +69,7 @@ const InProgressTable: React.FC = () => {
           </div>
           <Spinner />
         </>
-      ) : inProgressPublications.length == 0 ? (
+      ) : inProgressPubs.length == 0 ? (
         <></>
       ) : (
         <>
@@ -83,7 +77,7 @@ const InProgressTable: React.FC = () => {
             <h2 className="text-lg">Publicaciones en progreso</h2>
           </div>
           <PubsTable
-            pubs={inProgressPublications}
+            pubs={inProgressPubs}
             menuOptions={inProgressOptions}
             activeMenuIndex={activeMenuIndex}
             columns={inProgressPubsColumns}

@@ -33,7 +33,9 @@ const pendingPubsColumns = [
   { key: "actions", class: "px-3 flex items-center", label: "", rowClass: "" },
 ];
 
-const PendingTable: React.FC = () => {
+const PendingTable: React.FC<{ onPublish: () => Promise<void> }> = ({
+  onPublish,
+}) => {
   const { postPendingProducts } = useMLApi();
   const { getPendingPublications } = useStores();
 
@@ -48,6 +50,7 @@ const PendingTable: React.FC = () => {
     if (await postPendingProducts(store_id)) {
       setToastType("success");
       setToastMessage("Publicación iniciada.");
+      onPublish();
     } else {
       setToastType("error");
       setToastMessage("Ocurrió un error iniciando la publicación");
@@ -73,7 +76,6 @@ const PendingTable: React.FC = () => {
     setLoading(true);
     const response = await getPendingPublications();
     if (response) setPendingPublications(response);
-
     setLoading(false);
   };
 

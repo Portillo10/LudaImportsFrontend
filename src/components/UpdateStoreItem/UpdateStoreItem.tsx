@@ -7,7 +7,7 @@ type UpdateStoreItemProps = {
   store: {
     _id: string;
     alias: string;
-    user?: string;
+    user?: any;
     lastUpdate?: string;
     inProgress?: boolean;
     allowUpdate: boolean;
@@ -29,7 +29,7 @@ const UpdateStoreItem: React.FC<UpdateStoreItemProps> = ({ store }) => {
       </section>
       <section className="span-2">
         <p>Tienda: {store.alias}</p>
-        <p>Dueño: {store.user}</p>
+        <p>Dueño: {store.user.username}</p>
         <p>
           {store.inProgress
             ? "Actualizando..."
