@@ -8,15 +8,17 @@ function PendingPostingPage() {
   const [inProgressPubs, setInProgressPubs] = useState<any[]>([]);
   const { getPostingProgress } = useStores();
 
-  const updatedPendingPubs = async () => {
+  const updatedInProgressPubs = async () => {
     setLoadingInProgress(true);
     const response = await getPostingProgress();
+    console.log(response);
+
     if (response) setInProgressPubs(response);
     setLoadingInProgress(false);
   };
 
   useEffect(() => {
-    updatedPendingPubs();
+    updatedInProgressPubs();
   });
 
   return (
@@ -26,10 +28,10 @@ function PendingPostingPage() {
           <InProgressTable
             inProgressPubs={inProgressPubs}
             loading={loadingInProgress}
-            updatePubs={updatedPendingPubs}
+            updatePubs={updatedInProgressPubs}
           />
         )}
-        <PendingTable onPublish={updatedPendingPubs} />
+        <PendingTable onPublish={updatedInProgressPubs} />
       </div>
     </div>
   );
