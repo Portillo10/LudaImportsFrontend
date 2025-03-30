@@ -1,16 +1,6 @@
-import { CalcPriceResponse } from "../types/apiResponses";
 import apiClient from "./apiClient";
 
 const mercadoLibreService = {
-  async calcPrice(storeId: string, sku: string) {
-    const response = await apiClient.get(
-      `/api/store/${storeId}/calc-price?sku=${sku}`,
-      { timeout: 200000 }
-    );
-    const responseData: CalcPriceResponse | any = response.data;
-    return { data: responseData, status: response.status };
-  },
-
   async getCategories() {
     const response = await apiClient.get("/api/categories");
     return response.data;
@@ -22,8 +12,10 @@ const mercadoLibreService = {
     sku?: string,
     limit: number = 1
   ) {
+    const queryParams = `${sku ? `sku=${sku}` : q ? `q=${q}` : ""}`;
+
     const response = await apiClient.get(
-      `/api/store/${store_id}/predict?${sku ? `sku=${sku}` : ""}${q && !sku ? `q=${q}` : ""}&limit=${limit}`
+      `/api/store/${store_id}/predict?${queryParams}&limit=${limit}`
     );
     return response.data;
   },
@@ -57,6 +49,13 @@ const mercadoLibreService = {
   async deleteForbbidenProducts(store_id: string) {
     const response = await apiClient.post(
       `/api/store/${store_id}/delete-forbbiden`
+    );
+    return response.data;
+  },
+
+  async postOmited(store_id: string) {
+    const response = await apiClient.post(
+      `/api/store/${store_id}/posting/omited`
     );
     return response.data;
   },

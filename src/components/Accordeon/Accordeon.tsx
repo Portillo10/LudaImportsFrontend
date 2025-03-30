@@ -28,7 +28,8 @@ const Accordeon: React.FC<AccordeonProps> = ({
           />
         </div>
         <div
-          className={`${displayed ? "max-h-96" : "max-h-0"} transition-all flex flex-col items-center w-full overflow-hidden`}
+          style={{ transition: displayed ? "all 600ms" : "all 200ms" }}
+          className={`${displayed ? "max-h-96" : "max-h-0"} flex flex-col items-center w-full overflow-hidden`}
         >
           {children}
         </div>

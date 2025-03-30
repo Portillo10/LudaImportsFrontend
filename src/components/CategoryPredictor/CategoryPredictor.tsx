@@ -42,7 +42,7 @@ const CategoryPredictor: React.FC = () => {
         action=""
         onSubmit={handleSubmit(onSubmit)}
       >
-        <span className="inputBox max-w-80">
+        <span className="inputBox min-w-96">
           <input
             type="text"
             className="input"

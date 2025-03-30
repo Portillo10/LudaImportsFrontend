@@ -1,16 +1,19 @@
 import { useParams } from "react-router-dom";
-import DropFileInput from "../../components/DropFile/DropFile";
 import { ChangeEvent, useEffect, useState } from "react";
-import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
+
+import Icon from "../../components/Icon";
+import PlayIcon from "../../components/Icons/PlayIcon";
+import Spinner from "../../components/Spinner/Spinner";
+import PauseIcon from "../../components/Icons/PauseIcon";
+import DropFileInput from "../../components/DropFile/DropFile";
+
+import ScrapingPanel from "./ScrapingPanel";
+import { IconName } from "../../types/iconProps";
 import { useScraping } from "../../hooks/useScraping";
 import { IScrapingProgress } from "../../types/scrapingProgress";
-import PlayIcon from "../../components/Icons/PlayIcon";
-import { IconName } from "../../types/iconProps";
-import Icon from "../../components/Icon";
-import PauseIcon from "../../components/Icons/PauseIcon";
+import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
+
 import "./styles.css";
-import Spinner from "../../components/Spinner/Spinner";
-import ScrapingPanel from "./ScrapingPanel";
 
 type OmitedProductCardProps = {
   children: any;

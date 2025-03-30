@@ -23,7 +23,7 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
 
   if (updatingProgress) {
     return (
-      <div className="w-full flex flex-col gap-6 items-center px-2">
+      <div className="w-full flex flex-col gap-6 items-center px-2 fade-in">
         <ul className="p-3 bg-[#3b3f4e] flex justify-around items-center gap-6 rounded-md shadow-md shadow-slate-900">
           <li>
             <p className="text-[12px] text-gray-300">Precios actualizados</p>

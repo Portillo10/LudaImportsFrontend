@@ -109,11 +109,23 @@ export const useMLApi = () => {
     }
   };
 
+  const postOmited = async (store_id: string) => {
+    try {
+      await mercadoLibreService.postOmited(store_id);
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  };
+
   return {
-    error,
-    loading,
-    progress,
     loadingTransfer,
+    progress,
+    loading,
+    error,
+    postOmited,
     sincronizeStore,
     predictCategory,
     transferProducts,

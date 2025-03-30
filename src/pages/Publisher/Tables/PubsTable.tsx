@@ -1,7 +1,6 @@
 import LargeTable from "../../../components/LargeTable/LargeTable";
 import LargeRow from "../../../components/LargeTable/LargeRow";
 import Menu from "../../../components/Menu/Menu";
-import { useEffect } from "react";
 
 type PubsTableProps = {
   pubs: any[];
@@ -18,8 +17,6 @@ const PubsTable: React.FC<PubsTableProps> = ({
   activeMenuIndex,
   handleClickMenu,
 }) => {
-  useEffect(() => {}, []);
-
   return (
     <LargeTable columns={columns} rowsData={[]} classname="fade-in">
       {pubs.map((store, i) => (

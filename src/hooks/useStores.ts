@@ -154,6 +154,14 @@ export const useStores = () => {
     }
   };
 
+  const getOmitedPubs = async () => {
+    try {
+      return await storeService.getOmitedPubs();
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+    }
+  };
+
   return {
     handleSuccessLinkStore,
     getPendingPublications,
@@ -165,6 +173,7 @@ export const useStores = () => {
     getStoresByUser,
     handleLinkStore,
     renderSkeletons,
+    getOmitedPubs,
     endLinkStore,
     getAllStores,
     loading,

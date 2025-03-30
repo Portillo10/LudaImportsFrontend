@@ -14,7 +14,7 @@ const priceService = {
     return response.data;
   },
   async getUsdRate() {
-    const response = await apiClient.get("/price/usd-rate");
+    const response = await apiClient.get("/price/usd-rate", { timeout: 20000 });
     const responseData: { usdRate: number } = response.data;
     return responseData;
   },

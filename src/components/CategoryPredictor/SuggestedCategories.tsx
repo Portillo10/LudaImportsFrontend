@@ -30,7 +30,7 @@ const SuggestedCategories: React.FC<SuggestedCategoriesProps> = ({
 }) => {
   return (
     <ul
-      className={`flex flex-col w-max transition-normal overflow-hidden ${categories?.length == 0 ? "max-h-0" : "max-h-96"}`}
+      className={`flex flex-col w-full pr-10 transition-normal overflow-hidden ${categories?.length == 0 ? "max-h-0" : "max-h-96"}`}
     >
       {categories?.map((category, i) => (
         <SuggestedCategoryItem

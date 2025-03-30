@@ -65,6 +65,10 @@ const store = {
     const response = await apiClient.get("/stores/posting/progress");
     return response.data;
   },
+  async getOmitedPubs() {
+    const response = await apiClient.get("/stores/posting/omited");
+    return response.data;
+  },
 };
 
 export default store;
