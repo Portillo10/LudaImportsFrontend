@@ -120,11 +120,27 @@ export const useMLApi = () => {
     }
   };
 
+  const postBySKU = async (
+    sku: string,
+    store_id: string,
+    ignoreFilters: boolean
+  ) => {
+    try {
+      await mercadoLibreService.postBySku(sku, store_id, ignoreFilters);
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      }
+    }
+  };
+
   return {
     loadingTransfer,
     progress,
     loading,
     error,
+    postBySKU,
     postOmited,
     sincronizeStore,
     predictCategory,

@@ -13,9 +13,15 @@ const omitedPubsColumns = [
     rowClass: "",
   },
   {
-    key: "errorCount",
-    label: "Publicaciones activas",
+    key: "omitedCount",
+    label: "Productos omitidos",
     class: "px-6 w-44 text-right leading-tight",
+    rowClass: "",
+  },
+  {
+    key: "actions",
+    label: "",
+    class: "px-3 flex items-center",
     rowClass: "",
   },
 ];
@@ -29,7 +35,7 @@ const OmitedPubsTable: React.FC = () => {
   const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
   const [activeToast, setActiveToast] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const onClickMenu = (index: number) => {
     if (activeMenuIndex == index) {
@@ -57,7 +63,9 @@ const OmitedPubsTable: React.FC = () => {
   };
 
   const omitedOptions = [
-    { label: "Publicar productos omitidos", click: clickPostOmited },
+    { label: "Publicar", click: clickPostOmited },
+    { label: "Inspeccionar", click: clickPostOmited },
+    { label: "Eliminar", click: clickPostOmited },
   ];
 
   useEffect(() => {
@@ -75,21 +83,28 @@ const OmitedPubsTable: React.FC = () => {
 
   return (
     <>
-      <div className="w-full text-left py-4">
-        <h2 className="text-lg">Publicaciones pendientes</h2>
-      </div>
       {loading ? (
-        <Spinner />
+        <>
+          <div className="w-full text-left py-4">
+            <h2 className="text-lg">Productos omitidos</h2>
+          </div>
+          <Spinner />
+        </>
       ) : pendingPublications.length == 0 ? (
-        <p className="w-full text-center">No hay publicaciones pendientes</p>
+        <></>
       ) : (
-        <PubsTable
-          columns={omitedPubsColumns}
-          activeMenuIndex={activeMenuIndex}
-          handleClickMenu={onClickMenu}
-          menuOptions={omitedOptions}
-          pubs={pendingPublications}
-        />
+        <>
+          <div className="w-full text-left py-4">
+            <h2 className="text-lg">Productos omitidos</h2>
+          </div>
+          <PubsTable
+            columns={omitedPubsColumns}
+            activeMenuIndex={activeMenuIndex}
+            handleClickMenu={onClickMenu}
+            menuOptions={omitedOptions}
+            pubs={pendingPublications}
+          />
+        </>
       )}
       {activeToast && (
         <Toast

@@ -59,6 +59,17 @@ const mercadoLibreService = {
     );
     return response.data;
   },
+
+  async postBySku(
+    sku: string,
+    store_id: string,
+    ignoreFilters: boolean = false
+  ) {
+    const response = await apiClient.post(
+      `/api/store/${store_id}/post?sku=${sku}&ignoreFilters=${ignoreFilters}`
+    );
+    return response.data;
+  },
 };
 
 export default mercadoLibreService;

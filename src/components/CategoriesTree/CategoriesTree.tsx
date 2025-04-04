@@ -4,6 +4,8 @@ import { ICategory, IChildrenCategory } from "../../types/category";
 import { fetchCategories } from "../../utils/fetchHelper";
 import Toast from "../Toast/Toast";
 
+import "./style.css";
+
 type ActiveCategory = {
   level: number;
   id: string;
@@ -97,7 +99,7 @@ const CategoriesTree: React.FC = () => {
           {index > 0 && (
             <hr className="bg-[#4b5563] w-[2px] h-full border-none" />
           )}
-          <div className="flex flex-col">
+          <div className="flex flex-col fade-in-category">
             {categoryChunk.map((category, j) => (
               <CategoryItem
                 parent={category.parent}

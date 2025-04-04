@@ -16,7 +16,7 @@
 }
 
 .fade-in {
-  animation: fadeIn 0.5s ease-out;
+  animation: fadeIn 0.4s ease-out;
 }
 
 .input {
@@ -27,12 +27,16 @@
   @apply rounded-md bg-input-background border-input-border border px-2 py-1.5 outline-none focus:border-[#5CBAFF] transition;
 }
 
+.textarea {
+  @apply rounded-md bg-input-background border-input-border border px-2 py-1 outline-none focus:border-[#5CBAFF] transition w-full;
+}
+
 .button {
   @apply bg-button-background px-4 py-2 font-semibold text-base rounded-md hover:bg-button-hover transition flex justify-center;
 }
 
 .inputBox {
-  @apply flex flex-col gap-2 w-full;
+  @apply flex flex-col gap-1 w-full;
 }
 
 .inputBox select {

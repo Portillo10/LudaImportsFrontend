@@ -28,7 +28,7 @@ const store = {
   },
 
   async getStores() {
-    const response = await apiClient.get("/api/stores");
+    const response = await apiClient.get("/stores");
     return response.data;
   },
 
@@ -43,10 +43,10 @@ const store = {
   },
 
   async transferProducts(origin_store_id: string, target_store_id: string) {
-    const response = await apiClient.post("/api/store/transfer-products", {
-      origin_store_id,
-      target_store_id,
-    });
+    const response = await apiClient.post(
+      `/stores/${origin_store_id}/transfer-to/${target_store_id}`
+    );
+
     return response.data;
   },
 

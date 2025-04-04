@@ -1,11 +1,12 @@
 import { isAxiosError } from "axios";
 import scrapeService from "../services/scrapeService";
+import { IProduct } from "../types/product";
 
 export const useScraping = () => {
   const scrapeBySku = async (sku: string, store_id: string) => {
     try {
-      const response = await scrapeService.scrapeBySku(sku, store_id);
-      console.log(response);
+      const response: IProduct = await scrapeService.scrapeBySku(sku, store_id);
+      return response;
     } catch (error) {
       console.log(error);
     }

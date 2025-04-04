@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import { useStores } from "../../hooks/useStores";
+
 import InProgressTable from "./Tables/InProgressPubsTable";
+import OmitedPubsTable from "./Tables/OmitedPubsTable";
 import PendingTable from "./Tables/PendingPubsTable";
+
+import { useStores } from "../../hooks/useStores";
 
 function PendingPostingPage() {
   const [loadingInProgress, setLoadingInProgress] = useState<boolean>(true);
@@ -35,6 +38,7 @@ function PendingPostingPage() {
           />
         )}
         <PendingTable onPublish={updateInProgressPubs} />
+        <OmitedPubsTable />
       </div>
     </div>
   );

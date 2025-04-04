@@ -5,7 +5,12 @@ export interface IProduct {
   dimensions: string;
   title: string;
   category_id: string;
+  description: string;
+  pictures: Picture[];
+  attributes: Attributes;
+  condition: "new" | "refurbished";
   state: ProductState;
+  tracked?: boolean;
   isPrime?: boolean;
 }
 
@@ -17,3 +22,9 @@ export type ProductState =
   | "pending"
   | "revised"
   | "forbbiden";
+
+export type Attributes = { [key: string]: string | number };
+
+export type Picture = {
+  source: string;
+};

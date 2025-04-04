@@ -10,7 +10,6 @@ dialog::backdrop {
   border: none;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  max-width: 500px;
   width: 100%;
   margin: auto;
   background-color: #3a3b40;
@@ -34,7 +33,7 @@ dialog::backdrop {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 8px;
+  padding: 8px 20px;
   /* margin-bottom: 16px; */
 }
 
@@ -46,6 +45,7 @@ dialog::backdrop {
 }
 
 .modal-body {
-  padding: 15px 10px;
+  max-height: 495px;
+  padding: 15px 0px;
   border-top: rgb(39, 37, 37) solid 2px;
 }
