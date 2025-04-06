@@ -16,7 +16,7 @@ export const useScraping = () => {
       );
       return response;
     } catch (error) {
-      console.log(error);
+      if (isAxiosError(error)) console.log(error.response?.data);
     }
   };
 

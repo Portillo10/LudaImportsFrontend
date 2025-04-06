@@ -26,6 +26,7 @@ const Publisher: React.FC = () => {
       data.category_id
     );
     if (product) {
+      console.log(product);
       setScrapedProduct(product);
     }
   };
