@@ -44,10 +44,7 @@ const Modal: React.FC<ModalProps> = ({
   return (
     <>
       {/* {isOpen && <div className="modal-overlay"></div>} */}
-      <dialog
-        ref={dialogRef}
-        className={`modal overflow-hidden ${className || ""}`}
-      >
+      <dialog ref={dialogRef} className={`modal ${className || ""}`}>
         <div className="w-full">
           <div className="modal-header">
             {title && <h2>{title}</h2>}

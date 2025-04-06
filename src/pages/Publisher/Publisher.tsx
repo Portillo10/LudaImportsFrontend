@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 import { IProduct } from "../../types/product";
 import Modal from "../../components/Modal/Modal";
 import ProductViewer from "../../components/ProductViewer/ProductViewer";
-import PostBySkuForm from "./Forms/PostBySkuForm";
+import PostBySkuForm, { PublisherFormInputs } from "./Forms/PostBySkuForm";
 
 const Publisher: React.FC = () => {
   const { user } = useAuth();
@@ -19,8 +19,12 @@ const Publisher: React.FC = () => {
 
   useEffect(() => {}, []);
 
-  const onSubmit = async (data: any) => {
-    const product = await scrapeBySku(data.sku, data.store_id);
+  const onSubmit = async (data: PublisherFormInputs) => {
+    const product = await scrapeBySku(
+      data.sku,
+      data.store_id,
+      data.category_id
+    );
     if (product) {
       setScrapedProduct(product);
     }

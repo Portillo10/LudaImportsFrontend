@@ -6,7 +6,7 @@ export interface IProduct {
   title: string;
   category_id: string;
   description: string;
-  pictures: Picture[];
+  pictures: string[];
   attributes: Attributes;
   condition: "new" | "refurbished";
   state: ProductState;

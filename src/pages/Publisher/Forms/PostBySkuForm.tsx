@@ -5,7 +5,7 @@ import Spinner from "../../../components/Spinner/Spinner";
 import Select from "../../../components/Inputs/Select";
 import Input from "../../../components/Inputs/Input";
 
-type Inputs = {
+export type PublisherFormInputs = {
   sku: string;
   store_id: string;
   category_id: string;
@@ -15,17 +15,17 @@ type Inputs = {
 
 type PostBySkuFormProps = {
   user: IUser | null;
-  onSubmitHandler: (data: any) => Promise<void>;
+  onSubmitHandler: (data: PublisherFormInputs) => Promise<void>;
 };
 
 const PostBySkuForm: React.FC<PostBySkuFormProps> = ({
   user,
   onSubmitHandler,
 }) => {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<PublisherFormInputs>();
   const [loading, setLoading] = useState(false);
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<PublisherFormInputs> = async (data) => {
     setLoading(true);
     await onSubmitHandler(data);
     setLoading(false);

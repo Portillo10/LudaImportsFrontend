@@ -18,6 +18,8 @@ dialog::backdrop {
   transition:
     scale 0.15s ease,
     display 0.15s ease allow-discrete;
+  display: flex;
+  align-items: center;
 }
 
 .modal[open] {
@@ -45,7 +47,5 @@ dialog::backdrop {
 }
 
 .modal-body {
-  max-height: 495px;
-  padding: 15px 0px;
   border-top: rgb(39, 37, 37) solid 2px;
 }

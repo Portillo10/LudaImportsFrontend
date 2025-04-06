@@ -1,15 +1,15 @@
 import { useState } from "react";
-import { IProduct, Picture } from "../../types/product";
+import { IProduct } from "../../types/product";
 import DeleteIcon from "../../assets/icons/DeleteIcon.svg";
 import Toast from "../Toast/Toast";
 
 type ImageViewerProps = {
-  pictures: Picture[];
+  pictures: string[];
   deleteImage: (product: Partial<IProduct>) => void;
 };
 
 const ImageViewer: React.FC<ImageViewerProps> = ({ pictures, deleteImage }) => {
-  const [currentImg, setCurrentImg] = useState<string>(pictures[0].source);
+  const [currentImg, setCurrentImg] = useState<string>(pictures[0]);
   const [currentImgIndex, setCurrentImgIndex] = useState<number>(0);
   const [activeToast, setActiveToast] = useState<boolean>(false);
   const [messageToast, setMessageToast] = useState<string>("");
@@ -22,15 +22,13 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ pictures, deleteImage }) => {
 
   const onDeleteImage = () => {
     if (pictures.length > 1) {
-      const newImages = pictures.filter(
-        (picture) => picture.source != currentImg
-      );
+      const newImages = pictures.filter((picture) => picture != currentImg);
       deleteImage({ pictures: newImages });
 
       if (currentImgIndex == 0) {
-        setCurrentImg(pictures[1].source);
+        setCurrentImg(pictures[1]);
       } else {
-        setCurrentImg(pictures[currentImgIndex - 1].source);
+        setCurrentImg(pictures[currentImgIndex - 1]);
         setCurrentImgIndex(currentImgIndex - 1);
       }
     } else {
@@ -46,13 +44,13 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ pictures, deleteImage }) => {
         {pictures.map((picture, i) => (
           <span
             key={i}
-            onMouseEnter={() => changeCurrentImg(picture.source, i)}
+            onMouseEnter={() => changeCurrentImg(picture, i)}
             className={`cursor-pointer border-2 transition-all p-1 rounded-sm ${currentImgIndex == i && " border-sky-500"}`}
           >
             <img
               style={{ width: "35px" }}
               className="object-cover rounded-sm"
-              src={picture.source}
+              src={picture}
             />
           </span>
         ))}

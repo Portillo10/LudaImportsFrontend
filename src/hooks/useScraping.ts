@@ -3,9 +3,17 @@ import scrapeService from "../services/scrapeService";
 import { IProduct } from "../types/product";
 
 export const useScraping = () => {
-  const scrapeBySku = async (sku: string, store_id: string) => {
+  const scrapeBySku = async (
+    sku: string,
+    store_id: string,
+    category_id: string
+  ) => {
     try {
-      const response: IProduct = await scrapeService.scrapeBySku(sku, store_id);
+      const response: IProduct = await scrapeService.scrapeBySku(
+        sku,
+        store_id,
+        category_id
+      );
       return response;
     } catch (error) {
       console.log(error);
