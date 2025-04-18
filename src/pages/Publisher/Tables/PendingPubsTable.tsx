@@ -36,7 +36,7 @@ const pendingPubsColumns = [
 const PendingTable: React.FC<{ onPublish: () => Promise<void> }> = ({
   onPublish,
 }) => {
-  const { postPendingProducts } = useMLApi();
+  const { postProducts } = useMLApi();
   const { getPendingPublications } = useStores();
 
   const [pendingPublications, setPendingPublications] = useState<any[]>([]);
@@ -47,7 +47,7 @@ const PendingTable: React.FC<{ onPublish: () => Promise<void> }> = ({
   const [loading, setLoading] = useState<boolean>(true);
 
   const clickPostPending = async (store_id: string) => {
-    if (await postPendingProducts(store_id)) {
+    if (await postProducts(store_id)) {
       setToastType("success");
       setToastMessage("Publicación iniciada.");
       onPublish();

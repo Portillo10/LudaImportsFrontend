@@ -25,8 +25,10 @@ const mercadoLibreService = {
     return response.data;
   },
 
-  async postPending(store_id: string) {
-    const response = await apiClient.post(`/api/store/${store_id}/posting`);
+  async postProducts(store_id: string, status: string = "pending") {
+    const response = await apiClient.post(
+      `/api/store/${store_id}/posting?status=${status}`
+    );
 
     return response.data;
   },
@@ -49,13 +51,6 @@ const mercadoLibreService = {
   async deleteForbbidenProducts(store_id: string) {
     const response = await apiClient.post(
       `/api/store/${store_id}/delete-forbbiden`
-    );
-    return response.data;
-  },
-
-  async postOmited(store_id: string) {
-    const response = await apiClient.post(
-      `/api/store/${store_id}/posting/omited`
     );
     return response.data;
   },

@@ -28,7 +28,7 @@ const omitedPubsColumns = [
 
 const OmitedPubsTable: React.FC = () => {
   const { getOmitedPubs } = useStores();
-  const { postOmited } = useMLApi();
+  const { postProducts } = useMLApi();
 
   const [pendingPublications, setPendingPublications] = useState<any[]>([]);
   const [toastType, setToastType] = useState<"success" | "error">("success");
@@ -53,7 +53,7 @@ const OmitedPubsTable: React.FC = () => {
   };
 
   const clickPostOmited = async (store_id: string) => {
-    if (await postOmited(store_id)) {
+    if (await postProducts(store_id, "omited")) {
       setToastMessage("Publicación iniciada");
       setToastType("success");
     } else {
@@ -64,8 +64,8 @@ const OmitedPubsTable: React.FC = () => {
 
   const omitedOptions = [
     { label: "Publicar", click: clickPostOmited },
-    { label: "Inspeccionar", click: clickPostOmited },
-    { label: "Eliminar", click: clickPostOmited },
+    { label: "Inspeccionar", click: async () => {} },
+    { label: "Eliminar", click: async () => {} },
   ];
 
   useEffect(() => {

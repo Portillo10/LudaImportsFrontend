@@ -47,9 +47,9 @@ export const useMLApi = () => {
     }
   };
 
-  const postPendingProducts = async (store_id: string) => {
+  const postProducts = async (store_id: string, status?: string) => {
     try {
-      await mercadoLibreService.postPending(store_id);
+      await mercadoLibreService.postProducts(store_id, status);
       return true;
     } catch (error) {
       if (error instanceof Error) {
@@ -109,17 +109,6 @@ export const useMLApi = () => {
     }
   };
 
-  const postOmited = async (store_id: string) => {
-    try {
-      await mercadoLibreService.postOmited(store_id);
-      return true;
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
-    }
-  };
-
   const postBySKU = async (
     sku: string,
     store_id: string,
@@ -141,11 +130,10 @@ export const useMLApi = () => {
     loading,
     error,
     postBySKU,
-    postOmited,
+    postProducts,
     sincronizeStore,
     predictCategory,
     transferProducts,
-    postPendingProducts,
     getSyncStoreProgress,
     deleteForbbidenProducts,
     getPostingProgressByStore,
