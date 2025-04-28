@@ -61,7 +61,7 @@ const InProgressTable: React.FC<{
   }, []);
 
   return (
-    <>
+    <div className="w-full flex flex-col items-center p-8 gap-4 rounded-lg border border-gray-900 shadow-sm shadow-black">
       {loading ? (
         <>
           <div className="w-full text-left py-4">
@@ -85,7 +85,7 @@ const InProgressTable: React.FC<{
           />
         </>
       )}
-    </>
+    </div>
   );
 };
 

@@ -11,7 +11,8 @@ const Menu: React.FC<{
   classname?: string;
   active: boolean;
   options: OptionProps[];
-}> = ({ store_id, classname = "", options, active }) => {
+  side?: "right" | "left";
+}> = ({ store_id, classname = "", options, active, side = "right" }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const handleClick = async (option: OptionProps) => {
     setLoading(true);
@@ -34,7 +35,11 @@ const Menu: React.FC<{
         )}
         {active ? (
           <ul
-            className={`${classname} z-50 absolute -right-40 w-44 bg-[#3a3b40] flex flex-col py-1 text-sm`}
+            style={{
+              left: side == "left" ? "-160px" : "",
+              right: side == "right" ? "-160px" : "",
+            }}
+            className={`${classname} z-50 absolute w-44 bg-[#3a3b40] flex flex-col py-1 text-sm`}
           >
             {options.map((option) => (
               <li

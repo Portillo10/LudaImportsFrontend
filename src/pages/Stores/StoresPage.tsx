@@ -12,7 +12,7 @@ const StoresPage: React.FC = () => {
       return <Navigate to="/stores/link" />;
     } else {
       return (
-        <div className="basicContainer gap-8">
+        <div className="basicContainer gap-8 px-6">
           <span className="titlePageContainer">
             <h2>Mis tiendas</h2>
             <NavLink

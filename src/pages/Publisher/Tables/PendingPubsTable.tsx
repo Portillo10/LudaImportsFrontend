@@ -9,25 +9,19 @@ const pendingPubsColumns = [
   {
     key: "alias",
     label: "Tienda",
-    class: "px-6 w-36",
+    class: "px-6 max-w-60 w-full",
     rowClass: "",
   },
-  // {
-  //   key: "publishedCount",
-  //   label: "Publicaciones",
-  //   class: "px-6 w-44 text-right leading-tight",
-  //   rowClass: "",
-  // },
   {
     key: "activeCount",
     label: "Publicaciones activas",
-    class: "px-6 w-44 text-right leading-tight",
+    class: "px-6 max-w-60 w-full text-right leading-tight",
     rowClass: "text-green-300",
   },
   {
     key: "pendingCount",
     label: "Publicaciones pendientes",
-    class: "px-6 w-44 text-right leading-tight",
+    class: "px-6 max-w-60 w-full text-right leading-tight",
     rowClass: "text-red-300",
   },
   { key: "actions", class: "px-3 flex items-center", label: "", rowClass: "" },
@@ -93,8 +87,8 @@ const PendingTable: React.FC<{ onPublish: () => Promise<void> }> = ({
   }, []);
 
   return (
-    <>
-      <div className="w-full text-left py-4">
+    <div className="w-full flex flex-col items-center p-8 gap-4 rounded-lg border border-gray-900 shadow-sm shadow-black">
+      <div className="w-full text-left">
         <h2 className="text-lg">Publicaciones pendientes</h2>
       </div>
       {loading ? (
@@ -117,7 +111,7 @@ const PendingTable: React.FC<{ onPublish: () => Promise<void> }> = ({
           onClose={() => setActiveToast(false)}
         />
       )}
-    </>
+    </div>
   );
 };
 

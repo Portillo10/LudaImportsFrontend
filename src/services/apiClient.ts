@@ -6,7 +6,7 @@ const apiClient: AxiosInstance = axios.create({
   baseURL: window.location.host.includes("localhost")
     ? "http://localhost:8000"
     : import.meta.env.VITE_API_URL, // La base URL de la API
-  timeout: 7000, // Tiempo de espera para solicitudes
+  timeout: 10000, // Tiempo de espera para solicitudes
   headers: {
     "Content-Type": "application/json",
     Authorization: `Bearer ${getToken()}`,

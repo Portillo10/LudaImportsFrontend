@@ -73,7 +73,7 @@ const SelectShop: React.FC = () => {
   }, []);
 
   return (
-    <div className="basicContainer">
+    <div className="basicContainer px-6">
       <span className="titlePageContainer">
         <h2>Seleccione una tienda</h2>
       </span>

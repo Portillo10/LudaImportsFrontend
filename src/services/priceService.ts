@@ -27,7 +27,7 @@ const priceService = {
   async calcPrice(store_id: string, sku: string) {
     const response = await apiClient.get(
       `/price/store/${store_id}/calc-price?sku=${sku}`,
-      { timeout: 50000 }
+      { timeout: 120000 }
     );
     const responseData: CalcPriceResponse | any = response.data;
     return { data: responseData, status: response.status };

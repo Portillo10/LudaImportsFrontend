@@ -12,8 +12,10 @@ const LargeTable: React.FC<TableProps> = ({
   classname = "",
 }) => {
   return (
-    <div className={`rounded-sm ${classname}`}>
-      <ul className="py-6 h-16 flex items-center bg-[#232427] px-2">
+    <div
+      className={`rounded-lg ${classname} w-full border border-gray-900 overflow-hidden`}
+    >
+      <ul className="py-6 h-16 flex items-center justify-between bg-[#232427] px-2">
         {columns.map((column, i) => (
           <li key={i} className={column.class}>
             {column.label}

@@ -114,7 +114,7 @@ const UsersInfoPage: React.FC = () => {
   };
 
   return (
-    <div className="basicContainer pt-8">
+    <div className="basicContainer pt-8 px-6">
       {!loadingStores ? (
         <LargeTable classname="fade-in" columns={columns} rowsData={[]}>
           {stores.map((store, i) => (

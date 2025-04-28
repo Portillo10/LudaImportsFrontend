@@ -48,7 +48,7 @@ const RegisterUser: React.FC = () => {
   };
 
   return (
-    <div className="basicContainer">
+    <div className="basicContainer px-6">
       <span className="w-full flex justify-between pt-4 px-4">
         <h2 className="text-3xl font-semibold">Registrar usuario</h2>
       </span>

@@ -39,6 +39,7 @@ const PubsTable: React.FC<PubsTableProps> = ({
                   onClick={() => handleClickMenu(i)}
                 >
                   <Menu
+                    side="left"
                     options={menuOptions}
                     store_id={store["_id"]}
                     active={i == activeMenuIndex}

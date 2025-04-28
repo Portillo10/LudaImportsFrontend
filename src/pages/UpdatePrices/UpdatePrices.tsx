@@ -36,7 +36,7 @@ const UpdatePrices: React.FC = () => {
   };
 
   return (
-    <div className="basicContainer gap-4 fade-in">
+    <div className="basicContainer gap-4 fade-in px-6">
       <span className="titlePageContainer">
         <h2>Actualizar precios</h2>
       </span>

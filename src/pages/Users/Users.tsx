@@ -71,7 +71,7 @@ const Users: React.FC = () => {
   };
 
   return (
-    <div className="basicContainer gap-10">
+    <div className="basicContainer gap-10 px-6">
       <span className="titlePageContainer fade-in">
         <h2>Usuarios</h2>
         <NavLink

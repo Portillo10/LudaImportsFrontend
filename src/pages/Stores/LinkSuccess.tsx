@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { useStores } from "../../hooks/useStores";
 import { useSearchParams } from "react-router-dom";
-// import { IStore } from "../../types/store";
 import { sleep } from "../../utils/helpers";
 
 const LinkSuccess: React.FC = () => {

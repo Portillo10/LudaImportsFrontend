@@ -152,7 +152,7 @@ const ScrapingPage: React.FC = () => {
   };
 
   return (
-    <div className="basicContainer gap-5">
+    <div className="basicContainer gap-5 px-6">
       {progress ? (
         <>
           <span className="titlePageContainer fade-in">

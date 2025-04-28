@@ -9,13 +9,13 @@ const omitedPubsColumns = [
   {
     key: "alias",
     label: "Tienda",
-    class: "px-6 w-36",
+    class: "px-6 max-w-60 w-full",
     rowClass: "",
   },
   {
     key: "omitedCount",
     label: "Productos omitidos",
-    class: "px-6 w-44 text-right leading-tight",
+    class: "px-6 max-w-60 w-full text-right leading-tight",
     rowClass: "",
   },
   {
@@ -82,10 +82,10 @@ const OmitedPubsTable: React.FC = () => {
   }, []);
 
   return (
-    <>
+    <div className="w-full flex flex-col items-center p-8 gap-4 rounded-lg border border-gray-900 shadow-sm shadow-black">
       {loading ? (
         <>
-          <div className="w-full text-left py-4">
+          <div className="w-full text-left">
             <h2 className="text-lg">Productos omitidos</h2>
           </div>
           <Spinner />
@@ -94,7 +94,7 @@ const OmitedPubsTable: React.FC = () => {
         <></>
       ) : (
         <>
-          <div className="w-full text-left py-4">
+          <div className="w-full text-left">
             <h2 className="text-lg">Productos omitidos</h2>
           </div>
           <PubsTable
@@ -113,7 +113,7 @@ const OmitedPubsTable: React.FC = () => {
           onClose={() => setActiveToast(false)}
         />
       )}
-    </>
+    </div>
   );
 };
 
