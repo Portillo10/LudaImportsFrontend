@@ -74,6 +74,7 @@ const UpdatePrices: React.FC = () => {
             </div>
           ) : priceUpdatingInfo &&
             priceUpdatingInfo.trackingProgress.status == "stopped" &&
+            priceUpdatingInfo.singleProgress.status == "stopped" &&
             priceUpdatingInfo.updatingProgress.status == "stopped" ? (
             <UpdatePricesForm onSubmit={onSubmit} />
           ) : (
