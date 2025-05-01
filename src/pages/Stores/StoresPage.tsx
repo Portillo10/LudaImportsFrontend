@@ -1,12 +1,32 @@
 import { Navigate, NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ShopIcon from "../../assets/icons/ShopIcon.svg";
+import StatsCard from "../../components/StoreCard/StoreCard";
+import { useStores } from "../../hooks/useStores";
+import { IStore } from "../../types/store";
+import Spinner from "../../components/Spinner/Spinner";
 
 const StoresPage: React.FC = () => {
   const { user } = useAuth();
 
-  useEffect(() => {}, []);
+  const { getStoresByUser } = useStores();
+  const [loadingStores, setLoadingStores] = useState<boolean>(true);
+  const [stores, setStores] = useState<IStore[]>([]);
+
+  useEffect(() => {
+    const loadStores = async () => {
+      setLoadingStores(true);
+      if (user) {
+        const stores = await getStoresByUser(user._id);
+        if (stores) {
+          setStores(stores);
+        }
+      }
+      setLoadingStores(false);
+    };
+    loadStores();
+  }, []);
   if (user) {
     if (user.stores.length == 0) {
       return <Navigate to="/stores/link" />;
@@ -23,6 +43,26 @@ const StoresPage: React.FC = () => {
               <p>Añadir tienda</p>
             </NavLink>
           </span>
+          <div className="gap-4 flex flex-wrap justify-center fade-in">
+            {loadingStores ? (
+              <div className="flex justify-center pt-6">
+                <Spinner />
+              </div>
+            ) : (
+              stores.map((store) => (
+                <StatsCard
+                  key={store._id}
+                  salesNumber={store.completed || 0}
+                  reputationItems={[
+                    { label: "Reputación", value: store.reputation },
+                  ]}
+                  salesLabel="Ventas"
+                  status="Activa"
+                  title={store.alias}
+                />
+              ))
+            )}
+          </div>
         </div>
       );
     }

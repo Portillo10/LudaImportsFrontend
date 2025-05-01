@@ -3,6 +3,10 @@ export default {
   content: ["./index.html", "./src/**/*.{html,js,ts,tsx}"],
   theme: {
     extend: {
+      boxShadow: {
+        "neon-blue":
+          '0 0 5px theme("colors.blue.400"), 0 0 10px theme("colors.blue.700")',
+      },
       colors: {
         primary: {
           light: "#6d28d9",

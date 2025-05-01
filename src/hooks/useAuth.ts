@@ -7,7 +7,6 @@ import { isAxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../utils/tokenHelper";
 import { IUser } from "../types/user";
-import { sleep } from "../utils/helpers";
 
 export const useAuth = () => {
   const { login, isAuthenticated, logout } = useAuthStore();
@@ -22,7 +21,6 @@ export const useAuth = () => {
     try {
       const { access_token, user } = await authService.logIn(data);
       setUser(user);
-      await sleep(3000);
       login(access_token);
       navigate("/publisher");
     } catch (err) {

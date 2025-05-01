@@ -95,7 +95,7 @@ export const useStores = () => {
 
   const getStoresByUser = async (
     user_id: string
-  ): Promise<Record<string, string | number>[] | undefined> => {
+  ): Promise<IStore[] | undefined> => {
     try {
       const stores = await storeService.getStoresByUser(user_id);
       return stores;
