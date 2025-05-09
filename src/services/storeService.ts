@@ -1,3 +1,4 @@
+import { ISellerPricing } from "../types/sellerPricing";
 import apiClient from "./apiClient";
 
 type LinkStoreRequest = {
@@ -70,6 +71,16 @@ const store = {
       timeout: 20000,
     });
     return response.data;
+  },
+  async savePricing(data: any) {
+    const response = await apiClient.post("/stores/pricing", data);
+    return response.data;
+  },
+  async getPricing(user_id: string) {
+    const response = await apiClient.get(`/stores/pricing/${user_id}`);
+
+    const data: ISellerPricing = response.data.result;
+    return data;
   },
 };
 

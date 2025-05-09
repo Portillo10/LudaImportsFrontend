@@ -18,3 +18,8 @@ export const convertToQueryParams = (obj: any) => {
   }
   return queryParams.join("&");
 };
+
+const formatter = new Intl.NumberFormat("en-US");
+export const formatNumber = (number: number) => {
+  return formatter.format(number);
+};

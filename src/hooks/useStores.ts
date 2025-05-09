@@ -162,6 +162,22 @@ export const useStores = () => {
     }
   };
 
+  const savePricing = async (data: any) => {
+    try {
+      return await storeService.savePricing(data);
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+    }
+  };
+
+  const getPricing = async (user_id: string) => {
+    try {
+      return await storeService.getPricing(user_id);
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+    }
+  };
+
   return {
     handleSuccessLinkStore,
     getPendingPublications,
@@ -176,6 +192,8 @@ export const useStores = () => {
     getOmitedPubs,
     endLinkStore,
     getAllStores,
+    savePricing,
+    getPricing,
     loading,
     stores,
     error,
