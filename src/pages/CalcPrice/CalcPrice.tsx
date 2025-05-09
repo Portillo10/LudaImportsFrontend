@@ -1,4 +1,3 @@
-import { Save } from "lucide-react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useEffect, useRef, useState } from "react";
 
@@ -12,7 +11,6 @@ import { useCalcPrice } from "../../hooks/useCalcPrice";
 import Modal from "../../components/Modal/Modal";
 import MissingFieldsForm from "./MissingFieldsForm";
 import PricingTable from "../../components/PricingTable/PricingTable";
-import { formatNumber } from "../../utils/helpers";
 import { ISellerPricing, PercentRange } from "../../types/sellerPricing";
 import { useStores } from "../../hooks/useStores";
 import { useAuth } from "../../hooks/useAuth";
@@ -60,15 +58,6 @@ const CalcPrice: React.FC = () => {
   useEffect(() => {
     getInitialPriceInfo();
   }, []);
-
-  const onChangeFixedCostInput = (value: number) => {
-    if (
-      (!isNaN(value) || fixedCost.toString().length == 1) &&
-      value.toString().length <= 6
-    ) {
-      setFixedCosts(isNaN(value) ? 0 : value);
-    }
-  };
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const result = await calcPrice(data.sku);
@@ -202,10 +191,14 @@ const CalcPrice: React.FC = () => {
               type="fixed_costs"
               data={fixedCostsData}
               checkData={checkData}
-              title="Costos fijos"
+              title="Costos fijos:"
               onSave={onSave}
+              price={fixedCost}
+              onChangePriceInput={(value) => {
+                setFixedCosts(value);
+              }}
             />
-            <div className="flex items-center gap-2 w-min">
+            {/* <div className="flex items-center gap-2 w-min">
               <label className="w-max">Monto: </label>
               <span className="relative flex items-center">
                 <input
@@ -227,7 +220,7 @@ const CalcPrice: React.FC = () => {
               >
                 <Save size={20} />
               </button>
-            </div>
+            </div> */}
           </span>
         </section>
       </div>

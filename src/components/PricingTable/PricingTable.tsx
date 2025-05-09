@@ -4,6 +4,7 @@ import Spinner from "../Spinner/Spinner";
 import { PercentRange } from "../../types/sellerPricing";
 
 import "./styles.css";
+import { formatNumber } from "../../utils/helpers";
 
 type PricingtableProps = {
   checkData: (
@@ -14,7 +15,9 @@ type PricingtableProps = {
   onSave: () => Promise<boolean>;
   data: PercentRange[];
   title: string;
+  onChangePriceInput?: (value: number) => void;
   type?: "profit" | "fixed_costs";
+  price?: number;
 };
 
 const PricingTable: React.FC<PricingtableProps> = ({
@@ -23,6 +26,8 @@ const PricingTable: React.FC<PricingtableProps> = ({
   checkData,
   data,
   type,
+  price,
+  onChangePriceInput,
 }) => {
   const [saving, setSaving] = useState<boolean>(false);
   const [activeToast, setActiveToast] = useState<boolean>(false);
@@ -42,6 +47,16 @@ const PricingTable: React.FC<PricingtableProps> = ({
       setToastMsg("Error al guardar");
     }
     setSaving(false);
+  };
+
+  const onChangeInput = (value: number) => {
+    if (
+      (!isNaN(value) || price?.toString().length == 1) &&
+      value.toString().length <= 6 &&
+      onChangePriceInput
+    ) {
+      onChangePriceInput(isNaN(value) ? 0 : value);
+    }
   };
 
   const updateRange = (index: number, key: "from" | "to", value: number) => {
@@ -108,9 +123,27 @@ const PricingTable: React.FC<PricingtableProps> = ({
 
   return (
     <div className="w-[280px] bg-[#1e1f23] text-white rounded-2xl overflow-hidden shadow-lg transition">
-      <h2 className="text-center text-lg font-semibold text-sky-300 pt-3 pb-1 w-full">
-        {title}
-      </h2>
+      <span className="flex items-center justify-center gap-2">
+        <h2 className="text-center text-lg font-semibold text-sky-300 pt-3 pb-1">
+          {title}
+        </h2>
+        {price != undefined && (
+          <span className="relative flex items-center pt-3 ">
+            <input
+              onChange={(e) => {
+                const value = e.target.value.replace(/,/g, "");
+                onChangeInput(parseInt(value));
+              }}
+              className="mini-input w-28 text-left text-base"
+              type="text"
+              value={formatNumber(price)}
+            />
+            <div className="absolute right-0 pr-2 text-gray-400 pointer-events-none">
+              COP
+            </div>
+          </span>
+        )}
+      </span>
       <table className="w-full text-sm">
         <thead className="text-left text-gray-300">
           <tr>
