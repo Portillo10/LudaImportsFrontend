@@ -198,29 +198,6 @@ const CalcPrice: React.FC = () => {
                 setFixedCosts(value);
               }}
             />
-            {/* <div className="flex items-center gap-2 w-min">
-              <label className="w-max">Monto: </label>
-              <span className="relative flex items-center">
-                <input
-                  onChange={(e) => {
-                    const value = e.target.value.replace(/,/g, "");
-                    onChangeFixedCostInput(parseInt(value));
-                  }}
-                  className="input w-32"
-                  type="text"
-                  value={formatNumber(fixedCost)}
-                />
-                <div className="absolute right-0 pr-2 text-gray-400 pointer-events-none">
-                  COP
-                </div>
-              </span>
-              <button
-                title="Guardar cambios"
-                className="bg-green-800 hover:bg-green-900 p-1.5 transition-all rounded-md"
-              >
-                <Save size={20} />
-              </button>
-            </div> */}
           </span>
         </section>
       </div>

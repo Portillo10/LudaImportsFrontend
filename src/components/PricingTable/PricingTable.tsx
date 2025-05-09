@@ -207,7 +207,7 @@ const PricingTable: React.FC<PricingtableProps> = ({
                   <input
                     type="text"
                     className="mini-input outline-none w-12"
-                    value={row.percentage}
+                    value={row.percentage * 100}
                     onChange={(e) =>
                       updatePercentage(idx, parseFloat(e.target.value))
                     }
