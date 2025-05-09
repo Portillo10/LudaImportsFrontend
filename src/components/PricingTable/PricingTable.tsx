@@ -67,7 +67,7 @@ const PricingTable: React.FC<PricingtableProps> = ({
 
   const updatePercentage = (index: number, value: number) => {
     const updated = [...data];
-    updated[index].percentage = isNaN(value) ? 0 : value;
+    updated[index].percentage = isNaN(value) ? 0 : value / 100;
     checkData(index, updated, type);
   };
 
