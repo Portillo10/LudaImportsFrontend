@@ -92,7 +92,7 @@ const PricingTable: React.FC<PricingtableProps> = ({
       }
 
       if (lastRange && newRange.range.to) {
-        lastRange.range.from = newRange.range.to + 1;
+        lastRange.range.from = newRange.range.to;
         checkData(0, [...updated, newRange, lastRange], type);
       }
     } else {
@@ -193,7 +193,7 @@ const PricingTable: React.FC<PricingtableProps> = ({
                       type="text"
                       disabled
                       className="mini-input outline-none"
-                      value={row.range.from - 1}
+                      value={row.range.from}
                       onChange={(e) =>
                         updateRange(idx, "from", parseInt(e.target.value))
                       }

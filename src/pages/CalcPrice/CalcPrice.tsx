@@ -44,11 +44,11 @@ const CalcPrice: React.FC = () => {
   const [fixedCost, setFixedCosts] = useState<number>(0);
   const [profitData, setProfitData] = useState<PercentRange[]>([
     { range: { from: 0, to: 1 }, percentage: 0 },
-    { range: { from: 2, to: null }, percentage: 0 },
+    { range: { from: 1, to: null }, percentage: 0 },
   ]);
   const [fixedCostsData, setFixedCostsData] = useState<PercentRange[]>([
     { range: { from: 0, to: 1 }, percentage: 0 },
-    { range: { from: 2, to: null }, percentage: 0 },
+    { range: { from: 1, to: null }, percentage: 0 },
   ]);
 
   const { register, handleSubmit, watch } = useForm<Inputs>();
@@ -90,7 +90,7 @@ const CalcPrice: React.FC = () => {
       let currRange = newData[i];
 
       if (postUpdatedRange && currRange.range.to) {
-        newData[i + 1].range.from = currRange.range.to + 1;
+        newData[i + 1].range.from = currRange.range.to;
       }
 
       if (
@@ -98,7 +98,7 @@ const CalcPrice: React.FC = () => {
         postUpdatedRange.range.to &&
         postUpdatedRange.range.to <= postUpdatedRange.range.from
       ) {
-        newData[i + 1].range.to = postUpdatedRange.range.from + 1;
+        newData[i + 1].range.to = postUpdatedRange.range.from;
       }
     }
     switch (type) {
