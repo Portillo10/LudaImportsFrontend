@@ -140,11 +140,11 @@ const CalcPrice: React.FC = () => {
   }, []);
 
   return (
-    <div className="basicContainer gap-5 fade-in">
+    <div className="basicContainer gap-5 fade-in flex items-center">
       <span className="titlePageContainer">
         <h2>Calcular Precios</h2>
       </span>
-      <div className="flex w-full max-h-[calc(100vh-135px)]">
+      <div className="flex w-auto max-h-[calc(100vh-135px)] justify-center gap-6">
         <section className="flex flex-col min-w-[450px] px-4 gap-6">
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -176,7 +176,7 @@ const CalcPrice: React.FC = () => {
             />
           </div>
         </section>
-        <section className="w-full flex justify-evenly items-start">
+        <section className="w-full flex justify-evenly items-start gap-6">
           <span>
             <PricingTable
               data={profitData}

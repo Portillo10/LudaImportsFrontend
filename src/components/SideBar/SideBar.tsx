@@ -73,7 +73,7 @@ const SideBar: React.FC<SideBarProps> = ({ role }) => {
   }, []);
 
   return (
-    <aside className="h-full border-r border-black w-72 flex-col justify-between py-3 max-w-72 hidden sm:flex">
+    <aside className="h-full border-r border-black w-72 flex-col justify-between py-3 max-w-72 hidden sm:flex ">
       <ul className="w-full h-full flex flex-col items-center ">
         {elements
           .filter((element) => element.allowRoles.includes(role))

@@ -43,7 +43,7 @@ const StoresPage: React.FC = () => {
               <p>Añadir tienda</p>
             </NavLink>
           </span>
-          <div className="gap-4 flex flex-wrap justify-center fade-in">
+          <div className="gap-4 flex flex-wrap justify-center fade-in pt-12">
             {loadingStores ? (
               <div className="flex justify-center pt-6">
                 <Spinner />
@@ -51,6 +51,7 @@ const StoresPage: React.FC = () => {
             ) : (
               stores.map((store) => (
                 <StatsCard
+                  store_id={store._id}
                   key={store._id}
                   salesNumber={store.completed || 0}
                   reputationItems={[

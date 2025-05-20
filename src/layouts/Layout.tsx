@@ -5,7 +5,7 @@ interface ILayout {}
 
 const Layout: React.FC<ILayout> = () => {
   return (
-    <div className="w-full h-screen flex flex-col items-center bg-primary-default text-white">
+    <div className="w-full h-screen flex flex-col items-center bg-primary-default  text-white">
       <Header />
       <Outlet />
     </div>

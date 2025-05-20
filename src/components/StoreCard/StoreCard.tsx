@@ -1,6 +1,7 @@
 import React from "react";
 import "./styles.css";
 import { reputationColors } from "../../utils/constants";
+import { useNavigate } from "react-router-dom";
 
 interface StatsCardProps {
   title: string;
@@ -9,6 +10,7 @@ interface StatsCardProps {
   reputationItems: { label: string; value?: string }[];
   salesNumber: number;
   salesLabel: string;
+  store_id: string;
 }
 
 const StatsCard: React.FC<StatsCardProps> = ({
@@ -18,9 +20,19 @@ const StatsCard: React.FC<StatsCardProps> = ({
   reputationItems,
   salesNumber,
   salesLabel,
+  store_id,
 }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/stores/${store_id}/dashboard`);
+  };
+
   return (
-    <div className="store-card hover:shadow-neon-blue fade-in">
+    <div
+      className="store-card hover:shadow-neon-blue fade-in"
+      onClick={handleClick}
+    >
       {/* Header */}
       <div className="flex justify-between items-center mb-4 gap-3">
         <h3 className="text-lg font-semibold text-white">{title}</h3>

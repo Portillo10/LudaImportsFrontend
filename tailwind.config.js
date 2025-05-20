@@ -11,7 +11,7 @@ export default {
         primary: {
           light: "#6d28d9",
           default: "#2C2D31",
-          dark: "#4c1d95",
+          dark: "#0b0e16",
         },
         secondary: "#d97706",
         input: { background: "#1B2021", border: "#5E767C" },

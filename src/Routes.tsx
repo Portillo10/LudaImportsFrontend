@@ -16,6 +16,7 @@ import RegisterUser from "./pages/Users/RegisterUser";
 import ScrapingPage from "./pages/Scraping/ScrapingPage";
 import UpdatePrices from "./pages/UpdatePrices/UpdatePrices";
 import PendingPosting from "./pages/Publisher/PendingPosting";
+import StoreDashboard from "./pages/Stores/StoreDashboard";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -37,6 +38,10 @@ const AppRoutes: React.FC = () => {
           <Route path="/stores" element={<Outlet />}>
             <Route path="/stores" element={<StoresPage />} />
             <Route path="/stores/link" element={<LinkStore />} />
+            <Route
+              path="/stores/:store_id/dashboard"
+              element={<StoreDashboard />}
+            />
           </Route>
           <Route path="/users" element={<Outlet />}>
             <Route path="/users" element={<Users />} />
