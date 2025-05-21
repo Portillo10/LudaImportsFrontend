@@ -62,25 +62,51 @@ const store = {
     return (await apiClient.get(`/stores/posting/pending`, { timeout: 20000 }))
       .data;
   },
+
   async getPostingProgress() {
     const response = await apiClient.get("/stores/posting/progress");
     return response.data;
   },
+
   async getOmitedPubs() {
     const response = await apiClient.get("/stores/posting/omited", {
       timeout: 20000,
     });
     return response.data;
   },
+
   async savePricing(data: any) {
     const response = await apiClient.post("/stores/pricing", data);
     return response.data;
   },
+
   async getPricing(user_id: string) {
     const response = await apiClient.get(`/stores/pricing/${user_id}`);
 
     const data: ISellerPricing = response.data.result;
     return data;
+  },
+
+  async getItemsCount(store_id: string, filter: any) {
+    const response = await apiClient.post(
+      `/stores/${store_id}/items/search/count`,
+      filter
+    );
+    return response.data;
+  },
+
+  async getResume(store_id: string, last: number) {
+    const response = await apiClient.get(
+      `/stores/${store_id}/resume?last=${last}`
+    );
+    return response.data;
+  },
+
+  async deleteForbiddenItems(store_id: string) {
+    const response = await apiClient.post(
+      `/stores/${store_id}/items/delete/forbidden`
+    );
+    return response.data;
   },
 };
 
