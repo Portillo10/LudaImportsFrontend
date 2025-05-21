@@ -8,6 +8,8 @@ type LinkStoreRequest = {
   alias: string;
 };
 
+const prefix = "/stores";
+
 const store = {
   async linkStore({
     client_id,
@@ -29,12 +31,12 @@ const store = {
   },
 
   async getStores() {
-    const response = await apiClient.get("/stores");
+    const response = await apiClient.get(`${prefix}`);
     return response.data;
   },
 
   async getStoresByUser(user_id: string) {
-    const response = await apiClient.get(`/stores/user/${user_id}`);
+    const response = await apiClient.get(`${prefix}/user/${user_id}`);
     return response.data;
   },
 
@@ -45,43 +47,44 @@ const store = {
 
   async transferProducts(origin_store_id: string, target_store_id: string) {
     const response = await apiClient.post(
-      `/stores/${origin_store_id}/transfer-to/${target_store_id}`
+      `${prefix}/${origin_store_id}/transfer-to/${target_store_id}`
     );
 
     return response.data;
   },
 
   async deleteAllItems(store_id: string) {
-    const response = await apiClient.delete(`/stores/${store_id}/items/all`, {
+    const response = await apiClient.delete(`${prefix}/${store_id}/items/all`, {
       timeout: 60000,
     });
     return response.data;
   },
 
   async getPendingPublications() {
-    return (await apiClient.get(`/stores/posting/pending`, { timeout: 20000 }))
-      .data;
+    return (
+      await apiClient.get(`${prefix}/posting/pending`, { timeout: 20000 })
+    ).data;
   },
 
   async getPostingProgress() {
-    const response = await apiClient.get("/stores/posting/progress");
+    const response = await apiClient.get(`${prefix}/posting/progress`);
     return response.data;
   },
 
   async getOmitedPubs() {
-    const response = await apiClient.get("/stores/posting/omited", {
+    const response = await apiClient.get(`${prefix}/posting/omited`, {
       timeout: 20000,
     });
     return response.data;
   },
 
   async savePricing(data: any) {
-    const response = await apiClient.post("/stores/pricing", data);
+    const response = await apiClient.post(`${prefix}/pricing`, data);
     return response.data;
   },
 
   async getPricing(user_id: string) {
-    const response = await apiClient.get(`/stores/pricing/${user_id}`);
+    const response = await apiClient.get(`${prefix}/pricing/${user_id}`);
 
     const data: ISellerPricing = response.data.result;
     return data;
@@ -89,7 +92,7 @@ const store = {
 
   async getItemsCount(store_id: string, filter: any) {
     const response = await apiClient.post(
-      `/stores/${store_id}/items/search/count`,
+      `${prefix}/${store_id}/items/search/count`,
       filter
     );
     return response.data;
@@ -97,14 +100,14 @@ const store = {
 
   async getResume(store_id: string, last: number) {
     const response = await apiClient.get(
-      `/stores/${store_id}/sales/resume?last=${last}`
+      `${prefix}/${store_id}/sales/resume?last=${last}`
     );
     return response.data;
   },
 
   async deleteForbiddenItems(store_id: string) {
     const response = await apiClient.post(
-      `/stores/${store_id}/items/delete/forbidden`
+      `${prefix}/${store_id}/items/delete/forbidden`
     );
     return response.data;
   },

@@ -161,7 +161,7 @@ const ResumeSection: React.FC<{ store_id: string }> = ({ store_id }) => {
               icon={<CircleDollarSign strokeWidth={1.2} />}
               color="text-green-300"
               label="Ventas brutas"
-              value={`$${formatNumber(resume.grossSales)}`}
+              value={`$${formatNumber(resume.gross_sales)}`}
             />
             <ResumeCard
               icon={<BanknoteArrowUp strokeWidth={1.2} />}
