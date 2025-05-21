@@ -19,6 +19,32 @@ import Spinner from "../../components/Spinner/Spinner";
 import { useParams } from "react-router-dom";
 import { AxiosError } from "axios";
 
+const CARDS_CONFIG = [
+  {
+    title: "Activas",
+    key: "active" as const,
+    icon: <SquareCheckBig size={18} />,
+  },
+  {
+    title: "Pausadas",
+    key: "paused" as const,
+    bgIconColor: "#aaa2e2",
+    icon: <Pause color="#275baa" size={18} />,
+  },
+  {
+    title: "Inactivas",
+    key: "under_review" as const,
+    bgIconColor: "#e6b3b4",
+    icon: <Power color="#fe4e50" size={18} />,
+  },
+  {
+    title: "Pendientes",
+    key: "pending" as const,
+    bgIconColor: "#f0d29b",
+    icon: <Clock4 color="#c78f27" size={18} />,
+  },
+];
+
 const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
@@ -65,29 +91,15 @@ const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
         </div>
       ) : (
         <>
-          <InfoCard
-            title="Activas"
-            description={formatNumber(itemsInfo.active)}
-            icon={<SquareCheckBig size={18} />}
-          />
-          <InfoCard
-            title="Pausadas"
-            description={formatNumber(itemsInfo.paused)}
-            bgIconColor="#aaa2e2"
-            icon={<Pause color="#275baa" size={18} />}
-          />
-          <InfoCard
-            title="Inactivas"
-            description={formatNumber(itemsInfo.under_review)}
-            bgIconColor="#e6b3b4"
-            icon={<Power color="#fe4e50" size={18} />}
-          />
-          <InfoCard
-            title="Pendientes"
-            description={formatNumber(itemsInfo.pending)}
-            bgIconColor="#f0d29b"
-            icon={<Clock4 color="#c78f27" size={18} />}
-          />
+          {CARDS_CONFIG.map((card, index) => (
+            <InfoCard
+              key={index}
+              title={card.title}
+              description={formatNumber(itemsInfo[card.key] || 0)}
+              bgIconColor={card.bgIconColor}
+              icon={card.icon}
+            />
+          ))}
           <div className="w-full flex flex-col items-center justify-center pt-2 gap-2">
             <p>Acciones rápidas</p>
             <button className="bg-emerald-800 hover:bg-emerald-900 text-sm transition-all px-2 py-1 rounded-md w-full">
