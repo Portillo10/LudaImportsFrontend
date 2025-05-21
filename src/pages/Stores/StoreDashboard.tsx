@@ -17,9 +17,11 @@ import { useEffect, useState } from "react";
 import storeService from "../../services/storeService";
 import Spinner from "../../components/Spinner/Spinner";
 import { useParams } from "react-router-dom";
+import { AxiosError } from "axios";
 
 const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
   const [itemsInfo, setItemsInfo] = useState<any>({
     active: 0,
     paused: 0,
@@ -36,6 +38,19 @@ const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
       setItemsInfo(response.items_count);
     } catch (error) {}
     setLoading(false);
+  };
+
+  const handleClickDeleteItems = async () => {
+    setLoadingDelete(true);
+    try {
+      await storeService.deleteForbiddenItems(store_id);
+    } catch (error) {
+      console.error(
+        "Error deleting items:",
+        (error as AxiosError).response?.data
+      );
+    }
+    setLoadingDelete(false);
   };
 
   useEffect(() => {
@@ -78,7 +93,11 @@ const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
             <button className="bg-emerald-800 hover:bg-emerald-900 text-sm transition-all px-2 py-1 rounded-md w-full">
               Publicar pendientes
             </button>
-            <button className="bg-red-800 hover:bg-red-900 text-sm transition-all px-2 py-1 rounded-md w-full">
+            <button
+              onClick={handleClickDeleteItems}
+              disabled={loadingDelete}
+              className={`${loadingDelete ? "bg-red-800" : "bg-red-900"} hover:bg-red-900 text-sm transition-all px-2 py-1 rounded-md w-full`}
+            >
               Barrido de productos
             </button>
           </div>

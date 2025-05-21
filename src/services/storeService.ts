@@ -97,7 +97,7 @@ const store = {
 
   async getResume(store_id: string, last: number) {
     const response = await apiClient.get(
-      `/stores/${store_id}/resume?last=${last}`
+      `/stores/${store_id}/sales/resume?last=${last}`
     );
     return response.data;
   },
