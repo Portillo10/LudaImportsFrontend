@@ -1,7 +1,7 @@
 interface ParsedData {
   dimensions: string;
   weight: number;
-  category: string;
+  category?: string;
   url: string;
 }
 
@@ -16,24 +16,36 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
       const lines = content.trim().split("\n");
 
       // Procesar cada línea
-      const data: ParsedData[] = lines.map((line) => {
-        const values = line.split("\t");
-        return {
-          dimensions: values[0],
-          weight: parseFloat(values[1].split(" ")[0]),
-          category: values[2],
-          url: values[3],
-        };
-      });
+      let data: ParsedData[];
+      if (lines.length === 4) {
+        data = lines.map((line) => {
+          const values = line.split("\t");
+          return {
+            dimensions: values[0],
+            weight: parseFloat(values[1].split(" ")[0]),
+            category: values[2],
+            url: values[3],
+          };
+        });
+      } else if (lines.length === 3) {
+        data = lines.map((line) => {
+          const values = line.split("\t");
+          return {
+            dimensions: values[0],
+            weight: parseFloat(values[1].split(" ")[0]),
+            url: values[2],
+          };
+        });
 
-      resolve(data);
+        resolve(data);
+      }
+
+      reader.onerror = () => {
+        reject(new Error("Error al leer el archivo"));
+      };
+
+      reader.readAsText(file, "utf-8"); // Leer archivo como texto
     };
-
-    reader.onerror = () => {
-      reject(new Error("Error al leer el archivo"));
-    };
-
-    reader.readAsText(file, "utf-8"); // Leer archivo como texto
   });
 };
 
@@ -55,7 +67,7 @@ export const validateObjects = (
 
   const allValid = objects.every((obj, index) => {
     const objKeys = Object.keys(obj);
-    const expectedKeys = ["weight", "category", "url", "dimensions"];
+    const expectedKeys = ["weight", "url", "dimensions"];
 
     if (objKeys.length !== expectedKeys.length) {
       errors.push(
@@ -76,27 +88,17 @@ export const validateObjects = (
       return false;
     }
 
-    if (typeof obj.category !== "string" || !obj.category.startsWith("MCO")) {
-      errors.push(
-        `Object at index ${index} has an invalid 'category' attribute.`
-      );
-      return false;
-    }
+    // if (typeof obj.category !== "string" || !obj.category.startsWith("MCO")) {
+    //   errors.push(
+    //     `Object at index ${index} has an invalid 'category' attribute.`
+    //   );
+    //   return false;
+    // }
 
     if (typeof obj.url !== "string" || !isValidAmazonUrl(obj.url)) {
       errors.push(`Object at index ${index} has an invalid 'url' attribute.`);
       return false;
     }
-
-    // if (
-    //   typeof obj.dimensions !== "string" ||
-    //   !isValidDimensions(obj.dimensions)
-    // ) {
-    //   errors.push(
-    //     `Object at index ${index} has an invalid 'dimensions' attribute.`
-    //   );
-    //   return false;
-    // }
 
     return true;
   });

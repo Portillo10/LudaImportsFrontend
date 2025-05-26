@@ -108,7 +108,7 @@ const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
             <button
               onClick={handleClickDeleteItems}
               disabled={loadingDelete}
-              className={`${loadingDelete ? "bg-red-800" : "bg-red-900"} hover:bg-red-900 text-sm transition-all px-2 py-1 rounded-md w-full`}
+              className={`${loadingDelete ? "bg-red-900" : "bg-red-800"} hover:bg-red-900 text-sm transition-all px-2 py-1 rounded-md w-full`}
             >
               Barrido de productos
             </button>
