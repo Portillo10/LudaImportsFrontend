@@ -137,6 +137,8 @@ const ScrapingPage: React.FC = () => {
 
     if (selectedFile) {
       const parsedCsv = await parseTSVFromFile(selectedFile);
+      console.log(parsedCsv.length);
+
       const { valid, errors } = validateObjects(parsedCsv);
 
       if (valid) {
