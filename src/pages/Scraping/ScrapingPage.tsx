@@ -142,6 +142,7 @@ const ScrapingPage: React.FC = () => {
           store_id,
           url_object_list: parsedCsv,
         });
+        console.log(parsedCsv.length + " links enviados");
       } else {
         console.log("archivo inválido");
         for (const error of errors) {
