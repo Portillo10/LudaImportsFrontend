@@ -149,6 +149,8 @@ const ScrapingPage: React.FC = () => {
           console.log(error);
         }
       }
+    } else {
+      console.log("ningun archivo fue subido");
     }
   };
 
