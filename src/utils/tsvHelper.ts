@@ -18,6 +18,8 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
       // Procesar cada línea
       let data: ParsedData[] = [];
       if (lines[0].length === 4) {
+        console.log("4 elementos");
+
         data = lines.map((line) => {
           const values = line.split("\t");
           return {
@@ -28,6 +30,8 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
           };
         });
       } else if (lines[0].length === 3) {
+        console.log("3 elementos");
+
         data = lines.map((line) => {
           const values = line.split("\t");
           return {
