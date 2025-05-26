@@ -17,39 +17,30 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
 
       // Procesar cada línea
       let data: ParsedData[] = [];
-      if (lines[0].length === 4) {
-        console.log("4 elementos");
 
-        data = lines.map((line) => {
-          const values = line.split("\t");
+      data = lines.map((line) => {
+        const values = line.split("\t");
+        if (values.length == 4)
           return {
             dimensions: values[0],
             weight: parseFloat(values[1].split(" ")[0]),
             category: values[2],
             url: values[3],
           };
-        });
-      } else if (lines[0].length === 3) {
-        console.log("3 elementos");
-
-        data = lines.map((line) => {
-          const values = line.split("\t");
+        else
           return {
             dimensions: values[0],
             weight: parseFloat(values[1].split(" ")[0]),
             url: values[2],
           };
-        });
-      }
+      });
 
       resolve(data);
-
-      reader.onerror = () => {
-        reject(new Error("Error al leer el archivo"));
-      };
-
-      reader.readAsText(file, "utf-8"); // Leer archivo como texto
     };
+    reader.onerror = () => {
+      reject(new Error("Error al leer el archivo"));
+    };
+    reader.readAsText(file, "utf-8"); // Leer archivo como texto
   });
 };
 
