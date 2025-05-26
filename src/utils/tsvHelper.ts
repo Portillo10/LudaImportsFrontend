@@ -16,8 +16,8 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
       const lines = content.trim().split("\n");
 
       // Procesar cada línea
-      let data: ParsedData[];
-      if (lines.length === 4) {
+      let data: ParsedData[] = [];
+      if (lines[0].length === 4) {
         data = lines.map((line) => {
           const values = line.split("\t");
           return {
@@ -27,7 +27,7 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
             url: values[3],
           };
         });
-      } else if (lines.length === 3) {
+      } else if (lines[0].length === 3) {
         data = lines.map((line) => {
           const values = line.split("\t");
           return {
@@ -36,9 +36,9 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
             url: values[2],
           };
         });
-
-        resolve(data);
       }
+
+      resolve(data);
 
       reader.onerror = () => {
         reject(new Error("Error al leer el archivo"));
