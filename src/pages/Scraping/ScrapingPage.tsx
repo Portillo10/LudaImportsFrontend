@@ -133,13 +133,9 @@ const ScrapingPage: React.FC = () => {
 
   const handleFileInput = async (event: ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.item(0);
-    console.log("archivo cargado");
 
     if (selectedFile) {
-      console.log("archivo válido");
-
       const parsedCsv = await parseTSVFromFile(selectedFile);
-      console.log(parsedCsv.length);
 
       const { valid, errors } = validateObjects(parsedCsv);
 
@@ -148,7 +144,6 @@ const ScrapingPage: React.FC = () => {
           store_id,
           url_object_list: parsedCsv,
         });
-        console.log(parsedCsv.length + " links enviados");
       } else {
         console.log("archivo inválido");
         for (const error of errors) {

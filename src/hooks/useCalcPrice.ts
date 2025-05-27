@@ -54,10 +54,7 @@ export const useCalcPrice = () => {
       if (!user || user?.stores.length == 0) {
         throw new Error("Debe tener por lo menos una tienda vinculada");
       }
-      const { data, status } = await priceService.calcPrice(
-        user.stores[0]._id,
-        sku
-      );
+      const { data, status } = await priceService.calcPrice(user._id, sku);
       if (status == 202) {
         setActiveModal(true);
         if (data.missingFields) {
