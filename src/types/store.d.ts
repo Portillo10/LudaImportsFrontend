@@ -11,4 +11,5 @@ export interface IStore {
   completed?: number;
   claims?: number;
   total?: number;
+  suspended?: boolean;
 }

@@ -41,7 +41,11 @@ const store = {
   },
 
   async sincronizeStore(store_id: string) {
-    const response = await apiClient.put(`/api/store/${store_id}/sincronize`);
+    const response = await apiClient.put(
+      `/api/store/${store_id}/sincronize`,
+      {},
+      { params: { all_stores: "true" } }
+    );
     return response.data;
   },
 

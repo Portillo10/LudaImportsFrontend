@@ -58,8 +58,13 @@ const StoresPage: React.FC = () => {
                     { label: "Reputación", value: store.reputation },
                   ]}
                   salesLabel="Ventas"
-                  status="Activa"
+                  status={store.suspended ? "Suspendida" : "Activa"}
                   title={store.alias}
+                  statusColor={
+                    store.suspended
+                      ? "bg-red-100 text-red-800"
+                      : "bg-green-100 text-green-800"
+                  }
                 />
               ))
             )}
