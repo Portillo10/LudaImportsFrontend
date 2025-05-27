@@ -157,7 +157,7 @@ export const useCalcPrice = () => {
       if (key == "internationalShipment") {
         row.label += `: ${priceInfo.weight} libras`;
       } else if (key == "profit") {
-        row.label += ` ${priceInfo.profitPercent}%`;
+        row.label += ` ${priceInfo.profitPercent * 100}%`;
       }
 
       if (!ignoreAttrs.includes(key)) {
