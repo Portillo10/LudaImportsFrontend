@@ -67,7 +67,9 @@ export const useStores = () => {
     try {
       if (stores.length == 0) {
         setLoading(true);
-        const data = await storeService.getStores();
+        const data = (await storeService.getStores()).filter(
+          (store: any) => !store.suspended
+        );
         setStoresLength(data.length);
         setStores(data);
       }
