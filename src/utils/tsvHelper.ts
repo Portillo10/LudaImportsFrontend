@@ -64,7 +64,7 @@ export const validateObjects = (
     const objKeys = Object.keys(obj);
     const expectedKeys = ["weight", "url", "dimensions"];
 
-    if (objKeys.length !== expectedKeys.length) {
+    if (objKeys.length < expectedKeys.length) {
       errors.push(
         `Object at index ${index} has unexpected number of attributes.`
       );
