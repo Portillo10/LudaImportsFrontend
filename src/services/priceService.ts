@@ -35,6 +35,12 @@ const priceService = {
     const responseData: CalcPriceResponse | any = response.data;
     return { data: responseData, status: response.status };
   },
+
+  async getUpdateHistory() {
+    const response = await apiClient.get("/price/update/history");
+    const { data, status } = response;
+    return { data, status };
+  },
 };
 
 export default priceService;

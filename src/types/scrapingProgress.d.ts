@@ -1,13 +1,12 @@
 export interface IScrapingProgress {
-  target: "sku" | "product";
-  scrapedSkuCount: number;
-  scrapedProductsCount: number;
-  omitedProducts: OmitedProduct[];
-  productsToScrape: number;
-  status: "running" | "loading" | "paused" | "stopped";
-  targetStore?: ObjectId;
+  total: number;
   storeAlias?: string;
   usedCredits: number;
+  targetStore?: ObjectId;
+  target: "sku" | "product";
+  scrapedProductsCount: number;
+  omitedProducts: OmitedProduct[];
+  status: "running" | "loading" | "paused" | "stopped";
 }
 
 type OmitedProduct = {

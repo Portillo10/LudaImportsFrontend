@@ -34,7 +34,7 @@ const ScrapingPanel: React.FC<{
     const currentStats: Stat[] = [
       {
         label: "Productos restantes",
-        value: progress.productsToScrape - progress.scrapedProductsCount,
+        value: progress.total - progress.scrapedProductsCount,
       },
       {
         label: "Productos extraídos",
