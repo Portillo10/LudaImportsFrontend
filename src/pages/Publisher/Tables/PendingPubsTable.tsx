@@ -13,6 +13,12 @@ const pendingPubsColumns = [
     rowClass: "",
   },
   {
+    key: "pausedCount",
+    label: "Publicaciones pausadas",
+    class: "px-6 max-w-60 w-full text-right leading-tight",
+    rowClass: "",
+  },
+  {
     key: "activeCount",
     label: "Publicaciones activas",
     class: "px-6 max-w-60 w-full text-right leading-tight",
