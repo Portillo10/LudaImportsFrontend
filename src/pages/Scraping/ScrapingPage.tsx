@@ -83,8 +83,8 @@ const OmitedProductsPanel: React.FC = () => {
     <div className="scraping-container p-3 gap-4">
       <h2>Productos omitidos</h2>
       <div className="grid">
-        {cardsInfo.map((card) => (
-          <OmitedProductCard label={card.label} value={card.value}>
+        {cardsInfo.map((card, i) => (
+          <OmitedProductCard key={i} label={card.label} value={card.value}>
             <Icon iconName={card.icon} size={28} color="#FFFFFF"></Icon>
           </OmitedProductCard>
         ))}

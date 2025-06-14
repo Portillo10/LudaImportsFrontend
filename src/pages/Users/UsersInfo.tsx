@@ -12,14 +12,14 @@ import ModalStore from "./Modal/ModalStore";
 const columns = [
   { key: "alias", class: "px-2 w-40", label: "Tienda" },
   {
-    key: "reputation",
-    class: "px-2 w-40 text-center",
-    label: "Reputación",
-  },
-  {
     key: "total",
     class: "px-2 w-28 text-right",
     label: "Ventas",
+  },
+  {
+    key: "publicationStartDate",
+    class: "px-2 w-40 text-center",
+    label: "Fecha de inicio",
   },
   {
     key: "publicationStartDate",

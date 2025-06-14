@@ -16,6 +16,11 @@ const scrape = {
     return response.data;
   },
 
+  async updateTasks(links: any) {
+    const response = await apiClient.post("/scrape/update-tasks", links);
+    return response.data;
+  },
+
   async getScrapingProgress(store_id?: string) {
     const response = await apiClient.get(
       `/scrape/tasks${store_id ? `?store_id=${store_id}` : ""}`

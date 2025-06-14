@@ -66,8 +66,8 @@ const ScrapingPanel: React.FC<{
   return (
     <div className="scraping-container w-full gap-2">
       <section className="stats">
-        {stats.map((stat) => (
-          <span>
+        {stats.map((stat, i) => (
+          <span key={i}>
             <h3>{stat.label}</h3>
             <p>{stat.value}</p>
           </span>
