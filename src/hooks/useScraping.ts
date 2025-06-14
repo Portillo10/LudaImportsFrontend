@@ -22,9 +22,9 @@ export const useScraping = () => {
 
   const initializeScraping = async (data: any) => {
     try {
-      await scrapeService.updateTasks(data.url_object_list);
-      // const response = await scrapeService.initializeScraping(data);
-      // console.log(response);
+      // await scrapeService.updateTasks(data.url_object_list);
+      const response = await scrapeService.initializeScraping(data);
+      console.log(response);
     } catch (error) {
       if (isAxiosError(error)) {
         console.log(error.response?.data);
