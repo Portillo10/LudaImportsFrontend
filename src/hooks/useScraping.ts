@@ -6,13 +6,17 @@ export const useScraping = () => {
   const scrapeBySku = async (
     sku: string,
     store_id: string,
-    category_id: string
+    category_id: string,
+    defaultWeight?: number,
+    defaultDimensions?: string
   ) => {
     try {
       const response: IProduct = await scrapeService.scrapeBySku(
         sku,
         store_id,
-        category_id
+        category_id,
+        defaultWeight,
+        defaultDimensions
       );
       return response;
     } catch (error) {

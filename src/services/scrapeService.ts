@@ -2,10 +2,22 @@ import { IScrapingProgress } from "../types/scrapingProgress";
 import apiClient from "./apiClient";
 
 const scrape = {
-  scrapeBySku: async (sku: string, store_id: string, category_id: string) => {
+  scrapeBySku: async (
+    sku: string,
+    store_id: string,
+    category_id: string,
+    defaultWeight?: number,
+    defaultDimensions?: string
+  ) => {
     const response = await apiClient.post(
       "/scrape",
-      { sku, target_store_id: store_id, category_id },
+      {
+        sku,
+        category_id,
+        defaultWeight,
+        defaultDimensions,
+        target_store_id: store_id,
+      },
       { timeout: 200000 }
     );
 

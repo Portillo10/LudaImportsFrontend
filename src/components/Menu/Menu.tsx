@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Spinner from "../Spinner/Spinner";
 
-type OptionProps = {
+export type OptionProps = {
   label: string;
   click: (store_id: string) => Promise<void>;
 };

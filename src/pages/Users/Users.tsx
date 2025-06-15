@@ -35,7 +35,8 @@ const Users: React.FC = () => {
       const users = await getUsers();
 
       if (users && Array.isArray(users)) {
-        setRowsData(users);
+        const filteredUsers = users.filter((user) => user.stores.length > 0);
+        setRowsData(filteredUsers);
       }
       setLoadingTable(false);
     };

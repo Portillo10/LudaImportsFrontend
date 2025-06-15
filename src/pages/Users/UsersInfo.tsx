@@ -5,9 +5,8 @@ import LargeTable from "../../components/LargeTable/LargeTable";
 import LargeRow from "../../components/LargeTable/LargeRow";
 import Spinner from "../../components/Spinner/Spinner";
 
-import { reputationColors } from "../../utils/constants";
-
-import ModalStore from "./Modal/ModalStore";
+import Menu, { OptionProps } from "../../components/Menu/Menu";
+import subscriptionService from "../../services/subscriptionService";
 
 const columns = [
   { key: "alias", class: "px-2 w-40", label: "Tienda" },
@@ -17,16 +16,21 @@ const columns = [
     label: "Ventas",
   },
   {
-    key: "publicationStartDate",
+    key: "subscriptionStartDate",
     class: "px-2 w-40 text-center",
     label: "Fecha de inicio",
   },
   {
-    key: "publicationStartDate",
+    key: "subscriptionEndDate",
     class: "px-2 w-40 text-center",
-    label: "Fecha de inicio",
+    label: "Fecha de pago",
   },
-  { key: "actions", class: "px-3 w-16 cursor-pointer", label: "" },
+  {
+    key: "subscriptionStatus",
+    class: "px-2 w-40 text-center",
+    label: "Estado",
+  },
+  { key: "actions", class: "px-3 w-12", label: "" },
 ];
 
 const UsersInfoPage: React.FC = () => {
@@ -34,11 +38,16 @@ const UsersInfoPage: React.FC = () => {
   const { getStoresByUser } = useStores();
   const [loadingStores, setLoadingStores] = useState<boolean>(true);
   const [stores, setStores] = useState<any[]>([]);
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  const [currentStore, setCurrentStore] = useState<Record<
-    string,
-    string | number
-  > | null>(null);
+
+  const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
+
+  const onClickMenu = (index: number) => {
+    if (activeMenuIndex == index) {
+      setActiveMenuIndex(-1);
+    } else {
+      setActiveMenuIndex(index);
+    }
+  };
 
   useEffect(() => {
     const loadStores = async () => {
@@ -55,43 +64,68 @@ const UsersInfoPage: React.FC = () => {
     loadStores();
   }, []);
 
-  const handleClickDetails = (store: Record<string, string | number>) => {
-    setCurrentStore(store);
-    setOpenModal(true);
-  };
+  useEffect(() => {
+    const handleClickWindow = (ev: MouseEvent) => {
+      if (ev.target instanceof HTMLElement && ev.target.tagName !== "SPAN")
+        setActiveMenuIndex(-1);
+    };
+    document.addEventListener("click", handleClickWindow);
 
-  const renderRow = (store: Record<string, string | number>) => {
+    return () => {
+      document.removeEventListener("click", handleClickWindow);
+    };
+  }, []);
+
+  const options: OptionProps[] = [
+    {
+      click: async (store_id) => {
+        await subscriptionService.renewSubscription(store_id);
+      },
+      label: "Renovar membresía",
+    },
+  ];
+
+  const renderRow = (store: Record<string, string | number>, index: number) => {
+    let rowOptions = [...options];
+    if (!store["startDate"]) {
+      const option: OptionProps = {
+        click: async (store_id) => {
+          await subscriptionService.startSubscription(store_id);
+        },
+        label: "Iniciar membresía",
+      };
+      rowOptions.shift();
+      rowOptions.unshift(option);
+    }
     const items = columns.map((column) => {
       let label = "";
       if (column.key == "actions") {
         return (
           <li
-            onClick={() => handleClickDetails(store)}
+            onClick={() => onClickMenu(index)}
             className={`${column.class} py-4 h-14`}
           >
-            ---
+            <Menu
+              side="left"
+              store_id={store["_id"].toString()}
+              active={activeMenuIndex == index}
+              options={rowOptions}
+            />
           </li>
         );
-      } else if (column.key == "reputation") {
-        if (store[column.key] && reputationColors[store[column.key]]) {
-          return (
-            <li className={`${column.class} py-4 h-14`}>
-              <p
-                className={`${reputationColors[store[column.key]].class} text-sm py-0.5 rounded-md font-semibold`}
-              >
-                {reputationColors[store[column.key]].label}
-              </p>
-            </li>
-          );
-        } else {
-          label = "Sin reputación";
-        }
-      } else if (column.key == "publicationStartDate") {
+      } else if (
+        column.key == "subscriptionStartDate" ||
+        column.key == "subscriptionEndDate"
+      ) {
         if (store[column.key]) {
           label = new Date(store[column.key].toString()).toLocaleDateString();
         } else {
-          label = "Nunca";
+          label = "Sin membresía";
         }
+      } else if (column.key == "subscriptionStatus") {
+        label = store[column.key]
+          ? store[column.key].toString()
+          : "Sin membresía";
       } else if (
         store[column.key] !== undefined &&
         store[column.key] !== null
@@ -111,7 +145,7 @@ const UsersInfoPage: React.FC = () => {
         <LargeTable classname="fade-in" columns={columns} rowsData={[]}>
           {stores.map((store, i) => (
             <LargeRow index={i} key={i}>
-              {renderRow(store)}
+              {renderRow(store, i)}
             </LargeRow>
           ))}
         </LargeTable>
@@ -120,11 +154,6 @@ const UsersInfoPage: React.FC = () => {
           <Spinner />
         </div>
       )}
-      <ModalStore
-        close={() => setOpenModal(false)}
-        openModal={openModal}
-        store={currentStore}
-      ></ModalStore>
     </div>
   );
 };

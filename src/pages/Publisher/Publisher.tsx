@@ -23,7 +23,9 @@ const Publisher: React.FC = () => {
     const product = await scrapeBySku(
       data.sku,
       data.store_id,
-      data.category_id
+      data.category_id,
+      parseInt(data.weight),
+      data.dimensions
     );
     if (product) {
       console.log(product);
