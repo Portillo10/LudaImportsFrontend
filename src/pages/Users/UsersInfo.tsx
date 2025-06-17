@@ -7,6 +7,8 @@ import Spinner from "../../components/Spinner/Spinner";
 
 import Menu, { OptionProps } from "../../components/Menu/Menu";
 import subscriptionService from "../../services/subscriptionService";
+import { useSubscription } from "../../hooks/useSubscription";
+import Toast from "../../components/Toast/Toast";
 
 const columns = [
   { key: "alias", class: "px-2 w-40", label: "Tienda" },
@@ -36,9 +38,10 @@ const columns = [
 const UsersInfoPage: React.FC = () => {
   const { user_id } = useParams();
   const { getStoresByUser } = useStores();
-  const [loadingStores, setLoadingStores] = useState<boolean>(true);
+  const { activeToast, closeToast, startSubscription, toastMsg, toastType } =
+    useSubscription();
   const [stores, setStores] = useState<any[]>([]);
-
+  const [loadingStores, setLoadingStores] = useState<boolean>(true);
   const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
 
   const onClickMenu = (index: number) => {
@@ -47,6 +50,23 @@ const UsersInfoPage: React.FC = () => {
     } else {
       setActiveMenuIndex(index);
     }
+  };
+
+  const updateSubscription = (subscription: any) => {
+    const newData = stores.map((store) => {
+      if (store["_id"] == subscription.store_id) {
+        return {
+          ...store,
+          subscriptionStartDate: subscription.startDate,
+          subscriptionEndDate: subscription.endDate,
+          subscriptionStatus: subscription.status,
+        };
+      } else {
+        return store;
+      }
+    });
+
+    setStores(newData);
   };
 
   useEffect(() => {
@@ -90,18 +110,20 @@ const UsersInfoPage: React.FC = () => {
     if (!store["startDate"]) {
       const option: OptionProps = {
         click: async (store_id) => {
-          await subscriptionService.startSubscription(store_id);
+          const response = await startSubscription(store_id);
+          if (response.subscription) updateSubscription(response.subscription);
         },
         label: "Iniciar membresía",
       };
       rowOptions.shift();
       rowOptions.unshift(option);
     }
-    const items = columns.map((column) => {
+    const items = columns.map((column, i) => {
       let label = "";
       if (column.key == "actions") {
         return (
           <li
+            key={i}
             onClick={() => onClickMenu(index)}
             className={`${column.class} py-4 h-14`}
           >
@@ -133,28 +155,37 @@ const UsersInfoPage: React.FC = () => {
         label = store[column.key].toString();
       }
 
-      return <li className={`${column.class} py-4 h-14`}>{label}</li>;
+      return (
+        <li key={i} className={`${column.class} py-4 h-14`}>
+          {label}
+        </li>
+      );
     });
 
     return items;
   };
 
   return (
-    <div className="basicContainer pt-8 px-6">
-      {!loadingStores ? (
-        <LargeTable classname="fade-in" columns={columns} rowsData={[]}>
-          {stores.map((store, i) => (
-            <LargeRow index={i} key={i}>
-              {renderRow(store, i)}
-            </LargeRow>
-          ))}
-        </LargeTable>
-      ) : (
-        <div className="w-full flex justify-center mt-16">
-          <Spinner />
-        </div>
+    <>
+      <div className="basicContainer pt-8 px-6">
+        {!loadingStores ? (
+          <LargeTable classname="fade-in" columns={columns} rowsData={[]}>
+            {stores.map((store, i) => (
+              <LargeRow index={i} key={i}>
+                {renderRow(store, i)}
+              </LargeRow>
+            ))}
+          </LargeTable>
+        ) : (
+          <div className="w-full flex justify-center mt-16">
+            <Spinner />
+          </div>
+        )}
+      </div>
+      {activeToast && (
+        <Toast message={toastMsg} onClose={closeToast} type={toastType} />
       )}
-    </div>
+    </>
   );
 };
 

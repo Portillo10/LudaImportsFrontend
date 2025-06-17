@@ -17,7 +17,6 @@ const Menu: React.FC<{
   const handleClick = async (option: OptionProps) => {
     setLoading(true);
     await option.click(store_id);
-    // await sleep(2000);
     setLoading(false);
   };
 
@@ -41,8 +40,9 @@ const Menu: React.FC<{
             }}
             className={`${classname} z-50 absolute w-44 bg-[#3a3b40] flex flex-col py-1 text-sm`}
           >
-            {options.map((option) => (
+            {options.map((option, i) => (
               <li
+                key={i}
                 onClick={() => handleClick(option)}
                 className="py-1 px-3 hover:bg-[#5d5f66] cursor-pointer"
               >

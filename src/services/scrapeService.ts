@@ -17,6 +17,7 @@ const scrape = {
         defaultWeight,
         defaultDimensions,
         target_store_id: store_id,
+        post: true,
       },
       { timeout: 200000 }
     );
