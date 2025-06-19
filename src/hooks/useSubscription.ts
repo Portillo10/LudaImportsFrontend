@@ -14,7 +14,7 @@ export const useSubscription = () => {
   const cancelSubscription = async (store_id: string) => {
     try {
       const response = await subscriptionService.cancelSubscription(store_id);
-      setToastMsg("Subscripción cancelada");
+      setToastMsg("Membresía cancelada");
       setToastType("success");
       setActiveToast(true);
       return response.data;
@@ -27,7 +27,7 @@ export const useSubscription = () => {
     try {
       const response = await subscriptionService.startSubscription(store_id);
       if (response.status == 201) {
-        setToastMsg("Subscripción iniciada");
+        setToastMsg("Membresía iniciada");
         setToastType("success");
         setActiveToast(true);
       }
@@ -53,11 +53,9 @@ export const useSubscription = () => {
   const renewSubscription = async (store_id: string) => {
     try {
       const response = await subscriptionService.renewSubscription(store_id);
-      if (response.status == 200) {
-        setToastMsg("Subscripción renovada");
-        setToastType("success");
-        setActiveToast(true);
-      }
+      setToastMsg("Membresía renovada");
+      setToastType("success");
+      setActiveToast(true);
       return response.data;
     } catch (error) {
       setError(error);
