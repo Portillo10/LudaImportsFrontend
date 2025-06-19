@@ -11,6 +11,18 @@ export const useSubscription = () => {
     setActiveToast(false);
   };
 
+  const cancelSubscription = async (store_id: string) => {
+    try {
+      const response = await subscriptionService.cancelSubscription(store_id);
+      setToastMsg("Subscripción cancelada");
+      setToastType("success");
+      setActiveToast(true);
+      return response.data;
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   const startSubscription = async (store_id: string) => {
     try {
       const response = await subscriptionService.startSubscription(store_id);
@@ -21,21 +33,41 @@ export const useSubscription = () => {
       }
       return response.data;
     } catch (error) {
-      if (isAxiosError(error) && error.response?.data.error) {
-        const {
-          response: { data },
-        } = error;
-        setToastMsg(data.error);
-      } else if (error instanceof Error) {
-        setToastMsg(error.message);
+      setError(error);
+    }
+  };
+
+  const setError = (error: unknown) => {
+    if (isAxiosError(error) && error.response?.data.error) {
+      const {
+        response: { data },
+      } = error;
+      setToastMsg(data.error);
+    } else if (error instanceof Error) {
+      setToastMsg(error.message);
+    }
+    setToastType("error");
+    setActiveToast(true);
+  };
+
+  const renewSubscription = async (store_id: string) => {
+    try {
+      const response = await subscriptionService.renewSubscription(store_id);
+      if (response.status == 200) {
+        setToastMsg("Subscripción renovada");
+        setToastType("success");
+        setActiveToast(true);
       }
-      setToastType("error");
-      setActiveToast(true);
+      return response.data;
+    } catch (error) {
+      setError(error);
     }
   };
 
   return {
+    cancelSubscription,
     startSubscription,
+    renewSubscription,
     closeToast,
     activeToast,
     toastType,

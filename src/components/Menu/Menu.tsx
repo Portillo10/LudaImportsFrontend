@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Spinner from "../Spinner/Spinner";
+import { isAxiosError } from "axios";
 
 export type OptionProps = {
   label: string;
-  click: (store_id: string) => Promise<void>;
+  click: (store_id: string, args?: any) => Promise<void>;
 };
 
 const Menu: React.FC<{
@@ -16,13 +17,21 @@ const Menu: React.FC<{
   const [loading, setLoading] = useState<boolean>(false);
   const handleClick = async (option: OptionProps) => {
     setLoading(true);
-    await option.click(store_id);
+    try {
+      await option.click(store_id);
+    } catch (error) {
+      console.log("problemas al ejecutar: " + option.label);
+      if (isAxiosError(error)) console.log(error.response?.data);
+      else if (error instanceof Error) console.log(error.message);
+    }
     setLoading(false);
   };
 
   return (
     <>
-      <span className="cursor-pointer flex gap-1 justify-between py-2 relative">
+      <span
+        className={`cursor-pointer flex gap-1 justify-between py-2 relative max-w-5 ${loading ? "cursor-default" : "cursor-pointer"}`}
+      >
         {loading ? (
           <Spinner size={18} />
         ) : (

@@ -14,4 +14,10 @@ export default {
     const { data, status } = response;
     return { data, status };
   },
+
+  async cancelSubscription(store_id: string) {
+    const response = await apiClient.put(`${prefix}/store/${store_id}/cancel`);
+    const { data, status } = response;
+    return { data, status };
+  },
 };

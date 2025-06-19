@@ -6,7 +6,6 @@ import LargeRow from "../../components/LargeTable/LargeRow";
 import Spinner from "../../components/Spinner/Spinner";
 
 import Menu, { OptionProps } from "../../components/Menu/Menu";
-import subscriptionService from "../../services/subscriptionService";
 import { useSubscription } from "../../hooks/useSubscription";
 import Toast from "../../components/Toast/Toast";
 
@@ -32,14 +31,21 @@ const columns = [
     class: "px-2 w-40 text-center",
     label: "Estado",
   },
-  { key: "actions", class: "px-3 w-12", label: "" },
+  { key: "actions", class: "w-7", label: "" },
 ];
 
 const UsersInfoPage: React.FC = () => {
   const { user_id } = useParams();
   const { getStoresByUser } = useStores();
-  const { activeToast, closeToast, startSubscription, toastMsg, toastType } =
-    useSubscription();
+  const {
+    activeToast,
+    closeToast,
+    startSubscription,
+    renewSubscription,
+    cancelSubscription,
+    toastMsg,
+    toastType,
+  } = useSubscription();
   const [stores, setStores] = useState<any[]>([]);
   const [loadingStores, setLoadingStores] = useState<boolean>(true);
   const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
@@ -75,7 +81,6 @@ const UsersInfoPage: React.FC = () => {
       if (user_id) {
         const stores = await getStoresByUser(user_id);
         if (stores) {
-          console.log(stores);
           setStores(stores);
         }
       }
@@ -99,15 +104,27 @@ const UsersInfoPage: React.FC = () => {
   const options: OptionProps[] = [
     {
       click: async (store_id) => {
-        await subscriptionService.renewSubscription(store_id);
+        await renewSubscription(store_id);
       },
       label: "Renovar membresía",
+    },
+    {
+      click: async (store_id) => {
+        await cancelSubscription(store_id);
+      },
+      label: "Cancelar membresía",
+    },
+    {
+      label: "Calcular utilidades",
+      click: async (store_id) => {
+        console.log(store_id);
+      },
     },
   ];
 
   const renderRow = (store: Record<string, string | number>, index: number) => {
     let rowOptions = [...options];
-    if (!store["startDate"]) {
+    if (!store["subscriptionStartDate"]) {
       const option: OptionProps = {
         click: async (store_id) => {
           const response = await startSubscription(store_id);
@@ -115,6 +132,8 @@ const UsersInfoPage: React.FC = () => {
         },
         label: "Iniciar membresía",
       };
+
+      rowOptions.shift();
       rowOptions.shift();
       rowOptions.unshift(option);
     }
@@ -125,7 +144,7 @@ const UsersInfoPage: React.FC = () => {
           <li
             key={i}
             onClick={() => onClickMenu(index)}
-            className={`${column.class} py-4 h-14`}
+            className={`${column.class}`}
           >
             <Menu
               side="left"
@@ -156,7 +175,7 @@ const UsersInfoPage: React.FC = () => {
       }
 
       return (
-        <li key={i} className={`${column.class} py-4 h-14`}>
+        <li key={i} className={`${column.class} py-3 `}>
           {label}
         </li>
       );
