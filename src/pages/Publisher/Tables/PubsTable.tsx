@@ -44,7 +44,7 @@ const PubsTable: React.FC<PubsTableProps> = ({
                   className={`${column.class} py-2 ${column.rowClass}`}
                   key={j}
                 >
-                  {column.key == "alias"
+                  {column.key == "alias" && store["user"]
                     ? `${store[column.key]} (${store["user"]["username"]})`
                     : store[column.key]}
                 </li>
