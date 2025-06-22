@@ -22,16 +22,7 @@ const PubsTable: React.FC<PubsTableProps> = ({
       {pubs.map((store, i) => (
         <LargeRow index={i} key={i}>
           {columns.map((column, j) => {
-            if (column.key != "actions")
-              return (
-                <li
-                  className={`${column.class} py-2 ${column.rowClass}`}
-                  key={j}
-                >
-                  {store[column.key]}
-                </li>
-              );
-            else
+            if (column.key == "actions")
               return (
                 <li
                   className={`${column.class}`}
@@ -45,6 +36,17 @@ const PubsTable: React.FC<PubsTableProps> = ({
                     active={i == activeMenuIndex}
                     classname={i == pubs.length - 1 ? "bottom-3" : "top-3"}
                   />
+                </li>
+              );
+            else
+              return (
+                <li
+                  className={`${column.class} py-2 ${column.rowClass}`}
+                  key={j}
+                >
+                  {column.key == "alias"
+                    ? `${store[column.key]} (${store["user"]["username"]})`
+                    : store[column.key]}
                 </li>
               );
           })}

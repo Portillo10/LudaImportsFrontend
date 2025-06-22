@@ -10,6 +10,7 @@ import { useSubscription } from "../../hooks/useSubscription";
 import Toast from "../../components/Toast/Toast";
 import { getStatusInfo } from "../../utils/statusHelper";
 import ConfirmModal from "../../components/ConfirmModal";
+import SummaryModal from "./Modal/SummaryModal";
 
 const columns = [
   { key: "alias", class: "px-2 w-40 text-base font-normal", label: "Tienda" },
@@ -57,7 +58,8 @@ const UsersInfoPage: React.FC = () => {
   const [loadingStores, setLoadingStores] = useState<boolean>(true);
   const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [toCancelStore, setToCancelStore] = useState<string | undefined>();
+  const [currentStore, setCurrentStore] = useState<string | undefined>();
+  const [openSummaryModal, setOpenSummaryModal] = useState<boolean>(false);
 
   const onClickMenu = (index: number) => {
     if (activeMenuIndex == index) {
@@ -155,24 +157,25 @@ const UsersInfoPage: React.FC = () => {
       });
     }
 
-    if (status) {
-      rowOptions.push({
-        label: "Calcular utilidades",
-        click: async (store_id) => {
-          console.log(store_id);
-        },
-      });
-    }
-
     if (status == "active" || status == "grace") {
       rowOptions.push({
         click: async (store_id) => {
-          setToCancelStore(store_id);
+          setCurrentStore(store_id);
           setOpenModal(true);
           // const response = await cancelSubscription(store_id);
           // if (response) updateSubscription(response.subscription);
         },
         label: "Cancelar membresía",
+      });
+    }
+
+    if (status) {
+      rowOptions.push({
+        label: "Calcular utilidades",
+        click: async (store_id) => {
+          console.log(store_id);
+          setOpenSummaryModal(true);
+        },
       });
     }
 
@@ -252,13 +255,20 @@ const UsersInfoPage: React.FC = () => {
         title="¿Seguro que desea cancelar la membresía?"
         onCancel={() => setOpenModal(false)}
         onConfirm={async () => {
-          if (toCancelStore) {
-            const response = await cancelSubscription(toCancelStore);
+          if (currentStore) {
+            const response = await cancelSubscription(currentStore);
             if (response) updateSubscription(response.subscription);
           }
           setOpenModal(false);
         }}
       />
+
+      <SummaryModal
+        openModal={openSummaryModal}
+        close={() => setOpenSummaryModal(false)}
+        store_id={currentStore}
+      />
+
       {activeToast && (
         <Toast message={toastMsg} onClose={closeToast} type={toastType} />
       )}

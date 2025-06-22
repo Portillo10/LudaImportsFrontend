@@ -1,6 +1,7 @@
 import { useState } from "react";
 import mercadoLibreService from "../services/mercadoLibreService";
 import { useAuth } from "./useAuth";
+import { isAxiosError } from "axios";
 
 export const useMLApi = () => {
   const { user } = useAuth();
@@ -11,6 +12,36 @@ export const useMLApi = () => {
     posting: null,
     sincronize: null,
   });
+
+  const setErrorMsg = (error: unknown) => {
+    if (isAxiosError(error) && error.response?.data.error) {
+      const {
+        response: { data },
+      } = error;
+      setError(data.error);
+    } else if (error instanceof Error) {
+      setError(error.message);
+    }
+  };
+
+  const calculateSummary = async (params: {
+    store_id: string;
+    to: Date;
+    from: Date;
+  }) => {
+    try {
+      const { from, store_id, to } = params;
+      const response = await mercadoLibreService.calculateSummary(
+        store_id,
+        to.toISOString(),
+        from.toISOString()
+      );
+
+      return response;
+    } catch (error) {
+      setErrorMsg(error);
+    }
+  };
 
   const predictCategory = async (sku?: string, q?: string, limit?: number) => {
     setLoading(true);
@@ -134,6 +165,7 @@ export const useMLApi = () => {
     sincronizeStore,
     predictCategory,
     transferProducts,
+    calculateSummary,
     getSyncStoreProgress,
     deleteForbbidenProducts,
     getPostingProgressByStore,

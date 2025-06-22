@@ -1,5 +1,7 @@
 import apiClient from "./apiClient";
 
+const prefix = "/api";
+
 const mercadoLibreService = {
   async getCategories() {
     const response = await apiClient.get("/api/categories");
@@ -53,6 +55,14 @@ const mercadoLibreService = {
       `/api/store/${store_id}/delete-forbbiden`
     );
     return response.data;
+  },
+
+  async calculateSummary(store_id: string, to: string, from: string) {
+    const response = await apiClient.get(`${prefix}/calculate-summary`, {
+      params: { store_id, to, from },
+    });
+    const { data, status } = response;
+    return { data, status };
   },
 
   async postBySku(

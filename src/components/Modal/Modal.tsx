@@ -43,7 +43,6 @@ const Modal: React.FC<ModalProps> = ({
 
   return (
     <>
-      {/* {isOpen && <div className="modal-overlay"></div>} */}
       <dialog ref={dialogRef} className={`modal ${className || ""}`}>
         <div className="w-full">
           <div className="modal-header">
