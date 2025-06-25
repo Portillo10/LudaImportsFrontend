@@ -10,7 +10,7 @@ dialog::backdrop {
   border: none;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-  width: 100%;
+  width: fit-content;
   margin: auto;
   background-color: #3a3b40;
   color: white;

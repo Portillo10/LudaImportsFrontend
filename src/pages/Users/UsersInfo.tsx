@@ -112,6 +112,15 @@ const UsersInfoPage: React.FC = () => {
     };
   }, []);
 
+  const getDateFrom = (store_id: string | undefined): string | null => {
+    const store = stores.find((store) => store["_id"] == store_id);
+    if (store) {
+      return store["subscriptionStartDate"];
+    } else {
+      return null;
+    }
+  };
+
   const renderRow = (store: Record<string, string | number>, index: number) => {
     let rowOptions: OptionProps[] = [];
 
@@ -162,8 +171,6 @@ const UsersInfoPage: React.FC = () => {
         click: async (store_id) => {
           setCurrentStore(store_id);
           setOpenModal(true);
-          // const response = await cancelSubscription(store_id);
-          // if (response) updateSubscription(response.subscription);
         },
         label: "Cancelar membresía",
       });
@@ -173,7 +180,7 @@ const UsersInfoPage: React.FC = () => {
       rowOptions.push({
         label: "Calcular utilidades",
         click: async (store_id) => {
-          console.log(store_id);
+          setCurrentStore(store_id);
           setOpenSummaryModal(true);
         },
       });
@@ -263,11 +270,16 @@ const UsersInfoPage: React.FC = () => {
         }}
       />
 
-      <SummaryModal
-        openModal={openSummaryModal}
-        close={() => setOpenSummaryModal(false)}
-        store_id={currentStore}
-      />
+      {openSummaryModal && currentStore ? (
+        <SummaryModal
+          openModal={openSummaryModal}
+          close={() => setOpenSummaryModal(false)}
+          store_id={currentStore}
+          date_from={getDateFrom(currentStore)}
+        />
+      ) : (
+        <></>
+      )}
 
       {activeToast && (
         <Toast message={toastMsg} onClose={closeToast} type={toastType} />

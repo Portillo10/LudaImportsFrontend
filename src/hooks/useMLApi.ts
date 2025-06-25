@@ -26,15 +26,15 @@ export const useMLApi = () => {
 
   const calculateSummary = async (params: {
     store_id: string;
-    to: Date;
-    from: Date;
+    to: string;
+    from: string;
   }) => {
     try {
       const { from, store_id, to } = params;
       const response = await mercadoLibreService.calculateSummary(
         store_id,
-        to.toISOString(),
-        from.toISOString()
+        to,
+        from
       );
 
       return response;
