@@ -81,7 +81,7 @@ const SummaryModal: React.FC<ModalProps> = ({
         </span>
         <div className="flex flex-col w-full">
           {loading ? (
-            <div className="flex justify-center w-full">
+            <div className="flex justify-center items-center w-full h-24">
               <Spinner />
             </div>
           ) : (
