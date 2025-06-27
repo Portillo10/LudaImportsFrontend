@@ -26,7 +26,7 @@ const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
   return users.map((user, i) =>
     user.stores.length > 0 ? (
       <Accordeon
-        key={i}
+        key={user._id}
         displayed={selectedIndex == i}
         label={user.username}
         onClick={() => handleClickUser(i)}

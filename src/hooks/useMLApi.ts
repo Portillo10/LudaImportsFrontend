@@ -29,6 +29,7 @@ export const useMLApi = () => {
     to: string;
     from: string;
   }) => {
+    setLoading(true);
     try {
       const { from, store_id, to } = params;
       const response = await mercadoLibreService.calculateSummary(
@@ -40,6 +41,8 @@ export const useMLApi = () => {
       return response;
     } catch (error) {
       setErrorMsg(error);
+    } finally {
+      setLoading(false);
     }
   };
 
