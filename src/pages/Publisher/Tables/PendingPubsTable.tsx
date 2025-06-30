@@ -14,19 +14,25 @@ const pendingPubsColumns = [
   },
   {
     key: "pausedCount",
-    label: "Publicaciones pausadas",
+    label: "Pausadas",
     class: "px-6 max-w-60 w-full text-right leading-tight",
     rowClass: "",
   },
   {
     key: "activeCount",
-    label: "Publicaciones activas",
+    label: "Activas",
     class: "px-6 max-w-60 w-full text-right leading-tight",
     rowClass: "text-green-300",
   },
   {
     key: "pendingCount",
-    label: "Publicaciones pendientes",
+    label: "Pendientes",
+    class: "px-6 max-w-60 w-full text-right leading-tight",
+    rowClass: "text-red-300",
+  },
+  {
+    key: "total",
+    label: "Total",
     class: "px-6 max-w-60 w-full text-right leading-tight",
     rowClass: "text-red-300",
   },
