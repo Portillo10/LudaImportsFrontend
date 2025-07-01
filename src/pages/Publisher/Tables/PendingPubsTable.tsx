@@ -33,8 +33,8 @@ const pendingPubsColumns = [
   {
     key: "total",
     label: "Total",
-    class: "px-6 max-w-60 w-full text-right leading-tight",
-    rowClass: "text-red-300",
+    class: "px-6 max-w-60 w-full text-center leading-tight",
+    rowClass: "",
   },
   { key: "actions", class: "px-3 flex items-center", label: "", rowClass: "" },
 ];
