@@ -10,6 +10,10 @@ import {
   CircleDollarSign,
   BanknoteArrowUp,
   ChevronDown,
+  CalendarX2,
+  CalendarCheck2,
+  PiggyBank,
+  ActivitySquare,
 } from "lucide-react";
 import { formatNumber } from "../../utils/helpers";
 import { useEffect, useState } from "react";
@@ -18,6 +22,8 @@ import storeService from "../../services/storeService";
 import Spinner from "../../components/Spinner/Spinner";
 import { useParams } from "react-router-dom";
 import { AxiosError } from "axios";
+import { useSubscription } from "../../hooks/useSubscription";
+import { getStatusInfo } from "../../utils/statusHelper";
 
 const CARDS_CONFIG = [
   {
@@ -119,6 +125,80 @@ const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
   );
 };
 
+const SubscriptionResume: React.FC<{ store_id: string }> = ({ store_id }) => {
+  const [subscription, setSubscription] = useState<any>();
+  const { getSubscription } = useSubscription();
+
+  useEffect(() => {
+    (async () => {
+      const subscription = await getSubscription(store_id);
+      console.log(subscription);
+
+      if (subscription) {
+        const statusInfo = getStatusInfo({
+          endDate: new Date(subscription.endDate),
+          graceUntil: new Date(subscription.graceUntil),
+          status: subscription.status,
+        });
+        setSubscription({
+          ...subscription,
+          statusLabel: statusInfo.label,
+        });
+      }
+    })();
+  }, []);
+
+  return (
+    <div className="rounded-lg bg-[#18222b] px-4 pb-4 pt-2 flex flex-col gap-2 ">
+      <span className="w-full flex items-center">
+        <p>Membresía</p>
+      </span>
+      <div className="grid grid-cols-4 w-full">
+        <ResumeCard
+          icon={<ActivitySquare strokeWidth={1.2} />}
+          color="text-sky-200"
+          label="Estado"
+          value={
+            subscription?.statusLabel
+              ? subscription?.statusLabel
+              : "Sin membresía"
+          }
+        />
+        <ResumeCard
+          icon={<CalendarCheck2 strokeWidth={1.2} />}
+          color="text-green-300"
+          label="Fecha de inicio"
+          value={
+            subscription?.startDate
+              ? new Date(subscription?.startDate).toLocaleDateString()
+              : "Sin membresía"
+          }
+        />
+        <ResumeCard
+          icon={<CalendarX2 strokeWidth={1.2} />}
+          color="text-yellow-300"
+          label="Fecha de pago"
+          value={
+            subscription?.endDate
+              ? new Date(subscription?.endDate).toLocaleDateString()
+              : "Sin membresía"
+          }
+        />
+        <ResumeCard
+          icon={<PiggyBank strokeWidth={1.2} />}
+          color="text-indigo-200"
+          label="Saldo a pagar"
+          value={
+            subscription?.amountToPay
+              ? `$${formatNumber(subscription.amountToPay)}`
+              : "$0"
+          }
+        />
+      </div>
+    </div>
+  );
+};
+
 const ResumeSection: React.FC<{ store_id: string }> = ({ store_id }) => {
   const [days, setDays] = useState<number>(30);
   const [loading, setLoading] = useState<boolean>(false);
@@ -151,10 +231,13 @@ const ResumeSection: React.FC<{ store_id: string }> = ({ store_id }) => {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="rounded-lg bg-[#18222b] px-4 pb-4 pt-2 flex flex-col gap-1">
-          <span className="w-full flex items-center gap-1 justify-end text-sm text-gray-300 cursor-pointer">
-            <p>Últimos {days} días</p>
-            <ChevronDown strokeWidth={1.2} />
+        <div className="rounded-lg bg-[#18222b] px-4 pb-4 pt-2 flex flex-col gap-2">
+          <span className="w-full flex items-center gap-1 justify-between ">
+            <div>Resumen de ventas</div>
+            <div className="text-sm text-gray-300 cursor-pointer flex items-center">
+              <p>Últimos {days} días</p>
+              <ChevronDown strokeWidth={1.2} />
+            </div>
           </span>
           <div className="grid grid-cols-4 w-full">
             <ResumeCard
@@ -206,7 +289,7 @@ const ResumeCard: React.FC<ResumeCardProps> = ({
       <p className="text-sm">{label}</p>
       {icon}
     </span>
-    <h3 className="text-xl">{value}</h3>
+    <h3 className="text-lg">{value}</h3>
   </div>
 );
 
@@ -215,9 +298,10 @@ const StoreDashboard = () => {
 
   if (store_id)
     return (
-      <div className="screenContainer w-full flex p-4 gap-4">
-        <section className="w-full">
+      <div className="screenContainer w-full flex p-4 gap-4 fade-in">
+        <section className="w-full flex flex-col gap-2">
           <ResumeSection store_id={store_id} />
+          <SubscriptionResume store_id={store_id} />
         </section>
         <section className="">
           <PubsSection store_id={store_id} />

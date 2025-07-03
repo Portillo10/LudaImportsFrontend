@@ -62,10 +62,20 @@ export const useSubscription = () => {
     }
   };
 
+  const getSubscription = async (store_id: string) => {
+    try {
+      const response = await subscriptionService.getSubscription(store_id);
+      return response.data.subscription;
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   return {
     cancelSubscription,
     startSubscription,
     renewSubscription,
+    getSubscription,
     closeToast,
     activeToast,
     toastType,

@@ -65,6 +65,9 @@ const StoresPage: React.FC = () => {
                       ? "bg-red-100 text-red-800"
                       : "bg-green-100 text-green-800"
                   }
+                  subEndDate={store.subscriptionEndDate}
+                  subGraceDate={store.subscriptionGraceUntil}
+                  subStatus={store.subscriptionStatus}
                 />
               ))
             )}

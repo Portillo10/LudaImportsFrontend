@@ -12,4 +12,7 @@ export interface IStore {
   claims?: number;
   total?: number;
   suspended?: boolean;
+  subscriptionEndDate?: string;
+  subscriptionGraceUntil?: string;
+  subscriptionStatus?: string;
 }

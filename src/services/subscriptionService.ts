@@ -20,4 +20,10 @@ export default {
     const { data, status } = response;
     return { data, status };
   },
+
+  async getSubscription(store_id: string) {
+    const response = await apiClient.get(`${prefix}/store/${store_id}`);
+    const { data, status } = response;
+    return { data, status };
+  },
 };

@@ -9,13 +9,15 @@ type SubscriptionStatus =
 interface SubscriptionDates {
   endDate: Date; // Fin del período pagado
   graceUntil?: Date; // Fin del período de gracia, si aplica
-  status: string;
+  status?: string;
 }
 
-interface StatusInfo {
+export interface StatusInfo {
   label: string;
-  color: string; // Tailwind classes
+  textColor: string; // Tailwind classes
   status: SubscriptionStatus;
+  graceDays?: number;
+  bgColor: string;
 }
 
 export function getStatusInfo({
@@ -30,15 +32,17 @@ export function getStatusInfo({
   if (status === "cancelled") {
     return {
       label: "Cancelada",
-      color: "bg-red-100 text-red-800",
+      textColor: "text-red-800",
       status: "cancelled",
+      bgColor: "bg-red-100",
     };
   }
   if (status === "suspended") {
     return {
       label: "Suspendida",
-      color: "bg-orange-100 text-orange-800",
+      textColor: "text-orange-800",
       status: "suspended",
+      bgColor: "bg-orange-100",
     };
   }
 
@@ -46,22 +50,28 @@ export function getStatusInfo({
   if (now <= end) {
     return {
       label: "Activa",
-      color: "bg-green-100 text-green-800",
+      textColor: "text-green-800",
       status: "active",
+      bgColor: "bg-green-100 ",
     };
   }
 
   if (grace && now <= grace) {
+    const difference = Math.abs(grace.getTime() - now.getTime());
+    const graceDays = Math.ceil(difference / (1000 * 60 * 60 * 24));
     return {
-      label: "Pago pendiente",
-      color: "bg-yellow-100 text-yellow-800",
+      graceDays,
       status: "grace",
+      label: "Pago pendiente",
+      textColor: "text-yellow-900",
+      bgColor: "bg-yellow-100",
     };
   }
 
   return {
     label: "Expirada",
-    color: "bg-gray-200 text-gray-700",
+    textColor: "text-gray-700",
     status: "expired",
+    bgColor: "bg-gray-200",
   };
 }
