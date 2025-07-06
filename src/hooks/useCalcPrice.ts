@@ -47,14 +47,14 @@ export const useCalcPrice = () => {
     }
   };
 
-  const calcPrice = async (sku: string) => {
+  const calcPrice = async (params: any) => {
     setLoading(true);
     setMissingFields([]);
     try {
       if (!user || user?.stores.length == 0) {
         throw new Error("Debe tener por lo menos una tienda vinculada");
       }
-      const { data, status } = await priceService.calcPrice(user._id, sku);
+      const { data, status } = await priceService.calcPrice(params);
       if (status == 202) {
         setActiveModal(true);
         if (data.missingFields) {

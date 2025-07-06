@@ -10,8 +10,9 @@ import UpdatePricesForm from "./UpdatePricesForm";
 import UpdateProgressPanel from "./UpdateProgressPanel";
 
 import "./styles.css";
+import { useSideBarStore } from "../../store/MenuStore";
 
-const UpdatePrices: React.FC = () => {
+const UpdatePrices: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const { stores, getAllStores, renderSkeletons, loading } = useStores();
   const {
     getUsdRate,
@@ -21,11 +22,13 @@ const UpdatePrices: React.FC = () => {
     loadingProgress,
     priceUpdatingInfo,
   } = usePriceUpdating();
+  const { setCurrentIndexPage } = useSideBarStore();
 
   useEffect(() => {
     getAllStores();
     getUsdRate();
     getUpdateProgress();
+    setCurrentIndexPage(pageIndex || 3);
   }, []);
 
   const onSubmit = async (data: any) => {

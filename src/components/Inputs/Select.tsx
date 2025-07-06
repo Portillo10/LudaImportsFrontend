@@ -6,6 +6,7 @@ interface SelectProps {
   name: any;
   options: Store[];
   label: string;
+  placholder?: string;
   required?: boolean;
 }
 
@@ -14,6 +15,7 @@ const Select: React.FC<SelectProps> = ({
   name,
   options,
   label,
+  placholder = "Seleccionar...",
   required = false,
 }) => {
   const validation: RegisterOptions<any> = required
@@ -24,9 +26,11 @@ const Select: React.FC<SelectProps> = ({
     <span className="inputBox min-w-52">
       <label htmlFor={name}>{label}</label>
       <select id={name} className="select" {...register(name, validation)}>
-        <option value="">Seleccionar...</option>
+        <option value="" className="text-gray-400">
+          {placholder}
+        </option>
         {options?.map((store) => (
-          <option key={store._id} value={store._id}>
+          <option className="cursor-pointer" key={store._id} value={store._id}>
             {store.alias}
           </option>
         ))}

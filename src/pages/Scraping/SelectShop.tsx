@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { IUser } from "../../types/user";
 import Accordeon from "../../components/Accordeon/Accordeon";
 import Spinner from "../../components/Spinner/Spinner";
+import { useSideBarStore } from "../../store/MenuStore";
 
 const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -47,15 +48,18 @@ const SelectAccordeon: React.FC<{ users: IUser[] }> = memo(({ users }) => {
   );
 });
 
-const SelectShop: React.FC = () => {
+const SelectShop: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const [users, setUsers] = useState<IUser[]>([]);
 
   const { getUsers } = useAuth();
   const { getScrapingProgress } = useScraping();
 
   const navigate = useNavigate();
+  const { setCurrentIndexPage } = useSideBarStore();
 
   useEffect(() => {
+    setCurrentIndexPage(pageIndex || 5);
+
     (async () => {
       const progress = await getScrapingProgress();
       if (

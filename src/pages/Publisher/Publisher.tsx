@@ -10,14 +10,18 @@ import { IProduct } from "../../types/product";
 import Modal from "../../components/Modal/Modal";
 import ProductViewer from "../../components/ProductViewer/ProductViewer";
 import PostBySkuForm, { PublisherFormInputs } from "./Forms/PostBySkuForm";
+import { useSideBarStore } from "../../store/MenuStore";
 
-const Publisher: React.FC = () => {
+const Publisher: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const { user } = useAuth();
   const { scrapeBySku } = useScraping();
+  const { setCurrentIndexPage } = useSideBarStore();
 
   const [scrapedProduct, setScrapedProduct] = useState<IProduct | null>(null);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setCurrentIndexPage(pageIndex || 0);
+  }, []);
 
   const onSubmit = async (data: PublisherFormInputs) => {
     const product = await scrapeBySku(

@@ -5,6 +5,7 @@ import { IUser } from "../../types/user";
 import Table from "../../components/Table/Table";
 import { useAuth } from "../../hooks/useAuth";
 import Spinner from "../../components/Spinner/Spinner";
+import { useSideBarStore } from "../../store/MenuStore";
 
 const TableColumns = [
   {
@@ -24,13 +25,16 @@ const TableColumns = [
   },
 ];
 
-const Users: React.FC = () => {
+const Users: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const [rowsData, setRowsData] = useState<Partial<IUser>[]>([]);
   const [loadingTable, setLoadingTable] = useState<boolean>(true);
   const { getUsers } = useAuth();
   const navigate = useNavigate();
+  const { setCurrentIndexPage } = useSideBarStore();
 
   useEffect(() => {
+    setCurrentIndexPage(pageIndex || 4);
+
     const initUsers = async () => {
       const users = await getUsers();
 

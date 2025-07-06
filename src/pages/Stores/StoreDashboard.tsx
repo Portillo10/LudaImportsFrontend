@@ -24,6 +24,7 @@ import { useParams } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useSubscription } from "../../hooks/useSubscription";
 import { getStatusInfo } from "../../utils/statusHelper";
+import { useSideBarStore } from "../../store/MenuStore";
 
 const CARDS_CONFIG = [
   {
@@ -293,9 +294,14 @@ const ResumeCard: React.FC<ResumeCardProps> = ({
   </div>
 );
 
-const StoreDashboard = () => {
+const StoreDashboard: React.FC<{ pageIndex?: number }> = ({
+  pageIndex = 1,
+}) => {
   const { store_id } = useParams();
-
+  const { setCurrentIndexPage } = useSideBarStore();
+  useEffect(() => {
+    setCurrentIndexPage(pageIndex);
+  }, []);
   if (store_id)
     return (
       <div className="screenContainer w-full flex p-4 gap-4 fade-in">

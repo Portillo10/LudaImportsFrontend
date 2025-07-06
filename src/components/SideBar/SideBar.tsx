@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import OffIcon from "../../assets/icons/off_icon.svg";
 import SideBarElement from "./SideBarElement";
 import { useAuth } from "../../hooks/useAuth";
 import { IconName } from "../../types/iconProps";
+import { useSideBarStore } from "../../store/MenuStore";
 import "./styles.css";
 
 type SideBarElementProps = {
@@ -59,15 +60,17 @@ const sellerOptions: SideBarElementProps[] = [
 ];
 
 const SideBar: React.FC<SideBarProps> = ({ role }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
   const { handleLogout } = useAuth();
+
+  const { currentIndexPage, setCurrentIndexPage } = useSideBarStore();
+
   const elements = [...sellerOptions, ...adminOptions];
 
   useEffect(() => {
     const currentUrl = window.location.href;
     elements.forEach((element, i) => {
       if (currentUrl.includes(element.href)) {
-        setActiveIndex(i);
+        setCurrentIndexPage(i);
       }
     });
   }, []);
@@ -82,8 +85,8 @@ const SideBar: React.FC<SideBarProps> = ({ role }) => {
               iconName={element.icon}
               text={element.text}
               href={element.href}
-              active={activeIndex == i}
-              onClick={() => setActiveIndex(i)}
+              active={currentIndexPage == i}
+              onClick={() => setCurrentIndexPage(i)}
               key={i}
             />
           ))}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useStores } from "../../hooks/useStores";
 import LargeTable from "../../components/LargeTable/LargeTable";
 import LargeRow from "../../components/LargeTable/LargeRow";
@@ -11,6 +11,7 @@ import Toast from "../../components/Toast/Toast";
 import { getStatusInfo } from "../../utils/statusHelper";
 import ConfirmModal from "../../components/ConfirmModal";
 import SummaryModal from "./Modal/SummaryModal";
+import { useSideBarStore } from "../../store/MenuStore";
 
 const columns = [
   { key: "alias", class: "px-2 w-40 text-base font-normal", label: "Tienda" },
@@ -42,7 +43,7 @@ const columns = [
   { key: "actions", class: "w-7", label: "" },
 ];
 
-const UsersInfoPage: React.FC = () => {
+const UsersInfoPage: React.FC<{ pageIndex?: number }> = ({ pageIndex = 4 }) => {
   const { user_id } = useParams();
   const { getStoresByUser } = useStores();
   const {
@@ -60,6 +61,9 @@ const UsersInfoPage: React.FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [currentStore, setCurrentStore] = useState<string | undefined>();
   const [openSummaryModal, setOpenSummaryModal] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+  const { setCurrentIndexPage } = useSideBarStore();
 
   const onClickMenu = (index: number) => {
     if (activeMenuIndex == index) {
@@ -87,6 +91,7 @@ const UsersInfoPage: React.FC = () => {
   };
 
   useEffect(() => {
+    setCurrentIndexPage(pageIndex);
     const loadStores = async () => {
       setLoadingStores(true);
       if (user_id) {
@@ -113,9 +118,9 @@ const UsersInfoPage: React.FC = () => {
   }, []);
 
   const getDateFrom = (store_id: string | undefined): string | null => {
-    const store = stores.find((store) => store["_id"] == store_id);
+    const store = stores.find((store) => store._id == store_id);
     if (store) {
-      return store["subscriptionStartDate"];
+      return store.subscriptionStartDate;
     } else {
       return null;
     }
@@ -192,7 +197,10 @@ const UsersInfoPage: React.FC = () => {
         return (
           <li
             key={i}
-            onClick={() => onClickMenu(index)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClickMenu(index);
+            }}
             className={`${column.class}`}
           >
             <Menu
@@ -245,7 +253,12 @@ const UsersInfoPage: React.FC = () => {
         {!loadingStores ? (
           <LargeTable classname="fade-in" columns={columns} rowsData={[]}>
             {stores.map((store, i) => (
-              <LargeRow index={i} key={i}>
+              <LargeRow
+                index={i}
+                key={i}
+                className="cursor-pointer hover:bg-[#595a63]"
+                onClick={() => navigate(`/users/store/${store._id}`)}
+              >
                 {renderRow(store, i)}
               </LargeRow>
             ))}

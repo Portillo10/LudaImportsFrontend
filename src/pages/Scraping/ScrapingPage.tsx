@@ -14,6 +14,7 @@ import { IScrapingProgress } from "../../types/scrapingProgress";
 import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
 
 import "./styles.css";
+import { useSideBarStore } from "../../store/MenuStore";
 
 type OmitedProductCardProps = {
   children: any;
@@ -112,7 +113,7 @@ const Status: React.FC<{ status: string }> = ({ status }) => {
   );
 };
 
-const ScrapingPage: React.FC = () => {
+const ScrapingPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const [progress, setProgress] = useState<{
     queueInfo: any;
     scrapingProgress: IScrapingProgress;
@@ -121,7 +122,11 @@ const ScrapingPage: React.FC = () => {
   const { store_id } = useParams();
   const { initializeScraping, getScrapingProgress } = useScraping();
 
+  const { setCurrentIndexPage } = useSideBarStore();
+
   useEffect(() => {
+    setCurrentIndexPage(pageIndex || 5);
+
     const init = async () => {
       const scrapingProgress = await getScrapingProgress(store_id);
       if (scrapingProgress) {

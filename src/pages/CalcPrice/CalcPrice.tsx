@@ -14,6 +14,8 @@ import PricingTable from "../../components/PricingTable/PricingTable";
 import { ISellerPricing, PercentRange } from "../../types/sellerPricing";
 import { useStores } from "../../hooks/useStores";
 import { useAuth } from "../../hooks/useAuth";
+import { useSideBarStore } from "../../store/MenuStore";
+import Select from "../../components/Inputs/Select";
 
 const tableColumns = [
   { key: "label", label: "" },
@@ -22,9 +24,10 @@ const tableColumns = [
 
 type Inputs = {
   sku: string;
+  store_id?: string;
 };
 
-const CalcPrice: React.FC = () => {
+const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const {
     loading,
     errorMsg,
@@ -38,6 +41,7 @@ const CalcPrice: React.FC = () => {
     getInitialPriceInfo,
   } = useCalcPrice();
   const { user } = useAuth();
+  const hasStores = user && user.stores.length > 0;
   const { savePricing, getPricing } = useStores();
   const [activeToast, setActiveToast] = useState<boolean>(false);
   const [successMsg, setSuccessMsg] = useState<string>("");
@@ -53,16 +57,26 @@ const CalcPrice: React.FC = () => {
 
   const { register, handleSubmit, watch } = useForm<Inputs>();
 
+  const { setCurrentIndexPage } = useSideBarStore();
+
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     getInitialPriceInfo();
+    setCurrentIndexPage(pageIndex || 2);
   }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    const result = await calcPrice(data.sku);
-    if (result?.status == 200) {
-      setSuccessMsg("Operación exitosa.");
+    if (data.store_id) {
+      const result = await calcPrice(data);
+      if (result?.status == 200) {
+        setErrorMsg("");
+        setSuccessMsg("Operación exitosa.");
+        setActiveToast(true);
+      }
+    } else {
+      setSuccessMsg("");
+      setErrorMsg("Debe tener al menos una tienda registrada activa.");
       setActiveToast(true);
     }
   };
@@ -148,25 +162,35 @@ const CalcPrice: React.FC = () => {
         <section className="flex flex-col min-w-[450px] px-4 gap-6">
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex gap-2 max-w-md pr-2"
+            className="flex flex-col gap-2 max-w-md pr-2"
           >
-            <input
-              type="text"
-              className="input w-full"
-              placeholder="SKU del producto"
-              {...register("sku", { required: true })}
+            <Select
+              label=""
+              placholder="Seleccione una tienda"
+              name="store_id"
+              options={user ? user.stores : []}
+              register={register}
             />
-            <button
-              ref={buttonRef}
-              disabled={loading}
-              className={`${loading ? "bg-[#3B6541]" : "bg-[#4A7F50]"} rounded-md px-2 py-2 hover:bg-[#3B6541] transition-all`}
-            >
-              {loading ? (
-                <Spinner size={16} />
-              ) : (
-                <img src={SendIcon} alt="" width={18} />
-              )}
-            </button>
+
+            <span className="flex gap-2 w-full">
+              <input
+                type="text"
+                className="input w-full"
+                placeholder="SKU del producto"
+                {...register("sku", { required: true })}
+              />
+              <button
+                ref={buttonRef}
+                disabled={loading && !hasStores}
+                className={`${loading ? "bg-[#3B6541]" : "bg-[#4A7F50]"} rounded-md px-2 py-2 hover:bg-[#3B6541] transition-all`}
+              >
+                {loading ? (
+                  <Spinner size={16} />
+                ) : (
+                  <img src={SendIcon} alt="" width={18} />
+                )}
+              </button>
+            </span>
           </form>
           <div className="h-full overflow-auto max-w-md border border-[#5A5B60] rounded-xl mb-4 scroll-container">
             <Table

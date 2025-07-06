@@ -6,15 +6,19 @@ import StatsCard from "../../components/StoreCard/StoreCard";
 import { useStores } from "../../hooks/useStores";
 import { IStore } from "../../types/store";
 import Spinner from "../../components/Spinner/Spinner";
+import { useSideBarStore } from "../../store/MenuStore";
 
-const StoresPage: React.FC = () => {
+const StoresPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const { user } = useAuth();
 
   const { getStoresByUser } = useStores();
   const [loadingStores, setLoadingStores] = useState<boolean>(true);
   const [stores, setStores] = useState<IStore[]>([]);
+  const { setCurrentIndexPage } = useSideBarStore();
 
   useEffect(() => {
+    setCurrentIndexPage(pageIndex || 1);
+
     const loadStores = async () => {
       setLoadingStores(true);
       if (user) {
