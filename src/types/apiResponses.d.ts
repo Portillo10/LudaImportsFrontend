@@ -37,10 +37,20 @@ export interface CalcPriceResponse {
 }
 
 export interface UpdatingProgressResponse {
-  trackingProgress: TrackingProgress;
+  trackingProgress: Progress;
   updatingProgress: UpdatingProgress;
-  singleProgress: ISingleTrackingProgress;
+  singleProgress: Progress;
 }
+
+type Progress = {
+  total: number;
+  processedCount: number;
+  errorCount: number;
+  errors: any[];
+  itemsCount: number;
+  usedCredits: number;
+  status: "stopped" | "running" | "paused";
+};
 
 type TrackingProgress = {
   compareCount: number;

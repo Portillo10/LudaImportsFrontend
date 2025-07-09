@@ -28,7 +28,7 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
           <li>
             <p className="text-[12px] text-gray-300">Precios actualizados</p>
             <span className="text-2xl">
-              {updatingProgress.trackingProgress.updatedCount.toLocaleString(
+              {updatingProgress.trackingProgress.itemsCount.toLocaleString(
                 "es-US"
               )}
             </span>
@@ -51,13 +51,13 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
           </li>
         </ul>
         <LoadingBar
-          progress={updatingProgress.trackingProgress.updatedTasksCount}
-          total={updatingProgress.trackingProgress.tasksToUpdate}
+          progress={updatingProgress.trackingProgress.processedCount}
+          total={updatingProgress.trackingProgress.total}
           label="Analizando por link..."
         />
         {updatingProgress.singleProgress.status == "running" ? (
           <LoadingBar
-            progress={updatingProgress.singleProgress.updatedCount}
+            progress={updatingProgress.singleProgress.processedCount}
             total={updatingProgress.singleProgress.total}
             label="Analizando por producto..."
           />
