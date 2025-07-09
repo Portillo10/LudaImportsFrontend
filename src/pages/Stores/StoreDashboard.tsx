@@ -134,7 +134,6 @@ const SubscriptionResume: React.FC<{ store_id: string }> = ({ store_id }) => {
     (async () => {
       const subscription = await getSubscription(store_id);
       console.log(subscription);
-
       if (subscription) {
         const statusInfo = getStatusInfo({
           endDate: new Date(subscription.endDate),
@@ -171,7 +170,7 @@ const SubscriptionResume: React.FC<{ store_id: string }> = ({ store_id }) => {
           label="Fecha de inicio"
           value={
             subscription?.startDate
-              ? new Date(subscription?.startDate).toLocaleDateString()
+              ? new Date(subscription.startDate).toLocaleDateString()
               : "Sin membresía"
           }
         />
@@ -181,7 +180,7 @@ const SubscriptionResume: React.FC<{ store_id: string }> = ({ store_id }) => {
           label="Fecha de pago"
           value={
             subscription?.endDate
-              ? new Date(subscription?.endDate).toLocaleDateString()
+              ? new Date(subscription.endDate).toLocaleDateString()
               : "Sin membresía"
           }
         />
