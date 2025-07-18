@@ -14,11 +14,11 @@ export const useMLApi = () => {
   });
 
   const setErrorMsg = (error: unknown) => {
-    if (isAxiosError(error) && error.response?.data.error) {
+    if (isAxiosError(error) && error.response?.data) {
       const {
         response: { data },
       } = error;
-      setError(data.error);
+      setError(data.message);
     } else if (error instanceof Error) {
       setError(error.message);
     }

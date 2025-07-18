@@ -1,7 +1,7 @@
 import { RegisterOptions, UseFormRegister } from "react-hook-form";
 
 interface TextAreaProps {
-  register: UseFormRegister<any>;
+  register?: UseFormRegister<any>;
   name: any;
   label: string;
   placeholder?: string;
@@ -10,10 +10,12 @@ interface TextAreaProps {
   resizeX?: boolean;
   rows?: number;
   style?: React.CSSProperties;
+  value?: string;
+  onChange?: (value: string) => void;
 }
 
 const TextArea: React.FC<TextAreaProps> = ({
-  register,
+  register = () => {},
   name,
   label,
   placeholder = "",
@@ -22,6 +24,8 @@ const TextArea: React.FC<TextAreaProps> = ({
   resizeY,
   rows = 2,
   style = {},
+  value = "",
+  onChange,
 }) => {
   const validation: RegisterOptions<any> = required
     ? { required: "Este campo es obligatorio" }
@@ -36,7 +40,11 @@ const TextArea: React.FC<TextAreaProps> = ({
         placeholder={placeholder}
         rows={rows}
         style={style}
+        value={value}
         {...register(name, validation)}
+        onChange={(e) => {
+          if (onChange) onChange(e.target.value);
+        }}
       />
     </span>
   );

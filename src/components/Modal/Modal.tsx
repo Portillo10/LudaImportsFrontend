@@ -51,7 +51,7 @@ const Modal: React.FC<ModalProps> = ({
               ×
             </button>
           </div>
-          <div className="modal-body overflow-hidden">{children}</div>
+          <div className="modal-body">{children}</div>
         </div>
       </dialog>
     </>

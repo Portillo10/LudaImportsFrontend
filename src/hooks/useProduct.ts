@@ -15,7 +15,7 @@ export const useProduct = () => {
       return response;
     } catch (error) {
       if (isAxiosError(error) && error.response?.data) {
-        setErrorMsg(error.response.data.error);
+        setErrorMsg(error.response.data.message);
       } else if (error instanceof Error) {
         setErrorMsg(error.message);
       }
@@ -31,7 +31,7 @@ export const useProduct = () => {
       return response;
     } catch (error) {
       if (isAxiosError(error) && error.response?.data) {
-        setErrorMsg(error.response.data.error);
+        setErrorMsg(error.response.data.message);
       } else if (error instanceof Error) {
         setErrorMsg(error.message);
       }

@@ -20,6 +20,7 @@ dialog::backdrop {
     display 0.15s ease allow-discrete;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 .modal[open] {
@@ -48,4 +49,7 @@ dialog::backdrop {
 
 .modal-body {
   border-top: rgb(39, 37, 37) solid 2px;
+  overflow-y: auto;
+  max-height: 500px;
+  position: relative;
 }

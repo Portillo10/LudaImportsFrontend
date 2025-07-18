@@ -1,15 +1,20 @@
 import { useState } from "react";
-import { IProduct } from "../../types/product";
 import DeleteIcon from "../../assets/icons/DeleteIcon.svg";
 import Toast from "../Toast/Toast";
+import { Item, Picture } from "../../types/item";
 
 type ImageViewerProps = {
-  pictures: string[];
-  deleteImage: (product: Partial<IProduct>) => void;
+  pictures: Picture[];
+  deleteImage: (product: Partial<Item>) => void;
+  className?: string;
 };
 
-const ImageViewer: React.FC<ImageViewerProps> = ({ pictures, deleteImage }) => {
-  const [currentImg, setCurrentImg] = useState<string>(pictures[0]);
+const ImageViewer: React.FC<ImageViewerProps> = ({
+  pictures,
+  deleteImage,
+  className = "",
+}) => {
+  const [currentImg, setCurrentImg] = useState<string>(pictures[0].source);
   const [currentImgIndex, setCurrentImgIndex] = useState<number>(0);
   const [activeToast, setActiveToast] = useState<boolean>(false);
   const [messageToast, setMessageToast] = useState<string>("");
@@ -22,13 +27,15 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ pictures, deleteImage }) => {
 
   const onDeleteImage = () => {
     if (pictures.length > 1) {
-      const newImages = pictures.filter((picture) => picture != currentImg);
+      const newImages = pictures.filter(
+        (picture) => picture.source != currentImg
+      );
       deleteImage({ pictures: newImages });
 
       if (currentImgIndex == 0) {
-        setCurrentImg(pictures[1]);
+        setCurrentImg(pictures[1].source);
       } else {
-        setCurrentImg(pictures[currentImgIndex - 1]);
+        setCurrentImg(pictures[currentImgIndex - 1].source);
         setCurrentImgIndex(currentImgIndex - 1);
       }
     } else {
@@ -44,21 +51,21 @@ const ImageViewer: React.FC<ImageViewerProps> = ({ pictures, deleteImage }) => {
         {pictures.map((picture, i) => (
           <span
             key={i}
-            onMouseEnter={() => changeCurrentImg(picture, i)}
-            className={`cursor-pointer border-2 transition-all p-1 rounded-sm ${currentImgIndex == i && " border-sky-500"}`}
+            onMouseEnter={() => changeCurrentImg(picture.source, i)}
+            className={`cursor-pointer border-2 transition-all rounded-sm ${currentImgIndex == i ? " border-sky-500" : "border-transparent"}`}
           >
             <img
               style={{ width: "35px" }}
               className="object-cover rounded-sm"
-              src={picture}
+              src={picture.source}
             />
           </span>
         ))}
       </section>
       <section className="flex relative h-min">
         <img
-          style={{ width: "400px" }}
-          className="rounded-sm h-min"
+          style={{ width: "450px" }}
+          className={`rounded-sm h-min ${className}`}
           src={currentImg}
           alt=""
         />

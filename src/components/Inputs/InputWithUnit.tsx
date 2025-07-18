@@ -11,6 +11,9 @@ interface InputWithUnitProps {
   className?: string;
   style?: React.CSSProperties;
   onchange?: React.ChangeEventHandler<HTMLInputElement>;
+  readOnly?: boolean;
+  type?: "text" | "number";
+  value?: string | number;
 }
 
 const InputWithUnit: React.FC<InputWithUnitProps> = ({
@@ -24,6 +27,9 @@ const InputWithUnit: React.FC<InputWithUnitProps> = ({
   className = "",
   style = {},
   onchange,
+  readOnly = false,
+  type = "number",
+  value = "",
 }) => {
   const validation: RegisterOptions<any> = required
     ? { required: "Este campo es obligatorio" }
@@ -47,14 +53,16 @@ const InputWithUnit: React.FC<InputWithUnitProps> = ({
           </div>
         )}
         <input
+          readOnly={readOnly}
           onChange={onchange}
           id={name}
-          type="text"
+          type={type}
           className={`input w-full ${
             unitPosition === "left" ? "pl-10" : "pr-10"
           }`}
           placeholder={placeholder}
           {...setRegister(name, validation)}
+          value={value}
         />
         {unitPosition === "right" && (
           <div className="absolute right-0 pr-2 text-gray-400 pointer-events-none">

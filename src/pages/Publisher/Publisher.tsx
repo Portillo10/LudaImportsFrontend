@@ -1,43 +1,45 @@
+import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { useScraping } from "../../hooks/useScraping";
 
-import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
-
 import CategoryPredictor from "../../components/CategoryPredictor/CategoryPredictor";
-import { NavLink } from "react-router-dom";
-import { IProduct } from "../../types/product";
-import Modal from "../../components/Modal/Modal";
+import CategoriesTree from "../../components/CategoriesTree/CategoriesTree";
 import ProductViewer from "../../components/ProductViewer/ProductViewer";
-import PostBySkuForm, { PublisherFormInputs } from "./Forms/PostBySkuForm";
+import Modal from "../../components/Modal/Modal";
+
 import { useSideBarStore } from "../../store/MenuStore";
+import PostBySkuForm, { PublisherFormInputs } from "./Forms/PostBySkuForm";
+import { Item } from "../../types/item";
+import Toast from "../../components/Toast/Toast";
 
 const Publisher: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const { user } = useAuth();
-  const { scrapeBySku } = useScraping();
   const { setCurrentIndexPage } = useSideBarStore();
+  const { scrapeBySku, closeToast, toastMsg, toastType, activeToast } =
+    useScraping();
 
-  const [scrapedProduct, setScrapedProduct] = useState<IProduct | null>(null);
+  const [scrapedProduct, setScrapedProduct] = useState<Item | null>(null);
 
   useEffect(() => {
     setCurrentIndexPage(pageIndex || 0);
   }, []);
 
   const onSubmit = async (data: PublisherFormInputs) => {
-    const product = await scrapeBySku(
+    const response = await scrapeBySku(
       data.sku,
       data.store_id,
       data.category_id,
       parseInt(data.weight),
       data.dimensions
     );
-    if (product) {
-      console.log(product);
-      setScrapedProduct(product);
+    if (response?.item) {
+      console.log(response.item);
+      setScrapedProduct(response.item);
     }
   };
 
-  const onChangeProduct = (data: Partial<IProduct>) => {
+  const onChangeProduct = (data: Partial<Item>) => {
     if (scrapedProduct) {
       const newData = { ...scrapedProduct, ...data };
       setScrapedProduct(newData);
@@ -76,6 +78,9 @@ const Publisher: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
             product={scrapedProduct}
           />
         </Modal>
+      )}
+      {activeToast && (
+        <Toast type={toastType} message={toastMsg} onClose={closeToast} />
       )}
     </div>
   );

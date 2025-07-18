@@ -25,9 +25,11 @@ const UpdatePrices: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const { setCurrentIndexPage } = useSideBarStore();
 
   useEffect(() => {
-    getAllStores();
-    getUsdRate();
-    getUpdateProgress();
+    async () => {
+      await getAllStores();
+      await getUsdRate();
+      await getUpdateProgress();
+    };
     setCurrentIndexPage(pageIndex || 3);
   }, []);
 

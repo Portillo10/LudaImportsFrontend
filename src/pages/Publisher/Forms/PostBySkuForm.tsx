@@ -55,11 +55,10 @@ const PostBySkuForm: React.FC<PostBySkuFormProps> = ({
         </div>
         <div className="flex gap-4">
           <Input
-            label="Categoría"
+            label="Categoría (opcional)"
             name="category_id"
             placeholder="ID de la categoría"
             register={register}
-            required
           />
           <Input
             label="Peso (opcional)"

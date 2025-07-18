@@ -69,15 +69,7 @@ interface ISingleTrackingProgress {
 }
 
 type UpdatingProgress = {
-  progress: {
-    _id: string;
-    alias: string;
-    updatedCount: number;
-    errorsCount: number;
-    updatedComplete: boolean;
-    inProgress: boolean;
-    error?: string;
-  }[];
+  stores: Record<string, Progress>;
   status: "stopped" | "running";
 };
 

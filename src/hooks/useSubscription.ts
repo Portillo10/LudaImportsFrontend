@@ -38,11 +38,11 @@ export const useSubscription = () => {
   };
 
   const setError = (error: unknown) => {
-    if (isAxiosError(error) && error.response?.data.error) {
+    if (isAxiosError(error) && error.response?.data) {
       const {
         response: { data },
       } = error;
-      setToastMsg(data.error);
+      setToastMsg(data.message);
     } else if (error instanceof Error) {
       setToastMsg(error.message);
     }

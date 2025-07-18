@@ -39,11 +39,9 @@ export const usePriceUpdating = () => {
     setLoadingProgress(true);
     try {
       const response = await priceService.getUpdateProgress();
-      const updateProgressStores = response.updatingProgress.progress;
-      if (updateProgressStores.length > 0) {
-        for (const progress of updateProgressStores) {
-          toggleUpdateInProgress(progress._id, progress.inProgress);
-        }
+      const updateProgressStores = response.updatingProgress.stores;
+      for (const [_id, progress] of Object.entries(updateProgressStores)) {
+        toggleUpdateInProgress(_id, progress.status == "running");
       }
       setPriceUpdatingInfo(response);
     } catch (error) {

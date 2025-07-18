@@ -71,8 +71,8 @@ export const useCalcPrice = () => {
 
       if (error instanceof Error) {
         if (isAxiosError(error)) {
-          if (error.response?.data.error) {
-            setErrorMsg(error.response?.data.error);
+          if (error.response?.data) {
+            setErrorMsg(error.response?.data.message);
           } else {
             setErrorMsg(error.message);
           }

@@ -25,8 +25,8 @@ export const useAuth = () => {
       navigate("/publisher");
     } catch (err) {
       if (err instanceof Error) {
-        if (isAxiosError(err) && err.response?.data.error) {
-          setError(err.response.data.error);
+        if (isAxiosError(err) && err.response?.data) {
+          setError(err.response.data.message);
         } else {
           setError(err.message);
         }
@@ -69,8 +69,8 @@ export const useAuth = () => {
       return { userId };
     } catch (error) {
       if (isAxiosError(error)) {
-        if (error.response?.data.error) {
-          return { error: error.response?.data.error };
+        if (error.response?.data) {
+          return { error: error.response?.data };
         } else {
           return {
             error:
