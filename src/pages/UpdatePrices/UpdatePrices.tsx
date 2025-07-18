@@ -77,8 +77,7 @@ const UpdatePrices: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
             </div>
           ) : priceUpdatingInfo &&
             priceUpdatingInfo.trackingProgress.status == "stopped" &&
-            priceUpdatingInfo.singleProgress.status == "stopped" &&
-            priceUpdatingInfo.updatingProgress.status == "stopped" ? (
+            priceUpdatingInfo.singleProgress.status == "stopped" ? (
             <UpdatePricesForm onSubmit={onSubmit} />
           ) : (
             <UpdateProgressPanel
