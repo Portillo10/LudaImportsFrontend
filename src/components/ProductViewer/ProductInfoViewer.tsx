@@ -162,7 +162,7 @@ const ProductInfoViewer: React.FC<ProductInfoViewerProps> = ({
           label="Stock"
           type="number"
           value={product.available_quantity}
-          name="stock"
+          name="available_quantity"
           style={{ width: "30%" }}
           onchange={(e) => {
             onChangeProduct({ available_quantity: parseInt(e.target.value) });

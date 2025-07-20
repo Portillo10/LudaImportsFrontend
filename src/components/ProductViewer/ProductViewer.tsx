@@ -1,4 +1,4 @@
-import { Item } from "../../types/item";
+import { Item, ItemAttribute } from "../../types/item";
 import AttributesViewer from "./AttributesViewer";
 import ImageViewer from "./ImageViewer";
 import ProductInfoViewer from "./ProductInfoViewer";
@@ -6,11 +6,15 @@ import ProductInfoViewer from "./ProductInfoViewer";
 type ProductViewerProps = {
   product: Item | null;
   onChangeProduct: (data: Partial<Item>) => void;
+  onChangeAttribute: (attribute: ItemAttribute) => void;
+  onPublish: (item: any) => Promise<void>;
 };
 
 const ProductViewer: React.FC<ProductViewerProps> = ({
   product,
+  onPublish,
   onChangeProduct,
+  onChangeAttribute,
 }) => {
   if (product)
     return (
@@ -34,9 +38,15 @@ const ProductViewer: React.FC<ProductViewerProps> = ({
             Características del producto (los campos marcados con{" "}
             <span className="text-red-400">*</span> son obligatorios)
           </p>
-          <AttributesViewer attributes={product.attributes} />
+          <AttributesViewer
+            onChangeAttribute={onChangeAttribute}
+            attributes={product.attributes}
+          />
         </div>
-        <button className="bg-cyan-800 hover:bg-cyan-900 py-2 px-3 transition-all rounded-md sticky bottom-3 w-min">
+        <button
+          onClick={() => onPublish(product)}
+          className="bg-cyan-800 hover:bg-cyan-900 py-2 px-3 transition-all rounded-md sticky bottom-3 w-min"
+        >
           Publicar
         </button>
       </div>

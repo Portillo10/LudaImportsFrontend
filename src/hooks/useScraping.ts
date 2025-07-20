@@ -5,7 +5,9 @@ import { useState } from "react";
 
 export const useScraping = () => {
   const [toastMsg, setToastMsg] = useState<string>("");
-  const [toastType, setToastType] = useState<"success" | "error">("success");
+  const [toastType, setToastType] = useState<"success" | "error" | null>(
+    "success"
+  );
   const [activeToast, setActiveToast] = useState<boolean>(false);
 
   const setError = (error: unknown) => {
@@ -24,6 +26,8 @@ export const useScraping = () => {
 
   const closeToast = () => {
     setActiveToast(false);
+    setToastMsg("");
+    setToastType(null);
   };
 
   const scrapeBySku = async (

@@ -10,16 +10,28 @@ import Modal from "../../components/Modal/Modal";
 
 import { useSideBarStore } from "../../store/MenuStore";
 import PostBySkuForm, { PublisherFormInputs } from "./Forms/PostBySkuForm";
-import { Item } from "../../types/item";
+import { Item, ItemAttribute } from "../../types/item";
 import Toast from "../../components/Toast/Toast";
+import { useMLApi } from "../../hooks/useMLApi";
 
 const Publisher: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const { user } = useAuth();
   const { setCurrentIndexPage } = useSideBarStore();
   const { scrapeBySku, closeToast, toastMsg, toastType, activeToast } =
     useScraping();
+  const {
+    activeToast: activePostingToast,
+    closeToast: closePostingToast,
+    toastType: postingToastType,
+    toastMsg: postingToastMsg,
+    postItem,
+  } = useMLApi();
 
   const [scrapedProduct, setScrapedProduct] = useState<Item | null>(null);
+  const [pricing, setPricing] = useState<any>(null);
+  const [postingData, setPostingData] = useState<PublisherFormInputs | null>(
+    null
+  );
 
   useEffect(() => {
     setCurrentIndexPage(pageIndex || 0);
@@ -33,8 +45,9 @@ const Publisher: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
       parseInt(data.weight),
       data.dimensions
     );
+    setPostingData(data);
     if (response?.item) {
-      console.log(response.item);
+      setPricing(response.pricing);
       setScrapedProduct(response.item);
     }
   };
@@ -43,6 +56,34 @@ const Publisher: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     if (scrapedProduct) {
       const newData = { ...scrapedProduct, ...data };
       setScrapedProduct(newData);
+    }
+  };
+
+  const onChangeAttribute = (attribute: ItemAttribute) => {
+    if (scrapedProduct) {
+      const { attributes, ...rest } = scrapedProduct;
+      const newAttributes = attributes.map((attr) => {
+        if (attr.id == attribute.id) {
+          return {
+            ...attr,
+            value_name: attribute.value_name,
+          };
+        } else {
+          return attr;
+        }
+      });
+      const newData = { ...rest, attributes: newAttributes };
+      setScrapedProduct(newData);
+    }
+  };
+
+  const publishItem = async (item: any) => {
+    console.log(item);
+    if (postingData && pricing) {
+      const { sku, store_id } = postingData;
+      await postItem(sku, store_id, scrapedProduct, pricing);
+    } else {
+      console.log("postingData or pricing undefined");
     }
   };
 
@@ -74,13 +115,29 @@ const Publisher: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
           className="max-w-[1020px]"
         >
           <ProductViewer
+            onPublish={publishItem}
+            onChangeAttribute={onChangeAttribute}
             onChangeProduct={onChangeProduct}
             product={scrapedProduct}
           />
+          {activePostingToast && (
+            <Toast
+              message={postingToastMsg}
+              onClose={closePostingToast}
+              type={postingToastType || "warning"}
+            />
+          )}
         </Modal>
       )}
       {activeToast && (
-        <Toast type={toastType} message={toastMsg} onClose={closeToast} />
+        <Toast
+          type={toastType || "warning"}
+          message={toastMsg}
+          onClose={() => {
+            closeToast();
+            closePostingToast();
+          }}
+        />
       )}
     </div>
   );

@@ -81,6 +81,16 @@ const mercadoLibreService = {
     );
     return response.data;
   },
+
+  async postItem(sku: string, store_id: string, item: any, pricing: any) {
+    const response = await apiClient.post(
+      `/api/posting/item`,
+      { item, pricing },
+      { params: { sku, store_id } }
+    );
+    const { data, status } = response;
+    return { data, status };
+  },
 };
 
 export default mercadoLibreService;

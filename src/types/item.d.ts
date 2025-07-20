@@ -4,7 +4,7 @@ export interface Item {
   description: string;
   price: number;
   pictures: Picture[];
-  attributes: any;
+  attributes: ItemAttribute[];
   available_quantity: number;
   currency_id: "COP";
   buying_mode: "buy_it_now";

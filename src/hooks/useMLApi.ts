@@ -13,15 +13,31 @@ export const useMLApi = () => {
     sincronize: null,
   });
 
+  const [toastMsg, setToastMsg] = useState<string>("");
+  const [toastType, setToastType] = useState<"success" | "error" | null>(
+    "success"
+  );
+  const [activeToast, setActiveToast] = useState<boolean>(false);
+
   const setErrorMsg = (error: unknown) => {
+    setToastType("error");
     if (isAxiosError(error) && error.response?.data) {
       const {
         response: { data },
       } = error;
       setError(data.message);
+      setToastMsg(data.message);
     } else if (error instanceof Error) {
       setError(error.message);
+      setToastMsg(error.message);
     }
+    setActiveToast(true);
+  };
+
+  const closeToast = () => {
+    setActiveToast(false);
+    setToastMsg("");
+    setToastType(null);
   };
 
   const calculateSummary = async (params: {
@@ -158,12 +174,39 @@ export const useMLApi = () => {
     }
   };
 
+  const postItem = async (
+    sku: string,
+    store_id: string,
+    item: any,
+    pricing: any
+  ) => {
+    try {
+      const response = await mercadoLibreService.postItem(
+        sku,
+        store_id,
+        item,
+        pricing
+      );
+      setToastType("success");
+      setToastMsg("El producto se publicó exitosamente.");
+      setActiveToast(true);
+      return response.data;
+    } catch (error) {
+      setErrorMsg(error);
+    }
+  };
+
   return {
     loadingTransfer,
+    activeToast,
+    toastType,
     progress,
+    toastMsg,
     loading,
     error,
+    postItem,
     postBySKU,
+    closeToast,
     postProducts,
     sincronizeStore,
     predictCategory,
