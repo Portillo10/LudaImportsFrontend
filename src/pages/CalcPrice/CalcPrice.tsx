@@ -143,7 +143,7 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
       <span className="titlePageContainer">
         <h2>Calcular Precios</h2>
       </span>
-      <div className="flex w-auto justify-center gap-6">
+      <div className="flex w-auto max-h-[calc(100vh-135px)] justify-center gap-6">
         <section className="flex flex-col min-w-[450px] px-4 gap-6">
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -177,7 +177,7 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
               </button>
             </span>
           </form>
-          <div className="h-full max-w-md border border-[#5A5B60] rounded-xl mb-4">
+          <div className="h-full overflow-auto max-w-md border border-[#5A5B60] rounded-xl mb-4 scroll-container">
             <Table
               columns={tableColumns}
               rowsData={priceRows}
@@ -185,7 +185,7 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
             />
           </div>
         </section>
-        <section className="w-full flex justify-evenly items-start gap-6 h-min sticky">
+        <section className="w-full flex justify-evenly items-start gap-6">
           <span>
             <PricingTable
               data={profitData}
