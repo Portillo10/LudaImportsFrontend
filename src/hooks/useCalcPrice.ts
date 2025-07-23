@@ -31,19 +31,43 @@ export const useCalcPrice = () => {
   const { user } = useAuth();
   const [missingFields, setMissingFields] = useState<string[]>([]);
   const [activeModal, setActiveModal] = useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string>("");
 
   const [loading, setLoading] = useState<boolean>(false);
   const [priceRows, setPriceRows] = useState<
     { label: string; value: string }[]
   >([]);
 
+  const [toastMsg, setToastMsg] = useState<string>("");
+  const [toastType, setToastType] = useState<"success" | "error" | null>(
+    "success"
+  );
+  const [activeToast, setActiveToast] = useState<boolean>(false);
+
+  const setError = (error: unknown) => {
+    setToastType("error");
+    if (isAxiosError(error) && error.response?.data) {
+      const {
+        response: { data },
+      } = error;
+      setToastMsg(data.message);
+    } else if (error instanceof Error) {
+      setToastMsg(error.message);
+    }
+    setActiveToast(true);
+  };
+
+  const closeToast = () => {
+    setToastMsg("");
+    setToastType(null);
+    setActiveToast(false);
+  };
+
   const getCategories = async () => {
     try {
       const response = await mlService.getCategories();
       console.log(response);
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   };
 
@@ -53,6 +77,9 @@ export const useCalcPrice = () => {
     try {
       if (!user || user?.stores.length == 0) {
         throw new Error("Debe tener por lo menos una tienda vinculada");
+      }
+      if (!params.store_id) {
+        throw new Error("Debe seleccionar una tienda.");
       }
       const { data, status } = await priceService.calcPrice(params);
       if (status == 202) {
@@ -68,18 +95,7 @@ export const useCalcPrice = () => {
       return { data, status };
     } catch (error) {
       console.log(error);
-
-      if (error instanceof Error) {
-        if (isAxiosError(error)) {
-          if (error.response?.data) {
-            setErrorMsg(error.response?.data.message);
-          } else {
-            setErrorMsg(error.message);
-          }
-        } else {
-          setErrorMsg(error.message);
-        }
-      }
+      setError(error);
     } finally {
       setLoading(false);
     }
@@ -172,9 +188,7 @@ export const useCalcPrice = () => {
       const rows = convertPriceToRows(initialPriceInfo);
       setPriceRows(rows);
     } catch (error) {
-      if (error instanceof Error) {
-        setErrorMsg(error.message);
-      }
+      setError(error);
     }
   };
 
@@ -184,15 +198,17 @@ export const useCalcPrice = () => {
 
   return {
     getInitialPriceInfo,
+    setActiveModal,
     getCategories,
     closeModal,
+    closeToast,
     calcPrice,
-    setActiveModal,
-    setErrorMsg,
-    missingFields,
-    activeModal,
-    priceRows,
     loading,
-    errorMsg,
+    toastMsg,
+    toastType,
+    priceRows,
+    activeModal,
+    activeToast,
+    missingFields,
   };
 };

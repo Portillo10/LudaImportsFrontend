@@ -30,21 +30,23 @@ type Inputs = {
 const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const {
     loading,
-    errorMsg,
+    toastMsg,
     priceRows,
+    toastType,
     calcPrice,
+    closeToast,
     closeModal,
-    setErrorMsg,
+    activeToast,
     activeModal,
     missingFields,
     setActiveModal,
     getInitialPriceInfo,
   } = useCalcPrice();
+
   const { user } = useAuth();
   const hasStores = user && user.stores.length > 0;
+
   const { savePricing, getPricing } = useStores();
-  const [activeToast, setActiveToast] = useState<boolean>(false);
-  const [successMsg, setSuccessMsg] = useState<string>("");
   const [fixedCost, setFixedCosts] = useState<number>(0);
   const [profitData, setProfitData] = useState<PercentRange[]>([
     { range: { from: 0, to: 1 }, percentage: 0 },
@@ -67,18 +69,7 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (data.store_id) {
-      const result = await calcPrice(data);
-      if (result?.status == 200) {
-        setErrorMsg("");
-        setSuccessMsg("Operación exitosa.");
-        setActiveToast(true);
-      }
-    } else {
-      setSuccessMsg("");
-      setErrorMsg("Debe tener al menos una tienda registrada activa.");
-      setActiveToast(true);
-    }
+    await calcPrice(data);
   };
 
   const onSuccessUpdate = async () => {
@@ -86,12 +77,6 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
       buttonRef.current.click();
       setActiveModal(false);
     }
-  };
-
-  const onCloseToast = () => {
-    setActiveToast(false);
-    setErrorMsg("");
-    setSuccessMsg("");
   };
 
   const checkData = (
@@ -158,7 +143,7 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
       <span className="titlePageContainer">
         <h2>Calcular Precios</h2>
       </span>
-      <div className="flex w-auto max-h-[calc(100vh-135px)] justify-center gap-6">
+      <div className="flex w-auto justify-center gap-6">
         <section className="flex flex-col min-w-[450px] px-4 gap-6">
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -181,7 +166,7 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
               />
               <button
                 ref={buttonRef}
-                disabled={loading && !hasStores}
+                disabled={loading || !hasStores}
                 className={`${loading ? "bg-[#3B6541]" : "bg-[#4A7F50]"} rounded-md px-2 py-2 hover:bg-[#3B6541] transition-all`}
               >
                 {loading ? (
@@ -192,7 +177,7 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
               </button>
             </span>
           </form>
-          <div className="h-full overflow-auto max-w-md border border-[#5A5B60] rounded-xl mb-4 scroll-container">
+          <div className="h-full max-w-md border border-[#5A5B60] rounded-xl mb-4">
             <Table
               columns={tableColumns}
               rowsData={priceRows}
@@ -200,7 +185,7 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
             />
           </div>
         </section>
-        <section className="w-full flex justify-evenly items-start gap-6">
+        <section className="w-full flex justify-evenly items-start gap-6 h-min sticky">
           <span>
             <PricingTable
               data={profitData}
@@ -227,9 +212,9 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
       </div>
       {activeToast && (
         <Toast
-          message={errorMsg != "" ? errorMsg : successMsg}
-          onClose={onCloseToast}
-          type={errorMsg != "" ? "error" : "success"}
+          message={toastMsg}
+          onClose={closeToast}
+          type={toastType || "warning"}
         />
       )}
 
