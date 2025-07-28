@@ -91,7 +91,11 @@ const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
   }, [store_id]);
 
   return (
-    <InfoCardsContainer className="rounded-lg min-w-52" title="Publicaciones">
+    <InfoCardsContainer
+      className="rounded-lg min-w-52"
+      title="Publicaciones"
+      outLink={`/stores/${store_id}/items`}
+    >
       {loading ? (
         <div className="w-full flex justify-center pt-6">
           <Spinner />
@@ -133,7 +137,6 @@ const SubscriptionResume: React.FC<{ store_id: string }> = ({ store_id }) => {
   useEffect(() => {
     (async () => {
       const subscription = await getSubscription(store_id);
-      console.log(subscription);
       if (subscription) {
         const statusInfo = getStatusInfo({
           endDate: new Date(subscription.endDate),

@@ -2,6 +2,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 import { useEffect } from "react";
+import Toast from "../../components/Toast/Toast";
+import Spinner from "../../components/Spinner/Spinner";
 
 type Inputs = {
   username: string;
@@ -10,10 +12,19 @@ type Inputs = {
 
 const LogIn: React.FC = () => {
   const { register, handleSubmit } = useForm<Inputs>();
-  const { handleLogin, isAuthenticated, loading, checkToken } = useAuth();
+  const {
+    handleLogin,
+    isAuthenticated,
+    loading,
+    checkToken,
+    activeToast,
+    toastMsg,
+    closeToast,
+    toastType,
+  } = useAuth();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await handleLogin(data);
+    if (!loading) await handleLogin(data);
   };
 
   useEffect(() => {
@@ -52,8 +63,19 @@ const LogIn: React.FC = () => {
             />
           </span>
         </div>
-        <button className="button">Iniciar Sesión</button>
+        <button
+          className={`button w-32 ${loading ? "cursor-default bg-button-hover" : ""}`}
+        >
+          {loading ? <Spinner size={24} /> : <p>Iniciar Sesión</p>}
+        </button>
       </form>
+      {activeToast && (
+        <Toast
+          message={toastMsg}
+          onClose={closeToast}
+          type={toastType || "warning"}
+        />
+      )}
     </div>
   );
 };

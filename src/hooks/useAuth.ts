@@ -11,9 +11,27 @@ import { IUser } from "../types/user";
 export const useAuth = () => {
   const { login, isAuthenticated, logout } = useAuthStore();
   const { setUser, user } = useUserStore();
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const [toastMsg, setToastMsg] = useState<string>("");
+  const [toastType, setToastType] = useState<"success" | "error" | null>(
+    "success"
+  );
+  const [activeToast, setActiveToast] = useState<boolean>(false);
+
+  const setError = (error: unknown) => {
+    if (isAxiosError(error) && error.response?.data) {
+      const {
+        response: { data },
+      } = error;
+      if (data.message) setToastMsg(data.message);
+      else setToastMsg("Error desconocido");
+    } else if (error instanceof Error) {
+      setToastMsg(error.message);
+    }
+    setToastType("error");
+    setActiveToast(true);
+  };
   const navigate = useNavigate();
 
   const handleLogin = async (data: Partial<LogInRequest>) => {
@@ -24,18 +42,16 @@ export const useAuth = () => {
       login(access_token);
       navigate("/publisher");
     } catch (err) {
-      if (err instanceof Error) {
-        if (isAxiosError(err) && err.response?.data) {
-          setError(err.response.data.message);
-        } else {
-          setError(err.message);
-        }
-      } else {
-        console.log(err);
-      }
+      setError(err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const closeToast = async () => {
+    setActiveToast(false);
+    setToastMsg("");
+    setToastType(null);
   };
 
   const handleLogout = () => {
@@ -101,14 +117,17 @@ export const useAuth = () => {
   };
 
   return {
-    handleLogin,
-    handleLogout,
-    checkToken,
     registerUser,
+    handleLogout,
+    handleLogin,
+    checkToken,
+    closeToast,
     getUsers,
-    isAuthenticated,
-    error,
     user,
     loading,
+    toastMsg,
+    toastType,
+    activeToast,
+    isAuthenticated,
   };
 };
