@@ -115,6 +115,15 @@ const store = {
     );
     return response.data;
   },
+
+  async searchItems(store_id: string, filter: any, params: any) {
+    const response = await apiClient.post(
+      `${prefix}/${store_id}/items/search`,
+      filter,
+      { params }
+    );
+    return response.data;
+  },
 };
 
 export default store;

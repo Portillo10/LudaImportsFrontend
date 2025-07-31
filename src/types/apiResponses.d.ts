@@ -42,7 +42,7 @@ export interface UpdatingProgressResponse {
   singleProgress: Progress;
 }
 
-type Progress = {
+export type Progress = {
   total: number;
   processedCount: number;
   errorCount: number;

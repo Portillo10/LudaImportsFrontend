@@ -33,3 +33,75 @@ export function isValidFloat(texto: string) {
 
   return totalPuntos === 1;
 }
+
+export const getResizedImageUrl = (
+  imageId: string,
+  size: number = 1080,
+  prefix: "SL" | "US" = "US",
+  urlType: "amazon" | "censored" = "amazon"
+) => {
+  let source;
+  switch (urlType) {
+    case "amazon":
+      source = `https://m.media-amazon.com/images/I/${imageId}._AC_${
+        prefix + size
+      }_.jpg`;
+      break;
+    case "censored":
+      source = `https://api.notiludaimport.com/images/${imageId}?width=${size}&height=${size}`;
+      break;
+    default:
+      throw new Error("formatUrlType invalid");
+  }
+
+  return source;
+};
+export const cutText = (text: string, maxLength: number): string => {
+  const trimmedText = text.trim();
+
+  if (trimmedText.length <= maxLength) return trimmedText;
+
+  const excludedWords = new Set([
+    "con",
+    "y",
+    "a",
+    "de",
+    "gran",
+    "o",
+    "para",
+    "la",
+    "en",
+    "una",
+    "un",
+    "que",
+    ",",
+    "el",
+    "-",
+  ]);
+
+  // Recorta hasta el máximo de caracteres
+  let shortText = trimmedText.slice(0, maxLength);
+
+  // Si el corte cae a mitad de una palabra, retrocede hasta el espacio anterior
+  if (
+    trimmedText.length > maxLength &&
+    trimmedText[maxLength] !== " " &&
+    shortText[shortText.length - 1] !== " "
+  ) {
+    const lastSpace = shortText.lastIndexOf(" ");
+    if (lastSpace !== -1) {
+      shortText = shortText.slice(0, lastSpace);
+    }
+  }
+
+  // Elimina posibles palabras vacías o de poco valor al final
+  const words = shortText.trim().split(" ");
+  while (
+    words.length > 0 &&
+    excludedWords.has(words[words.length - 1].toLowerCase())
+  ) {
+    words.pop();
+  }
+
+  return words.join(" ");
+};

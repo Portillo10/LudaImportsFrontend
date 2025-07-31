@@ -9,8 +9,33 @@ import { getStoresLength, setStoresLength } from "../utils/cacheHelper";
 export const useStores = () => {
   const { user, pushStore } = useUserStore();
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<any | null>(null);
   const { setStores, stores, toggleAllowUpdate } = useShopStore();
+
+  const [toastMsg, setToastMsg] = useState<string>("");
+  const [toastType, setToastType] = useState<"success" | "error" | null>(
+    "success"
+  );
+  const [activeToast, setActiveToast] = useState<boolean>(false);
+
+  const setError = (error: unknown) => {
+    if (isAxiosError(error) && error.response?.data) {
+      const {
+        response: { data },
+      } = error;
+      if (data.message) setToastMsg(data.message);
+      else setToastMsg("Error desconocido");
+    } else if (error instanceof Error) {
+      setToastMsg(error.message);
+    }
+    setToastType("error");
+    setActiveToast(true);
+  };
+
+  const closeToast = () => {
+    setActiveToast(false);
+    setToastMsg("");
+    setToastType(null);
+  };
 
   const handleLinkStore = async (data: any) => {
     try {
@@ -28,16 +53,7 @@ export const useStores = () => {
         console.error("No hay una sesión iniciada");
       }
     } catch (error) {
-      if (isAxiosError(error)) {
-        console.log(error.response?.data);
-
-        setError(error.response?.data);
-      } else if (error instanceof Error) {
-        setError(error.message);
-        console.log(error.message);
-      } else {
-        console.log(error);
-      }
+      setError(error);
     }
   };
 
@@ -54,7 +70,7 @@ export const useStores = () => {
         );
       }
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   };
 
@@ -74,9 +90,7 @@ export const useStores = () => {
         setStores(data);
       }
     } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      }
+      setError(error);
     } finally {
       setLoading(false);
     }
@@ -102,7 +116,7 @@ export const useStores = () => {
       const stores = await storeService.getStoresByUser(user_id);
       return stores;
     } catch (error) {
-      if (error instanceof Error) setError(error.message);
+      setError(error);
     }
   };
 
@@ -111,7 +125,7 @@ export const useStores = () => {
       const response = await storeService.sincronizeStore(store_id);
       return response;
     } catch (error) {
-      if (error instanceof Error) setError(error.message);
+      setError(error);
     }
   };
 
@@ -120,7 +134,7 @@ export const useStores = () => {
       const response = await storeService.deleteAllItems(store_id);
       return response;
     } catch (error) {
-      if (error instanceof Error) setError(error.message);
+      setError(error);
     }
   };
 
@@ -136,7 +150,7 @@ export const useStores = () => {
 
       return response;
     } catch (error) {
-      if (error instanceof Error) setError(error.message);
+      setError(error);
     }
   };
 
@@ -144,7 +158,7 @@ export const useStores = () => {
     try {
       return await storeService.getPendingPublications();
     } catch (error) {
-      if (error instanceof Error) setError(error.message);
+      setError(error);
     }
   };
 
@@ -152,7 +166,7 @@ export const useStores = () => {
     try {
       return await storeService.getPostingProgress();
     } catch (error) {
-      if (error instanceof Error) console.log(error.message);
+      setError(error);
     }
   };
 
@@ -160,7 +174,7 @@ export const useStores = () => {
     try {
       return await storeService.getOmitedPubs();
     } catch (error) {
-      if (error instanceof Error) console.log(error.message);
+      setError(error);
     }
   };
 
@@ -168,7 +182,7 @@ export const useStores = () => {
     try {
       return await storeService.savePricing(data);
     } catch (error) {
-      if (error instanceof Error) console.log(error.message);
+      setError(error);
     }
   };
 
@@ -176,7 +190,21 @@ export const useStores = () => {
     try {
       return await storeService.getPricing(user_id);
     } catch (error) {
-      if (error instanceof Error) console.log(error.message);
+      setError(error);
+    }
+  };
+
+  const searchItems = async (store_id: string, filters: any, params: any) => {
+    try {
+      const response = await storeService.searchItems(
+        store_id,
+        filters,
+        params
+      );
+
+      return response;
+    } catch (error) {
+      setError(error);
     }
   };
 
@@ -195,9 +223,13 @@ export const useStores = () => {
     endLinkStore,
     getAllStores,
     savePricing,
+    searchItems,
     getPricing,
+    closeToast,
+    activeToast,
+    toastType,
+    toastMsg,
     loading,
     stores,
-    error,
   };
 };

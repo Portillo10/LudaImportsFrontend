@@ -13,15 +13,16 @@
 }
 /* Scrollbar elegante y oculta, visible sólo al hacer hover */
 .scroll-container {
-  overflow: auto;
-  scrollbar-width: none; /* Firefox */
+  overflow-y: auto;
+  scrollbar-gutter: stable overlay;
   -ms-overflow-style: none; /* IE/Edge */
+  scrollbar-width: thin;
   position: relative;
 }
 
 .scroll-container::-webkit-scrollbar {
-  width: 0;
-  height: 0;
+  width: 8px;
+  height: 8px;
   transition: all 150ms ease-in;
 }
 
@@ -31,24 +32,24 @@
   transition: all 150ms ease-in;
 }
 
-.scroll-container:hover::-webkit-scrollbar {
+/* .scroll-container:hover::-webkit-scrollbar {
   width: 8px;
   height: 8px;
   transition: all 150ms ease-in;
-}
+} */
 
-.scroll-container:hover::-webkit-scrollbar-thumb {
+/* .scroll-container:hover::-webkit-scrollbar-thumb {
   background-color: #4fd1c5;
   border-radius: 9999px;
   border: 2px solid transparent;
   background-clip: content-box;
   transition: all 150ms ease-in;
-}
+} */
 
-.scroll-container:hover::-webkit-scrollbar-track {
+/* .scroll-container:hover::-webkit-scrollbar-track {
   background: transparent;
   transition: all 150ms ease-in;
-}
+} */
 
 @keyframes fadeIn {
   from {

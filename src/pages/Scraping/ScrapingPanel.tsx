@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import PlayIcon from "../../components/Icons/PlayIcon";
 import StopIcon from "../../components/Icons/StopIcon";
-import { IScrapingProgress } from "../../types/scrapingProgress";
 import { useScraping } from "../../hooks/useScraping";
+import { Progress } from "../../types/apiResponses";
 
 type Stat = {
   label: string;
@@ -11,7 +11,7 @@ type Stat = {
 
 const ScrapingPanel: React.FC<{
   store_id?: string;
-  progress: IScrapingProgress;
+  progress: Progress;
 }> = ({ store_id, progress }) => {
   const initialStats: Stat[] = [
     {
@@ -30,15 +30,15 @@ const ScrapingPanel: React.FC<{
   const [stats, setStats] = useState<Stat[]>(initialStats);
   const { runTasks, pauseScraping } = useScraping();
 
-  const formatAndSetStats = async (progress: IScrapingProgress) => {
+  const formatAndSetStats = async (progress: Progress) => {
     const currentStats: Stat[] = [
       {
         label: "Productos restantes",
-        value: progress.total - progress.scrapedProductsCount,
+        value: progress.total - progress.processedCount,
       },
       {
         label: "Productos extraídos",
-        value: progress.scrapedProductsCount,
+        value: progress.processedCount,
       },
       {
         label: "Créditos usados",
