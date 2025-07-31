@@ -1,4 +1,4 @@
-import { IScrapingProgress } from "../types/scrapingProgress";
+import { ScrapingProgress } from "../types/scrapingProgress";
 import apiClient from "./apiClient";
 
 const scrape = {
@@ -40,7 +40,7 @@ const scrape = {
     );
     const responseData: {
       queueInfo: any;
-      scrapingProgress: IScrapingProgress;
+      scrapingProgress: ScrapingProgress;
     } = response.data;
     return responseData;
   },

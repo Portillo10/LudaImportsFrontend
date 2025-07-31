@@ -10,7 +10,7 @@ import DropFileInput from "../../components/DropFile/DropFile";
 import ScrapingPanel from "./ScrapingPanel";
 import { IconName } from "../../types/iconProps";
 import { useScraping } from "../../hooks/useScraping";
-import { IScrapingProgress } from "../../types/scrapingProgress";
+import { ScrapingProgress } from "../../types/scrapingProgress";
 import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
 
 import "./styles.css";
@@ -116,7 +116,7 @@ const Status: React.FC<{ status: string }> = ({ status }) => {
 const ScrapingPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const [progress, setProgress] = useState<{
     queueInfo: any;
-    scrapingProgress: IScrapingProgress;
+    scrapingProgress: ScrapingProgress;
   } | null>(null);
 
   const { store_id } = useParams();

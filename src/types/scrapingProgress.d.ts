@@ -1,12 +1,7 @@
-export interface IScrapingProgress {
-  total: number;
+import { Progress } from "./apiResponses";
+
+export interface ScrapingProgress extends Progress {
   storeAlias?: string;
-  usedCredits: number;
-  targetStore?: ObjectId;
-  target: "sku" | "product";
-  scrapedProductsCount: number;
-  omitedProducts: OmitedProduct[];
-  status: "running" | "loading" | "paused" | "stopped";
 }
 
 type OmitedProduct = {
