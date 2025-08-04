@@ -1,6 +1,6 @@
 interface ParsedData {
-  dimensions: string;
-  weight: number;
+  dimensions?: string;
+  weight?: number;
   category?: string;
   url: string;
 }
@@ -32,6 +32,10 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
               weight: parseFloat(values[1].split(" ")[0]),
               category: values[2],
               url: values[3],
+            };
+          else if (values.length == 1)
+            return {
+              url: values[0],
             };
           else
             return {

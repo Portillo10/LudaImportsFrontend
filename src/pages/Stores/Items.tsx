@@ -67,7 +67,7 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
           <ItemsTable
             items={items}
             page={currentPage}
-            className="h-[calc(100vh-260px)]"
+            className="h-[calc(100vh-260px)] w-[710px]"
             onChangePage={(i) => {
               setCurrentPage(i);
             }}
