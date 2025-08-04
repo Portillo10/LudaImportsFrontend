@@ -72,27 +72,27 @@ export const validateObjects = (
   const errors: string[] = [];
 
   const allValid = objects.every((obj, index) => {
-    const objKeys = Object.keys(obj);
-    const expectedKeys = ["weight", "url", "dimensions"];
+    // const objKeys = Object.keys(obj);
+    // const expectedKeys = ["weight", "url", "dimensions"];
 
-    if (objKeys.length < expectedKeys.length) {
-      errors.push(
-        `Object at index ${index} has unexpected number of attributes.`
-      );
-      return false;
-    }
+    // if (objKeys.length < expectedKeys.length) {
+    //   errors.push(
+    //     `Object at index ${index} has unexpected number of attributes.`
+    //   );
+    //   return false;
+    // }
 
-    if (!expectedKeys.every((key) => objKeys.includes(key))) {
-      errors.push(`Object at index ${index} is missing required attributes.`);
-      return false;
-    }
+    // if (!expectedKeys.every((key) => objKeys.includes(key))) {
+    //   errors.push(`Object at index ${index} is missing required attributes.`);
+    //   return false;
+    // }
 
-    if (typeof obj.weight !== "number") {
-      errors.push(
-        `Object at index ${index} has an invalid 'weight' attribute.`
-      );
-      return false;
-    }
+    // if (typeof obj.weight !== "number") {
+    //   errors.push(
+    //     `Object at index ${index} has an invalid 'weight' attribute.`
+    //   );
+    //   return false;
+    // }
 
     // if (typeof obj.category !== "string" || !obj.category.startsWith("MCO")) {
     //   errors.push(
