@@ -32,7 +32,7 @@ const mercadoLibreService = {
 
   async postProducts(store_id: string, status: string = "pending") {
     const response = await apiClient.post(
-      `/api/stores/${store_id}/posting?status=${status}`
+      `/api/stores/${store_id}/items/${status}`
     );
 
     return response.data;
@@ -84,7 +84,7 @@ const mercadoLibreService = {
 
   async postItem(sku: string, store_id: string, item: any, pricing: any) {
     const response = await apiClient.post(
-      `/api/posting/item`,
+      `/api/items`,
       { item, pricing },
       { params: { sku, store_id } }
     );

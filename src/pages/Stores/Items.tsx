@@ -3,17 +3,18 @@ import { useSideBarStore } from "../../store/MenuStore";
 import ItemsTable from "./components/ItemsTable";
 import { useStores } from "../../hooks/useStores";
 import { useParams } from "react-router-dom";
+import { ItemsFilterParams } from "../../types/filters";
 
 const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
   const { store_id } = useParams();
   const { setCurrentIndexPage } = useSideBarStore();
   const { searchItems } = useStores();
+  const [loadingItems, setLoadingItems] = useState<boolean>(false);
 
-  const [filters, setFilters] = useState<any>({
+  const [filters, setFilters] = useState<ItemsFilterParams>({
     productStoreFilters: {
       state: { $in: ["active", "paused"] },
     },
-    productFilters: {},
     projection: {
       error: 0,
       weight: 0,
@@ -36,6 +37,7 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const loadItems = async () => {
+    setLoadingItems(true);
     if (store_id) {
       const response = await searchItems(store_id, filters, {
         page: currentPage,
@@ -44,13 +46,21 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
         setItems(response.data);
         console.log(response.data);
         setTotalItems(response.total);
+        console.log(totalItems);
       }
     }
+    setLoadingItems(false);
   };
 
-  const onChangeFilters = () => {
-    setFilters({});
-    console.log(totalItems);
+  const onChangeFilters = (data: any) => {
+    const newFilters = {
+      ...filters,
+      productFilters: {
+        ...filters.productFilters,
+        ...data,
+      },
+    };
+    setFilters(newFilters);
   };
 
   useEffect(() => {
@@ -67,6 +77,7 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
           <ItemsTable
             items={items}
             page={currentPage}
+            loading={loadingItems}
             className="h-[calc(100vh-260px)] w-[710px]"
             onChangePage={(i) => {
               setCurrentPage(i);

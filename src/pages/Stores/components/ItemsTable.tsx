@@ -24,9 +24,10 @@ const statusColors: Record<string, string> = {};
 const ItemsTable: React.FC<{
   items: Item[];
   page: number;
-  onChangePage: (i: number) => void;
   className?: string;
-}> = ({ items, page, onChangePage, className }) => {
+  loading?: boolean;
+  onChangePage: (i: number) => void;
+}> = ({ items, page, onChangePage, className, loading = false }) => {
   const onClickNext = () => {
     onChangePage(page + 1);
   };
@@ -42,7 +43,7 @@ const ItemsTable: React.FC<{
       <div
         className={`grid grid-cols-1 gap-1 overflow-y-auto scroll-container bg-[#44454b] rounded-t-lg p-1 ${className}`}
       >
-        {items.length == 0 ? (
+        {loading ? (
           <div className="w-full h-full flex items-center justify-center">
             <Spinner />
           </div>
@@ -62,19 +63,16 @@ const ItemsTable: React.FC<{
                         : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSUcmLCO117IJOgKFUCKJHArA7qTYPUllDEV5FgEkyI_6VCragpyFcfkoWdazWv-Adg2aQ&usqp=CAU"
                   }
                   alt={item.title}
-                  className="w-20 h-20 object-contain rounded-md"
+                  className="w-16 h-16 object-contain rounded-md"
                 />
               </div>
 
               <div className="flex flex-col justify-around">
-                <h2 className="text-base text-wrap">
+                <h2 className="text-sm text-wrap w-1/2">
                   {item.title ? cutText(item.title, 60) : ""}
                 </h2>
-                <p className="text-[11px] text-gray-300">ID: {item.item_id}</p>
-                <p className="text-[11px] text-gray-300">
-                  SKU: {item.sku || item.productSku}
-                </p>
-                <p className="text-lg text-green-400">
+
+                <p className="text-base text-green-400">
                   ${item.itemPrice ? formatNumber(item.itemPrice) : 0}
                 </p>
               </div>
