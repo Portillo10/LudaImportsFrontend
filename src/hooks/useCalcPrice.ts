@@ -88,6 +88,9 @@ export const useCalcPrice = () => {
           setMissingFields(data.missingFields);
         }
       } else {
+        setToastMsg("Precio calculado exitosamente.");
+        setToastType("success");
+        setActiveToast(true);
         const priceInfo = convertPriceToRows(data);
         setPriceRows(priceInfo);
       }
