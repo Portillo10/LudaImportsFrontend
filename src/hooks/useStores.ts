@@ -37,6 +37,15 @@ export const useStores = () => {
     setToastType(null);
   };
 
+  const startPublication = async (store_id: string) => {
+    try {
+      const response = await storeService.startPublication(store_id);
+      return response;
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   const handleLinkStore = async (data: any) => {
     try {
       setLoading(true);
@@ -194,6 +203,14 @@ export const useStores = () => {
     }
   };
 
+  const patchPublications = async (store_id: string, status: string) => {
+    try {
+      return await storeService.patchPublications(store_id, status);
+    } catch (error) {
+      setError(Error);
+    }
+  };
+
   const searchItems = async (store_id: string, filters: any, params: any) => {
     try {
       const response = await storeService.searchItems(
@@ -213,8 +230,10 @@ export const useStores = () => {
     getPendingPublications,
     getPostingProgress,
     toggleAllowUpdate,
+    patchPublications,
     deleteAllProducts,
     transferProducts,
+    startPublication,
     sincronizeStore,
     getStoresByUser,
     handleLinkStore,

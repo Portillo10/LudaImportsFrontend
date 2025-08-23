@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import PubsTable from "./PubsTable";
 import Spinner from "../../../components/Spinner/Spinner";
+import { useStores } from "../../../hooks/useStores";
 
 const inProgressPubsColumns = [
   {
@@ -10,14 +11,14 @@ const inProgressPubsColumns = [
     rowClass: "",
   },
   {
-    key: "postedCount",
-    label: "Publicados hoy",
+    key: "processedCount",
+    label: "Publicados",
     class: "px-6 w-44 text-right leading-tight",
     rowClass: "text-green-300",
   },
   {
     key: "errorCount",
-    label: "Productos omitidos",
+    label: "Omitidos",
     class: "px-6 w-44 text-right leading-tight",
     rowClass: "text-red-300",
   },
@@ -30,9 +31,16 @@ const InProgressTable: React.FC<{
   updatePubs: () => Promise<void>;
 }> = ({ inProgressPubs, loading, updatePubs }) => {
   const [activeMenuIndex, setActiveMenuIndex] = useState<number>(-1);
-
+  const [patchLabel, setPatchLabel] = useState<string>("Pausar");
+  const [patchStatus, setPatchStatus] = useState<string>("paused");
+  const { patchPublications } = useStores();
   const inProgressOptions = [
-    { label: "Detener publicación", click: async () => {} },
+    {
+      label: patchLabel,
+      click: async (store_id: string) => {
+        await patchPublications(store_id, patchStatus);
+      },
+    },
   ];
 
   const onClickMenu = (index: number) => {
@@ -40,6 +48,17 @@ const InProgressTable: React.FC<{
       setActiveMenuIndex(-1);
     } else {
       setActiveMenuIndex(index);
+      const storeProgress = inProgressPubs[index];
+      if (storeProgress.status == "running") {
+        setPatchLabel("Pausar");
+        setPatchStatus("paused");
+      } else if (
+        storeProgress.status == "paused" ||
+        storeProgress.status == "stopped"
+      ) {
+        setPatchStatus("running");
+        setPatchLabel("Reanudar");
+      }
     }
   };
 
@@ -78,10 +97,10 @@ const InProgressTable: React.FC<{
           </div>
           <PubsTable
             pubs={inProgressPubs}
+            handleClickMenu={onClickMenu}
+            columns={inProgressPubsColumns}
             menuOptions={inProgressOptions}
             activeMenuIndex={activeMenuIndex}
-            columns={inProgressPubsColumns}
-            handleClickMenu={onClickMenu}
           />
         </>
       )}

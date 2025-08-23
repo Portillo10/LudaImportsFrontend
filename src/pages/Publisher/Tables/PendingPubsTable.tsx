@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useMLApi } from "../../../hooks/useMLApi";
 import { useStores } from "../../../hooks/useStores";
 import PubsTable from "./PubsTable";
 import Spinner from "../../../components/Spinner/Spinner";
@@ -42,8 +41,7 @@ const pendingPubsColumns = [
 const PendingTable: React.FC<{ onPublish: () => Promise<void> }> = ({
   onPublish,
 }) => {
-  const { postProducts } = useMLApi();
-  const { getPendingPublications } = useStores();
+  const { getPendingPublications, startPublication } = useStores();
 
   const [pendingPublications, setPendingPublications] = useState<any[]>([]);
   const [toastType, setToastType] = useState<"success" | "error">("success");
@@ -53,7 +51,7 @@ const PendingTable: React.FC<{ onPublish: () => Promise<void> }> = ({
   const [loading, setLoading] = useState<boolean>(true);
 
   const clickPostPending = async (store_id: string) => {
-    if (await postProducts(store_id)) {
+    if (await startPublication(store_id)) {
       setToastType("success");
       setToastMessage("Publicación iniciada.");
       onPublish();

@@ -70,9 +70,24 @@ const store = {
     ).data;
   },
 
-  async getPostingProgress() {
-    const response = await apiClient.get(`${prefix}/posting/progress`);
+  async startPublications(store_id: string) {
+    const url = `${prefix}/${store_id}/publications`;
+    const response = await apiClient.post(url);
     return response.data;
+  },
+
+  async patchPublications(store_id: string, status: string) {
+    const response = await apiClient.patch(
+      `${prefix}/${store_id}/publications`,
+      {},
+      { params: { status } }
+    );
+    return response.data;
+  },
+
+  async getPostingProgress() {
+    const response = await apiClient.get(`${prefix}/publications`);
+    return response.data.progress;
   },
 
   async getOmitedPubs() {
@@ -112,6 +127,14 @@ const store = {
   async deleteForbiddenItems(store_id: string) {
     const response = await apiClient.post(
       `${prefix}/${store_id}/items/delete/forbidden`
+    );
+    return response.data;
+  },
+
+  async startPublication(store_id: string, query: any = {}) {
+    const response = await apiClient.post(
+      `${prefix}/${store_id}/publications`,
+      { query }
     );
     return response.data;
   },
