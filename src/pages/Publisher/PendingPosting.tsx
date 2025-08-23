@@ -30,7 +30,7 @@ function PendingPostingPage() {
   return (
     <div className="basicContainer py-8 px-12">
       <div className="flex flex-col gap-4 w-full justify-center items-center">
-        {inProgressPubs.length > 0 && (
+        {inProgressPubs?.length > 0 && (
           <InProgressTable
             inProgressPubs={inProgressPubs}
             loading={loadingInProgress}

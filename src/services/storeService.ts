@@ -87,7 +87,7 @@ const store = {
 
   async getPostingProgress() {
     const response = await apiClient.get(`${prefix}/publications`);
-    return response.data.progress;
+    return response.data;
   },
 
   async getOmitedPubs() {
