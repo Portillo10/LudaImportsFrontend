@@ -88,7 +88,7 @@ const InProgressTable: React.FC<{
           </div>
           <Spinner />
         </>
-      ) : inProgressPubs.length == 0 ? (
+      ) : inProgressPubs?.length == 0 ? (
         <></>
       ) : (
         <>
