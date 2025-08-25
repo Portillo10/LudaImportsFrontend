@@ -37,9 +37,9 @@ export const useStores = () => {
     setToastType(null);
   };
 
-  const startPublication = async (store_id: string) => {
+  const startPublication = async (store_id: string, query: any = {}) => {
     try {
-      const response = await storeService.startPublication(store_id);
+      const response = await storeService.startPublication(store_id, query);
       return response;
     } catch (error) {
       setError(error);

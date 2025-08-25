@@ -56,8 +56,8 @@ const InProgressTable: React.FC<{
         storeProgress.status == "paused" ||
         storeProgress.status == "stopped"
       ) {
-        setPatchStatus("running");
         setPatchLabel("Reanudar");
+        setPatchStatus("running");
       }
     }
   };

@@ -51,7 +51,7 @@ const PendingTable: React.FC<{ onPublish: () => Promise<void> }> = ({
   const [loading, setLoading] = useState<boolean>(true);
 
   const clickPostPending = async (store_id: string) => {
-    if (await startPublication(store_id)) {
+    if (await startPublication(store_id, { state: "pending" })) {
       setToastType("success");
       setToastMessage("Publicación iniciada.");
       onPublish();

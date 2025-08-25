@@ -70,9 +70,20 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
         ) : (
           <></>
         )}
-        <button className="px-4 py-2 font-semibold text-base rounded-md hover:bg-[#B71C1C] transition flex justify-center bg-[#D32F2F]">
-          Cancelar
-        </button>
+        <div className="flex items-center gap-8">
+          {updatingProgress.singleProgress.status == "running" ? (
+            <button className="px-4 py-2 font-semibold text-base rounded-md hover:bg-[#615a5a] transition flex justify-center bg-[#555252]">
+              Pausar
+            </button>
+          ) : (
+            <button className="px-4 py-2 font-semibold text-base rounded-md hover:bg-[#4CAF50] transition flex justify-center bg-[#4CAF50]">
+              Reanudar
+            </button>
+          )}
+          <button className="px-4 py-2 font-semibold text-base rounded-md hover:bg-[#B71C1C] transition flex justify-center bg-[#D32F2F]">
+            Cancelar
+          </button>
+        </div>
       </div>
     );
   }
