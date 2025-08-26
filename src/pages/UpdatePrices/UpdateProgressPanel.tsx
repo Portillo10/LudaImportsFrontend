@@ -88,10 +88,10 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
         <div className="flex items-center gap-6">
           {updatingProgress.singleProgress.status == "running" ? (
             <button
-              className="base-button hover:bg-[#423d3d] bg-[#555252]"
+              className="base-button hover:bg-[#423d3d] bg-[#555252] w-20"
               onClick={() => onPatchProgress("paused")}
             >
-              {loadingPatch ? <Spinner /> : "Pausar"}
+              {loadingPatch ? <Spinner size={22} /> : "Pausar"}
             </button>
           ) : (
             <button
