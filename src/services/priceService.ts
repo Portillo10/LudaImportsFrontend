@@ -56,8 +56,17 @@ const priceService = {
     return { data: responseData, status: response.status };
   },
 
+  async patchUpdatingProgress(status: string) {
+    const response = await apiClient.patch(
+      `${baseUrl}/sync/amazon`,
+      {},
+      { params: { status } }
+    );
+    return response.data;
+  },
+
   async getUpdateHistory() {
-    const response = await apiClient.get("${baseUrl}/update/history");
+    const response = await apiClient.get(`${baseUrl}/update/history`);
     const { data, status } = response;
     return { data, status };
   },

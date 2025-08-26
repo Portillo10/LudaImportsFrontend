@@ -26,6 +26,10 @@
   @apply flex justify-between items-center gap-3 font-normal w-full;
 }
 
+.base-button {
+  @apply px-4 py-2 font-semibold text-base rounded-md transition flex justify-center;
+}
+
 @media (min-width: 440px) {
   .storesContainer {
     @apply min-w-[390px];

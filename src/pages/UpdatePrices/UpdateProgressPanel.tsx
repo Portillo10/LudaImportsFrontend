@@ -1,16 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import LoadingBar from "../../components/LoadingBar/LoadingBar";
 import { UpdatingProgressResponse } from "../../types/apiResponses";
+import { usePriceUpdating } from "../../hooks/usePriceUpdating";
+import Spinner from "../../components/Spinner/Spinner";
 
 type UpdateProgressPanelProps = {
   updatingProgress: UpdatingProgressResponse | null;
-  refreshUpdatingProgress: () => void;
+  refreshUpdatingProgress: () => Promise<void>;
 };
 
 const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
   updatingProgress,
   refreshUpdatingProgress,
 }) => {
+  const [loadingPatch, setLoadingPatch] = useState<boolean>(false);
+  const { patchUpdatingProcess } = usePriceUpdating();
+
   useEffect(() => {
     refreshUpdatingProgress();
 
@@ -20,6 +25,15 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
 
     return () => clearInterval(intervalId);
   }, []);
+
+  const onPatchProgress = async (status: string) => {
+    if (!loadingPatch) {
+      setLoadingPatch(true);
+      await patchUpdatingProcess(status);
+      await refreshUpdatingProgress();
+      setLoadingPatch(false);
+    }
+  };
 
   if (updatingProgress) {
     return (
@@ -70,18 +84,27 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
         ) : (
           <></>
         )}
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-6">
           {updatingProgress.singleProgress.status == "running" ? (
-            <button className="px-4 py-2 font-semibold text-base rounded-md hover:bg-[#615a5a] transition flex justify-center bg-[#555252]">
-              Pausar
+            <button
+              className="base-button hover:bg-[#423d3d] bg-[#555252]"
+              onClick={() => onPatchProgress("paused")}
+            >
+              {loadingPatch ? <Spinner /> : "Pausar"}
             </button>
           ) : (
-            <button className="px-4 py-2 font-semibold text-base rounded-md hover:bg-[#4CAF50] transition flex justify-center bg-[#4CAF50]">
-              Reanudar
+            <button
+              className="base-button hover:bg-[#237226] bg-[#338836] w-28"
+              onClick={() => onPatchProgress("running")}
+            >
+              {loadingPatch ? <Spinner size={22} /> : "Reanudar"}
             </button>
           )}
-          <button className="px-4 py-2 font-semibold text-base rounded-md hover:bg-[#B71C1C] transition flex justify-center bg-[#D32F2F]">
-            Cancelar
+          <button
+            onClick={() => onPatchProgress("stopped")}
+            className="base-button hover:bg-[#B71C1C] bg-[#D32F2F]"
+          >
+            Detener
           </button>
         </div>
       </div>

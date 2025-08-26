@@ -45,7 +45,7 @@ export const usePriceUpdating = () => {
           toggleUpdateInProgress(_id, progress.status == "running");
         }
       }
-      console.log(response.trackingProgress);
+      response.singleProgress.status = "paused";
       setPriceUpdatingInfo(response);
     } catch (error) {
       if (error instanceof Error) {
@@ -56,10 +56,20 @@ export const usePriceUpdating = () => {
     }
   };
 
+  const patchUpdatingProcess = async (status: string) => {
+    try {
+      const response = priceService.patchUpdatingProgress(status);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     getUsdRate,
     updatePrices,
     getUpdateProgress,
+    patchUpdatingProcess,
     error,
     usdRate,
     loadingProgress,
