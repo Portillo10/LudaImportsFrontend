@@ -45,7 +45,6 @@ export const usePriceUpdating = () => {
           toggleUpdateInProgress(_id, progress.status == "running");
         }
       }
-      response.singleProgress.status = "paused";
       setPriceUpdatingInfo(response);
     } catch (error) {
       if (error instanceof Error) {
