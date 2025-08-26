@@ -85,29 +85,33 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
         ) : (
           <></>
         )}
-        <div className="flex items-center gap-6">
-          {updatingProgress.singleProgress.status == "running" ? (
+        {loadingPatch ? (
+          <Spinner size={30} />
+        ) : (
+          <div className="flex items-center gap-6">
+            {updatingProgress.singleProgress.status == "running" ? (
+              <button
+                className="base-button hover:bg-[#423d3d] bg-[#555252] w-20"
+                onClick={() => onPatchProgress("paused")}
+              >
+                Pausar
+              </button>
+            ) : (
+              <button
+                className="base-button hover:bg-[#237226] bg-[#338836] w-28"
+                onClick={() => onPatchProgress("running")}
+              >
+                Reanudar
+              </button>
+            )}
             <button
-              className="base-button hover:bg-[#423d3d] bg-[#555252] w-20"
-              onClick={() => onPatchProgress("paused")}
+              onClick={() => onPatchProgress("stopped")}
+              className="base-button hover:bg-[#B71C1C] bg-[#D32F2F]"
             >
-              {loadingPatch ? <Spinner size={22} /> : "Pausar"}
+              Detener
             </button>
-          ) : (
-            <button
-              className="base-button hover:bg-[#237226] bg-[#338836] w-28"
-              onClick={() => onPatchProgress("running")}
-            >
-              {loadingPatch ? <Spinner size={22} /> : "Reanudar"}
-            </button>
-          )}
-          <button
-            onClick={() => onPatchProgress("stopped")}
-            className="base-button hover:bg-[#B71C1C] bg-[#D32F2F]"
-          >
-            Detener
-          </button>
-        </div>
+          </div>
+        )}
       </div>
     );
   }
