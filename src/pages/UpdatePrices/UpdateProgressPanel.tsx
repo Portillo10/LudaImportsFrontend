@@ -96,13 +96,15 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
               >
                 Pausar
               </button>
-            ) : (
+            ) : updatingProgress.singleProgress.status == "paused" ? (
               <button
                 className="base-button hover:bg-[#237226] bg-[#338836] w-28"
                 onClick={() => onPatchProgress("running")}
               >
                 Reanudar
               </button>
+            ) : (
+              <></>
             )}
             <button
               onClick={() => onPatchProgress("stopped")}
