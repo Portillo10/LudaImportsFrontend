@@ -70,6 +70,10 @@
   @apply rounded-md bg-input-background border-input-border border px-2 py-1 outline-none focus:border-[#5CBAFF] transition;
 }
 
+.input-custom {
+  @apply rounded-md bg-input-background border-input-border border outline-none focus:border-[#5CBAFF] transition;
+}
+
 .select {
   @apply rounded-md bg-input-background border-input-border border px-2 py-1.5 outline-none focus:border-[#5CBAFF] transition;
 }

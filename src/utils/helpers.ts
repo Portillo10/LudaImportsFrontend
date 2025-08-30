@@ -19,6 +19,15 @@ export const convertToQueryParams = (obj: any) => {
   return queryParams.join("&");
 };
 
+const spaceFormatter = new Intl.NumberFormat("en-US", {
+  useGrouping: true,
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 20,
+});
+
+export const formatNumberWithSpace = (number: number) => {
+  return spaceFormatter.format(number).replace(/,/g, " ");
+};
 const formatter = new Intl.NumberFormat("en-US");
 export const formatNumber = (number: number) => {
   const result = formatter.format(number);

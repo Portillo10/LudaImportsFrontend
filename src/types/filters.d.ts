@@ -1,5 +1,5 @@
 export interface ItemsFilterParams {
-  productStoreFilters?: any;
-  productFilters?: any;
+  productStore?: any;
+  product?: any;
   projection?: Record<string, number>;
 }

@@ -16,7 +16,7 @@ import RegisterUser from "./pages/Users/RegisterUser";
 import ScrapingPage from "./pages/Scraping/ScrapingPage";
 import UpdatePrices from "./pages/UpdatePrices/UpdatePrices";
 import PendingPosting from "./pages/Publisher/PendingPosting";
-import StoreDashboard from "./pages/Stores/StoreDashboard";
+import StoreDashboard from "./pages/Stores/Dashboard";
 import ItemsPage from "./pages/Stores/Items";
 
 const AppRoutes: React.FC = () => {

@@ -2,11 +2,11 @@ import React, { ReactNode, useRef, useEffect } from "react";
 import "./styles.css";
 
 interface ModalProps {
-  isOpen: boolean; // Controla si el modal está abierto
-  onClose: () => void; // Función para cerrar el modal
   title?: string; // Título opcional del modal
-  children: ReactNode; // Contenido del modal
+  isOpen: boolean; // Controla si el modal está abierto
   className?: string; // Clases personalizables para el modal
+  children: ReactNode; // Contenido del modal
+  onClose: () => void; // Función para cerrar el modal
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -19,6 +19,7 @@ const Modal: React.FC<ModalProps> = ({
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
+    console.log("entrando en useEffect");
     const dialog = dialogRef.current;
 
     if (!dialog) return;
@@ -31,13 +32,14 @@ const Modal: React.FC<ModalProps> = ({
 
     const handleClickOutside = (event: MouseEvent) => {
       if (event.target === dialog) {
+        event.preventDefault();
         onClose();
       }
     };
 
-    dialog.addEventListener("click", handleClickOutside);
+    window.addEventListener("click", handleClickOutside);
     return () => {
-      dialog.removeEventListener("click", handleClickOutside);
+      window.removeEventListener("click", handleClickOutside);
     };
   }, [isOpen]);
 
