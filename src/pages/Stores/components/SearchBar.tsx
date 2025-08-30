@@ -35,7 +35,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     if (currentPage) {
       loadItems();
     }
-  }, []);
+  }, [currentPage]);
 
   const loadItems = async () => {
     setLoadingItems(true);

@@ -75,10 +75,8 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
           </div>
         </div>
         {/* Estado de la publicación */}
-        <div className="py-3">
-          <label className="block mb-2">
-            Estado de la publicación recomendados:
-          </label>
+        <div className="py-3 flex gap-4">
+          <label className="block mb-2">Estado de la publicación:</label>
           <div className="flex flex-wrap gap-2">
             <label className="flex items-center gap-2">
               <input
