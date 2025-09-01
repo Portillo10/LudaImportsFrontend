@@ -56,6 +56,20 @@ const store = {
 
     return response.data;
   },
+  async deleteItems(store_id: string, options: any) {
+    const response = await apiClient.post(
+      `${prefix}/${store_id}/items`,
+      options
+    );
+    return response.data;
+  },
+
+  async pauseItems(store_id: string, options: any) {
+    const response = await apiClient.put(`${prefix}/${store_id}/items/pause`, {
+      data: { ...options },
+    });
+    return response.data;
+  },
 
   async deleteAllItems(store_id: string) {
     const response = await apiClient.delete(`${prefix}/${store_id}/items/all`, {

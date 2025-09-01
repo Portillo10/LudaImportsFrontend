@@ -22,13 +22,13 @@ type Item = {
 const statusColors: Record<string, string> = {
   active: "bg-green-100 text-green-800",
   paused: "bg-yellow-100 text-yellow-800",
-  inactive: "bg-red-100 text-red-800",
+  under_review: "bg-red-100 text-red-800",
 };
 
 const statusLabels: Record<string, string> = {
   active: "Activa",
   paused: "Pausada",
-  inactive: "Inactiva",
+  under_review: "Inactiva",
 };
 
 const ItemsTable: React.FC<{
@@ -37,7 +37,15 @@ const ItemsTable: React.FC<{
   className?: string;
   loading?: boolean;
   onChangePage: (i: number) => void;
-}> = ({ items, page, onChangePage, className, loading = false }) => {
+  totalPages?: number;
+}> = ({
+  items,
+  page,
+  onChangePage,
+  className,
+  loading = false,
+  totalPages,
+}) => {
   const onClickNext = () => {
     onChangePage(page + 1);
   };
@@ -105,17 +113,21 @@ const ItemsTable: React.FC<{
         )}
       </div>
       <div className="bg-[#1a1b1f] rounded-b-md flex py-1.5 items-center border-t-2 border-gray-500 justify-end">
-        <button onClick={onClickPrev}>
+        <button disabled={page <= 1} onClick={onClickPrev}>
           <ChevronLeft strokeWidth={3} size={30} />
         </button>
-        <p>
+        <p className="px-4 text-sm">
           {" "}
           Página{" "}
           <span className="border-2 border-gray-500 rounded-sm px-2 py-1">
             {page}
-          </span>
+          </span>{" "}
+          de {totalPages || 1}{" "}
         </p>
-        <button onClick={onClickNext}>
+        <button
+          disabled={totalPages ? totalPages <= page : false}
+          onClick={onClickNext}
+        >
           <ChevronRight strokeWidth={3} size={30} />
         </button>
       </div>

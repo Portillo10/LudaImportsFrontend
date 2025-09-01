@@ -19,7 +19,6 @@ const Modal: React.FC<ModalProps> = ({
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    console.log("entrando en useEffect");
     const dialog = dialogRef.current;
 
     if (!dialog) return;

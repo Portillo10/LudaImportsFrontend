@@ -3,6 +3,7 @@ import React from "react";
 interface ConfirmModalProps {
   isOpen: boolean;
   title?: string;
+  isLoading?: boolean;
   message: string;
   confirmLabel?: string;
   cancelLabel?: string;
@@ -18,6 +19,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   cancelLabel = "Cancelar",
   onConfirm,
   onCancel,
+  isLoading = false,
 }) => {
   if (!isOpen) return null;
 
@@ -28,14 +30,20 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
         <p className="text-zinc-300 mb-6">{message}</p>
         <div className="flex justify-end gap-3">
           <button
+            disabled={isLoading}
             onClick={onCancel}
-            className="px-4 py-2 rounded-md bg-zinc-700 hover:bg-zinc-600 transition"
+            className={`px-4 py-2 rounded-md bg-gray-600 transition ${
+              isLoading ? "opacity-50" : "hover:bg-gray-700 "
+            }`}
           >
             {cancelLabel}
           </button>
           <button
+            disabled={isLoading}
             onClick={onConfirm}
-            className="px-4 py-2 rounded-md bg-red-600  hover:bg-red-700 transition"
+            className={`px-4 py-2 rounded-md bg-red-600 text-white transition ${
+              isLoading ? "opacity-50" : "hover:bg-red-700 "
+            }`}
           >
             {confirmLabel}
           </button>

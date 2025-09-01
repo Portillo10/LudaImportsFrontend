@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useStores } from "../../hooks/useStores";
 import LargeTable from "../../components/LargeTable/LargeTable";
 import LargeRow from "../../components/LargeTable/LargeRow";
 import Spinner from "../../components/Spinner/Spinner";
+import ShopIcon from "../../assets/icons/ShopIcon.svg";
 
 import Menu, { OptionProps } from "../../components/Menu/Menu";
 import { useSubscription } from "../../hooks/useSubscription";
@@ -62,6 +63,7 @@ const UsersInfoPage: React.FC<{ pageIndex?: number }> = ({ pageIndex = 4 }) => {
   const [currentStore, setCurrentStore] = useState<string | undefined>();
   const [openSummaryModal, setOpenSummaryModal] = useState<boolean>(false);
 
+  const [userName, setUserName] = useState<string>("");
   const navigate = useNavigate();
   const { setCurrentIndexPage } = useSideBarStore();
 
@@ -95,9 +97,10 @@ const UsersInfoPage: React.FC<{ pageIndex?: number }> = ({ pageIndex = 4 }) => {
     const loadStores = async () => {
       setLoadingStores(true);
       if (user_id) {
-        const stores = await getStoresByUser(user_id);
-        if (stores) {
-          setStores(stores);
+        const response = await getStoresByUser(user_id);
+        if (response) {
+          setStores(response.stores);
+          setUserName(response.user.username);
         }
       }
       setLoadingStores(false);
@@ -251,18 +254,30 @@ const UsersInfoPage: React.FC<{ pageIndex?: number }> = ({ pageIndex = 4 }) => {
     <>
       <div className="basicContainer pt-8 px-6">
         {!loadingStores ? (
-          <LargeTable classname="fade-in" columns={columns} rowsData={[]}>
-            {stores.map((store, i) => (
-              <LargeRow
-                index={i}
-                key={i}
-                className="cursor-pointer hover:bg-[#595a63]"
-                onClick={() => navigate(`/users/store/${store._id}`)}
+          <>
+            <span className="titlePageContainer mb-4">
+              <h2>{userName}</h2>
+              <NavLink
+                to={`/stores/link?user_id=${user_id}`}
+                className="border border-[#A8C0C8] rounded-md px-3 text-center py-1 hover:bg-slate-600 transition flex items-center gap-2"
               >
-                {renderRow(store, i)}
-              </LargeRow>
-            ))}
-          </LargeTable>
+                <img src={ShopIcon} alt="" width={24} />
+                <p>Añadir tienda</p>
+              </NavLink>
+            </span>
+            <LargeTable classname="fade-in" columns={columns} rowsData={[]}>
+              {stores.map((store, i) => (
+                <LargeRow
+                  index={i}
+                  key={i}
+                  className="cursor-pointer hover:bg-[#595a63]"
+                  onClick={() => navigate(`/users/store/${store._id}`)}
+                >
+                  {renderRow(store, i)}
+                </LargeRow>
+              ))}
+            </LargeTable>
+          </>
         ) : (
           <div className="w-full flex justify-center mt-16">
             <Spinner />

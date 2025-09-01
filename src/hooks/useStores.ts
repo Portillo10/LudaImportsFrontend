@@ -46,20 +46,21 @@ export const useStores = () => {
     }
   };
 
-  const handleLinkStore = async (data: any) => {
+  const handleLinkStore = async (data: any, user_id?: string) => {
     try {
       setLoading(true);
 
-      if (user) {
+      let seller_id = user_id || user?._id;
+      if (seller_id) {
         const requestBody = {
           ...data,
-          seller_id: user._id,
+          seller_id,
         };
         const response = await storeService.linkStore(requestBody);
         localStorage.setItem("linkData", JSON.stringify(requestBody));
         window.open(response.redirectUrl, "_blank");
       } else {
-        console.error("No hay una sesión iniciada");
+        console.error("Se requiere el id del usuario");
       }
     } catch (error) {
       setError(error);
@@ -120,10 +121,10 @@ export const useStores = () => {
 
   const getStoresByUser = async (
     user_id: string
-  ): Promise<IStore[] | undefined> => {
+  ): Promise<{ stores: IStore[]; user: any } | undefined> => {
     try {
-      const stores = await storeService.getStoresByUser(user_id);
-      return stores;
+      const response = await storeService.getStoresByUser(user_id);
+      return response;
     } catch (error) {
       setError(error);
     }
@@ -211,6 +212,30 @@ export const useStores = () => {
     }
   };
 
+  const deleteItems = async (store_id: string, options: any) => {
+    try {
+      const response = await storeService.deleteItems(store_id, options);
+      setToastType("success");
+      setToastMsg("Proceso iniciado.");
+      setActiveToast(true);
+      return response;
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  const pauseItems = async (store_id: string, options: any) => {
+    try {
+      const response = await storeService.pauseItems(store_id, options);
+      setToastType("success");
+      setToastMsg("Proceso iniciado.");
+      setActiveToast(true);
+      return response;
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   const searchItems = async (store_id: string, filters: any, params: any) => {
     try {
       const response = await storeService.searchItems(
@@ -221,6 +246,7 @@ export const useStores = () => {
 
       return response;
     } catch (error) {
+      console.log(error);
       setError(error);
     }
   };
@@ -240,10 +266,12 @@ export const useStores = () => {
     renderSkeletons,
     getOmitedPubs,
     endLinkStore,
+    deleteItems,
     getAllStores,
     savePricing,
     searchItems,
     getPricing,
+    pauseItems,
     closeToast,
     activeToast,
     toastType,

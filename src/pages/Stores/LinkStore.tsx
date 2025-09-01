@@ -1,6 +1,9 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useStores } from "../../hooks/useStores";
 import { useAuth } from "../../hooks/useAuth";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useSideBarStore } from "../../store/MenuStore";
 
 type Inputs = {
   client_id: string;
@@ -8,18 +11,30 @@ type Inputs = {
   alias: string;
 };
 
-const LinkStore: React.FC = () => {
+const LinkStore: React.FC<{ pageIndex?: number }> = ({ pageIndex = 1 }) => {
   const { register, handleSubmit } = useForm<Inputs>();
   const { user } = useAuth();
   const { handleLinkStore } = useStores();
+  const [searchParams] = useSearchParams();
+  const { setCurrentIndexPage } = useSideBarStore();
+
+  useEffect(() => {
+    const user_id = searchParams.get("user_id") || undefined;
+    if (user_id) {
+      setCurrentIndexPage(4);
+    } else {
+      setCurrentIndexPage(pageIndex);
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    await handleLinkStore(data);
+    const user_id = searchParams.get("user_id") || undefined;
+    await handleLinkStore(data, user_id);
   };
 
   if (user) {
     return (
-      <div className="basicContainer gap-8 px-6">
+      <div className="basicContainer gap-8 px-6 justify-center">
         {user && user.stores.length == 0 && (
           <h2 className="font-medium text-xl w-1/2 text-center mt-5">
             Aún no tienes ninguna tienda vinculada, vincula tu primera tienda.

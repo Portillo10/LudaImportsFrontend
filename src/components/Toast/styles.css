@@ -2,7 +2,7 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: 5px;
   color: white;
   font-size: 14px;
@@ -10,6 +10,8 @@
   opacity: 0;
   transition: all;
   animation: fadeInOut 0.3s ease-in-out forwards;
+  display: flex;
+  gap: 12px;
 }
 
 .toast.onclose {

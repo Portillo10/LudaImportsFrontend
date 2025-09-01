@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import OffIcon from "../../assets/icons/off_icon.svg";
 import SideBarElement from "./SideBarElement";
 import { useAuth } from "../../hooks/useAuth";
@@ -66,14 +64,14 @@ const SideBar: React.FC<SideBarProps> = ({ role }) => {
 
   const elements = [...sellerOptions, ...adminOptions];
 
-  useEffect(() => {
-    const currentUrl = window.location.href;
-    elements.forEach((element, i) => {
-      if (currentUrl.includes(element.href)) {
-        setCurrentIndexPage(i);
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   const currentUrl = window.location.href;
+  //   elements.forEach((element, i) => {
+  //     if (currentUrl.includes(element.href)) {
+  //       setCurrentIndexPage(i);
+  //     }
+  //   });
+  // }, []);
 
   return (
     <aside className="h-full border-r border-black w-72 flex-col justify-between py-3 max-w-72 hidden sm:flex ">
