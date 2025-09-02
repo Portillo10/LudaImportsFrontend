@@ -64,10 +64,12 @@ const store = {
     return response.data;
   },
 
-  async pauseItems(store_id: string, options: any) {
-    const response = await apiClient.put(`${prefix}/${store_id}/items/pause`, {
-      data: { ...options },
-    });
+  async patchItems(store_id: string, options: any, status: string) {
+    const response = await apiClient.put(
+      `${prefix}/${store_id}/items/pause`,
+      options,
+      { params: { status } }
+    );
     return response.data;
   },
 

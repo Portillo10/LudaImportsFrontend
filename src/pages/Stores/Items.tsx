@@ -44,16 +44,17 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
   const [isFiltersModalOpen, setIsFiltersModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isConfirmModalLoading, setIsConfirmModalLoading] = useState(false);
-  const [cononfirmModalType, setConfirmModalType] = useState<string>("");
+  const [confirmModalType, setConfirmModalType] = useState<string>("");
 
   const { store_id } = useParams();
   const {
     searchItems,
     deleteItems,
-    pauseItems,
+    patchItems,
     toastMsg,
     toastType,
     closeToast,
+    startPublication,
     activeToast: isToastOpen,
   } = useStores();
   const { setCurrentIndexPage } = useSideBarStore();
@@ -81,16 +82,43 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
   const onDeleteItems = async () => {
     if (store_id) {
       setIsConfirmModalLoading(true);
-      await deleteItems(store_id, { query: filters });
+      await deleteItems(store_id, { query: filters.productStore });
       setIsConfirmModalLoading(false);
     }
   };
 
   const onPauseItems = async () => {
     if (store_id) {
-      console.log("se fue");
       setIsConfirmModalLoading(true);
-      await pauseItems(store_id, { query: filters });
+      const query = {
+        ...filters.productStore,
+        state: { $in: ["active"] },
+      };
+      await patchItems(store_id, { query }, "paused");
+      setIsConfirmModalLoading(false);
+    }
+  };
+
+  const onReactivateItems = async () => {
+    if (store_id) {
+      setIsConfirmModalLoading(true);
+      const query = {
+        ...filters.productStore,
+        state: { $in: ["paused"] },
+      };
+      await patchItems(store_id, { query }, "active");
+      setIsConfirmModalLoading(false);
+    }
+  };
+
+  const onRepublishItems = async () => {
+    if (store_id) {
+      setIsConfirmModalLoading(true);
+      const query = {
+        ...filters.productStore,
+        state: { $in: ["under_review"] },
+      };
+      await startPublication(store_id, { query });
       setIsConfirmModalLoading(false);
     }
   };
@@ -160,6 +188,7 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
         )
       ).total;
     }
+    setConfirmModalType("reactivate");
     setModalTilte("¿Estás seguro?");
     setModalMessage(
       `${formatNumberWithSpace(totalActiveItems)} productos serán reactivados${hasMoreStates ? ", sólo los productos pausados serán reactivados." : "."}`
@@ -189,6 +218,7 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
         )
       ).total;
     }
+    setConfirmModalType("republish");
     setModalTilte("¿Estás seguro? Pueden haber productos con infracciones");
     setModalMessage(
       `${formatNumberWithSpace(totalActiveItems)} productos serán publicados de nuevo${hasMoreStates ? ", sólo los productos inactivos serán publicados." : "."}`
@@ -266,11 +296,11 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
           isLoading={isConfirmModalLoading}
           onCancel={() => setIsConfirmModalOpen(false)}
           onConfirm={() => {
-            if (cononfirmModalType == "delete") {
-              onDeleteItems();
-            } else if (cononfirmModalType == "pause") {
-              onPauseItems();
-            }
+            if (confirmModalType == "delete") onDeleteItems();
+            else if (confirmModalType == "pause") onPauseItems();
+            else if (confirmModalType == "reactivate") onReactivateItems();
+            else if (confirmModalType == "republish") onRepublishItems();
+
             setIsConfirmModalOpen(false);
           }}
         />

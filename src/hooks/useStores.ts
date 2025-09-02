@@ -224,9 +224,9 @@ export const useStores = () => {
     }
   };
 
-  const pauseItems = async (store_id: string, options: any) => {
+  const patchItems = async (store_id: string, options: any, status: string) => {
     try {
-      const response = await storeService.pauseItems(store_id, options);
+      const response = await storeService.patchItems(store_id, options, status);
       setToastType("success");
       setToastMsg("Proceso iniciado.");
       setActiveToast(true);
@@ -271,7 +271,7 @@ export const useStores = () => {
     savePricing,
     searchItems,
     getPricing,
-    pauseItems,
+    patchItems,
     closeToast,
     activeToast,
     toastType,
