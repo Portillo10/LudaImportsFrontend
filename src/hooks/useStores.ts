@@ -40,6 +40,9 @@ export const useStores = () => {
   const startPublication = async (store_id: string, query: any = {}) => {
     try {
       const response = await storeService.startPublication(store_id, query);
+      setToastMsg("Proceso iniciado");
+      setToastType("success");
+      setActiveToast(true);
       return response;
     } catch (error) {
       setError(error);
@@ -206,7 +209,11 @@ export const useStores = () => {
 
   const patchPublications = async (store_id: string, status: string) => {
     try {
-      return await storeService.patchPublications(store_id, status);
+      const response = await storeService.patchPublications(store_id, status);
+      setToastMsg("Proceso iniciado");
+      setToastType("success");
+      setActiveToast(true);
+      return response;
     } catch (error) {
       setError(Error);
     }
