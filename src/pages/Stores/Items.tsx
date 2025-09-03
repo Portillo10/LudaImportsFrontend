@@ -13,7 +13,7 @@ import Toast from "../../components/Toast/Toast";
 
 const defaultFilters = {
   productStore: {
-    state: { $in: ["active", "paused"] },
+    state: { $in: ["active", "paused"], $nin: ["pending", "error"] },
     subStatus: "",
   },
   projection: {

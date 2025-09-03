@@ -33,7 +33,7 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
         ...prev,
         productStore: {
           ...prev.productStore,
-          state: { $in: newState },
+          state: { $in: newState, $nin: ["pending", "error"] },
           subStatus: currentSubStatus,
         },
       };
@@ -86,7 +86,7 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
     setNewFilters({
       ...newFilters,
       productStore: {
-        state: { $in: [] },
+        state: { $in: [], $nin: ["pending", "error"] },
       },
     });
   };
