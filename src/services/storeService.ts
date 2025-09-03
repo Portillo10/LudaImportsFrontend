@@ -150,7 +150,7 @@ const store = {
   async startPublication(store_id: string, query: any = {}) {
     const response = await apiClient.post(
       `${prefix}/${store_id}/publications`,
-      { query }
+      query
     );
     return response.data;
   },
