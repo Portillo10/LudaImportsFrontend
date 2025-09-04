@@ -124,6 +124,7 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
   };
 
   const onApplyFilters = (newFilters: any) => {
+    setCurrentPage(1);
     setFilters(newFilters);
     loadItems(newFilters);
     setIsFiltersModalOpen(false);

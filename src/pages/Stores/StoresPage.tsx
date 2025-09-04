@@ -31,6 +31,7 @@ const StoresPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     };
     loadStores();
   }, []);
+
   if (user) {
     if (user.stores.length == 0) {
       return <Navigate to="/stores/link" />;

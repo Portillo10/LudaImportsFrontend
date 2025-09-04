@@ -10,8 +10,7 @@ const LinkSuccess: React.FC = () => {
   const handleLoad = async () => {
     const code = searchParams.get("code");
     if (code) {
-      const response = await handleSuccessLinkStore(code);
-      console.log(response);
+      await handleSuccessLinkStore(code);
     }
     await sleep(10000);
     window.close();

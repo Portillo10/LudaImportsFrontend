@@ -1,7 +1,7 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useAuth } from "../../hooks/useAuth";
 import { Navigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Toast from "../../components/Toast/Toast";
 import Spinner from "../../components/Spinner/Spinner";
 
@@ -23,12 +23,15 @@ const LogIn: React.FC = () => {
     toastType,
   } = useAuth();
 
+  const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
+
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     if (!loading) await handleLogin(data);
   };
 
   useEffect(() => {
     checkToken();
+    setIsFirstLoad(false);
   }, []);
 
   if (isAuthenticated && !loading) {
@@ -66,10 +69,14 @@ const LogIn: React.FC = () => {
         <button
           className={`button w-32 ${loading ? "cursor-default bg-button-hover" : ""}`}
         >
-          {loading ? <Spinner size={24} /> : <p>Iniciar Sesión</p>}
+          {loading && !isFirstLoad ? (
+            <Spinner size={24} />
+          ) : (
+            <p>Iniciar Sesión</p>
+          )}
         </button>
       </form>
-      {activeToast && (
+      {activeToast && !isFirstLoad && (
         <Toast
           message={toastMsg}
           onClose={closeToast}

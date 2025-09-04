@@ -10,8 +10,16 @@ export default {
     return { data, status };
   },
 
-  async getGlobalProcess(processName: string) {
-    const response = await apiClient.get(`${baseUrl}/${processName}/global`);
+  async getChildrenProcess(processName: string) {
+    const response = await apiClient.get(`${baseUrl}/${processName}/children`);
+    const { data, status } = response;
+    return { data, status };
+  },
+
+  async getRunningProcess(store_id: string, processes?: string[]) {
+    const response = await apiClient.get(`${baseUrl}/running`, {
+      params: { store_id, processes },
+    });
     const { data, status } = response;
     return { data, status };
   },
