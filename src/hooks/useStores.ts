@@ -231,9 +231,9 @@ export const useStores = () => {
     }
   };
 
-  const patchItems = async (store_id: string, options: any, status: string) => {
+  const patchItems = async (store_id: string, query: any, status: string) => {
     try {
-      const response = await storeService.patchItems(store_id, options, status);
+      const response = await storeService.patchItems(store_id, query, status);
       setToastType("success");
       setToastMsg("Proceso iniciado.");
       setActiveToast(true);
