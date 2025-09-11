@@ -58,7 +58,7 @@ const store = {
   },
   async deleteItems(store_id: string, options: any) {
     const response = await apiClient.post(
-      `${prefix}/${store_id}/items`,
+      `${prefix}/${store_id}/items/delete`,
       options
     );
     return response.data;
