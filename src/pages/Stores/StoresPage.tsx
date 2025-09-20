@@ -33,7 +33,7 @@ const StoresPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   }, []);
 
   if (user) {
-    if (user.stores.length == 0) {
+    if (user.stores?.length == 0) {
       return <Navigate to="/stores/link" />;
     } else {
       return (

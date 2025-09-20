@@ -34,6 +34,7 @@ const SuggestedCategories: React.FC<SuggestedCategoriesProps> = ({
     >
       {categories?.map((category, i) => (
         <SuggestedCategoryItem
+          key={i}
           category={category}
           bgColor={`${i % 2 == 0 ? "#232427" : "#414249"}`}
         />

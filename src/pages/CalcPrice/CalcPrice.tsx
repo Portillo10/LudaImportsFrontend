@@ -44,7 +44,7 @@ const CalcPrice: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   } = useCalcPrice();
 
   const { user } = useAuth();
-  const hasStores = user && user.stores.length > 0;
+  const hasStores = user && user.stores?.length > 0;
 
   const { savePricing, getPricing } = useStores();
   const [fixedCost, setFixedCosts] = useState<number>(0);

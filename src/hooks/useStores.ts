@@ -219,9 +219,9 @@ export const useStores = () => {
     }
   };
 
-  const deleteItems = async (store_id: string, options: any) => {
+  const deleteItems = async (store_id: string, query: any) => {
     try {
-      const response = await storeService.deleteItems(store_id, options);
+      const response = await storeService.deleteItems(store_id, query);
       setToastType("success");
       setToastMsg("Proceso iniciado.");
       setActiveToast(true);

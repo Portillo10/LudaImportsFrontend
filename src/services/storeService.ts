@@ -11,15 +11,8 @@ type LinkStoreRequest = {
 const prefix = "/stores";
 
 const store = {
-  async linkStore({
-    client_id,
-    client_secret,
-    seller_id,
-    alias,
-  }: LinkStoreRequest) {
+  async linkStore({ seller_id, alias }: LinkStoreRequest) {
     const response = await apiClient.post("/api/link-store", {
-      client_id,
-      client_secret,
       seller_id,
       alias,
     });
@@ -56,10 +49,10 @@ const store = {
 
     return response.data;
   },
-  async deleteItems(store_id: string, options: any) {
+  async deleteItems(store_id: string, query: any) {
     const response = await apiClient.post(
       `${prefix}/${store_id}/items/delete`,
-      options
+      query
     );
     return response.data;
   },
