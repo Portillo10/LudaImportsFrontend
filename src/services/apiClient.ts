@@ -31,6 +31,7 @@ apiClient.interceptors.request.use(
 
 apiClient.interceptors.response.use(
   (response) => {
+    console.log("Respuesta de la API:", response.status);
     // ✅ Todo OK, retornamos la respuesta
     return response;
   },
@@ -38,7 +39,7 @@ apiClient.interceptors.response.use(
     if (error.response) {
       const status = error.response.status;
 
-      if (status === 401) {
+      if (status == 401) {
         const { handleLogout } = useAuth();
         handleLogout();
         console.error("Token expirado o inválido");
