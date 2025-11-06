@@ -40,7 +40,7 @@ const StoresPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
         <div className="basicContainer gap-8 px-6">
           <span className="titlePageContainer">
             <h2>Mis tiendas</h2>
-            {user.role != "admin" && (
+            {user.role == "admin" && (
               <NavLink
                 to="/stores/link"
                 className="border border-[#A8C0C8] rounded-md px-3 text-center py-1 hover:bg-slate-600 transition flex items-center gap-2"
