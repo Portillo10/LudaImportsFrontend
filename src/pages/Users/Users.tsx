@@ -39,8 +39,8 @@ const Users: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
       const users = await getUsers();
 
       if (users && Array.isArray(users)) {
-        const filteredUsers = users.filter((user) => user.stores.length > 0);
-        setRowsData(filteredUsers);
+        // const filteredUsers = users.filter((user) => user.stores.length > 0);
+        setRowsData(users);
       }
       setLoadingTable(false);
     };
