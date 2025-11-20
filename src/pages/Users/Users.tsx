@@ -58,7 +58,7 @@ const Users: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
           <Spinner />
         </div>
       );
-    } else if (rowsData.length > 0) {
+    } else if (rowsData.length >= 0) {
       return (
         <div className="min-w-96 fade-in">
           <Table
