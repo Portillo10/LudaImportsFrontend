@@ -32,7 +32,11 @@ const LinkStore: React.FC<{ pageIndex?: number }> = ({ pageIndex = 1 }) => {
     await handleLinkStore(data, user_id);
   };
 
-  if (user?.stores.length == 0 || user?.role == "admin") {
+  if (
+    user?.stores.length == 0 ||
+    user?.role == "admin" ||
+    user?.role == "seller"
+  ) {
     return (
       <div className="basicContainer gap-8 px-6 py-8">
         {user && user.stores.length == 0 && (
