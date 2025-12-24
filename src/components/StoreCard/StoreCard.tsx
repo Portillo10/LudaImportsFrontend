@@ -45,8 +45,14 @@ const StatsCard: React.FC<StatsCardProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(`/stores/${store_id}/dashboard`);
+  const handleClick = (status?: string) => {
+    if (status != "disconnected") {
+      navigate(`/stores/${store_id}/dashboard`);
+    } else {
+      alert(
+        "La tienda está desconectada. Por favor, vuelve a vincularla para acceder."
+      );
+    }
   };
 
   let statusResult: undefined | StatusInfo;
@@ -61,7 +67,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
   return (
     <div
       className="store-card hover:shadow-neon-blue fade-in relative"
-      onClick={handleClick}
+      onClick={() => handleClick(statusResult?.status)}
     >
       {/* Header */}
       <div className="flex justify-between items-center mb-4 gap-3">

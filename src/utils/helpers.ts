@@ -114,3 +114,18 @@ export const cutText = (text: string, maxLength: number): string => {
 
   return words.join(" ");
 };
+
+export function hasPassedDays(fromDate: Date, days: number): boolean {
+  const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+  const start = new Date(fromDate);
+  const now = new Date();
+
+  // Normalizar ambas fechas a medianoche
+  start.setHours(0, 0, 0, 0);
+  now.setHours(0, 0, 0, 0);
+
+  const diffInDays = Math.floor((now.getTime() - start.getTime()) / MS_PER_DAY);
+
+  return diffInDays >= days;
+}

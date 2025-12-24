@@ -1,10 +1,13 @@
+import { hasPassedDays } from "./helpers";
+
 type SubscriptionStatus =
   | "active"
   | "cancelled"
   | "suspended"
   | "grace"
   | "expired"
-  | "pending";
+  | "pending"
+  | "disconnected";
 
 interface SubscriptionDates {
   endDate: Date; // Fin del período pagado
@@ -65,6 +68,15 @@ export function getStatusInfo({
       label: "Pago pendiente",
       textColor: "text-yellow-900",
       bgColor: "bg-yellow-100",
+    };
+  }
+
+  if (grace && hasPassedDays(grace, 13)) {
+    return {
+      status: "disconnected",
+      label: "Desvinculada",
+      textColor: "text-red-900",
+      bgColor: "bg-red-100",
     };
   }
 
