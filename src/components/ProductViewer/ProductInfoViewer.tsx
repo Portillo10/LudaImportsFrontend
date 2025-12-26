@@ -63,15 +63,27 @@ const ProductInfoViewer: React.FC<ProductInfoViewerProps> = ({
       onSubmit={handleSubmit(submit)}
       className="w-full max-w-md flex flex-col gap-4"
     >
-      <TextArea
-        label="Título"
-        name="title"
-        value={product.title}
-        onChange={(value: string) => {
-          onChangeProduct({ title: value });
-        }}
-        style={{ maxHeight: "60px" }}
-      />
+      {product.title ? (
+        <TextArea
+          label="Título"
+          name="title"
+          value={product.title}
+          onChange={(value: string) => {
+            onChangeProduct({ title: value });
+          }}
+          style={{ maxHeight: "60px" }}
+        />
+      ) : (
+        <TextArea
+          label="Título"
+          name="family_name"
+          value={product.family_name}
+          onChange={(value: string) => {
+            onChangeProduct({ family_name: value });
+          }}
+          style={{ maxHeight: "60px" }}
+        />
+      )}
       <span className="w-full flex gap-4">
         <InputWithUnit
           unit="USD"

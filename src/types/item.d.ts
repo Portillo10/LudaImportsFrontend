@@ -18,6 +18,7 @@ export interface Item {
   shipmentPrice: number;
   manufacturingTime: number;
   warrantyTime: number;
+  family_name?: string;
 }
 
 export type ItemAttribute = {

@@ -32,6 +32,14 @@ export function getStatusInfo({
   const end = new Date(endDate);
   const grace = graceUntil ? new Date(graceUntil) : null;
 
+  if (status == "reconnected") {
+    return {
+      label: "Reconectada",
+      textColor: "text-blue-800",
+      status: "cancelled",
+      bgColor: "bg-blue-100",
+    };
+  }
   if (status === "cancelled") {
     return {
       label: "Cancelada",
