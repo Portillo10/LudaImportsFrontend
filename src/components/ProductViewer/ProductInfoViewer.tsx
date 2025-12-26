@@ -201,6 +201,9 @@ const ProductInfoViewer: React.FC<ProductInfoViewerProps> = ({
         name="description"
         value={product.description}
         style={{ fontSize: "14px", maxHeight: "250px" }}
+        onChange={(value) => {
+          onChangeProduct({ description: value });
+        }}
       />
     </form>
   );
