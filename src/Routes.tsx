@@ -18,6 +18,7 @@ import UpdatePrices from "./pages/UpdatePrices/UpdatePrices";
 import PendingPosting from "./pages/Publisher/PendingPosting";
 import StoreDashboard from "./pages/Stores/Dashboard";
 import ItemsPage from "./pages/Stores/Items";
+import PublisherPanel from "./pages/Stores/PublisherPanel";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -46,6 +47,10 @@ const AppRoutes: React.FC = () => {
             <Route
               path="/stores/:store_id/dashboard"
               element={<StoreDashboard />}
+            />
+            <Route
+              path="/stores/:store_id/publisher-panel"
+              element={<PublisherPanel />}
             />
           </Route>
           <Route path="/users" element={<Outlet />}>

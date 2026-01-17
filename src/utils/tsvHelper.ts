@@ -68,7 +68,7 @@ const isValidAmazonUrl = (url: string): boolean => {
 
 export const validateObjects = (
   objects: any[]
-): { valid: boolean; errors: string[] } => {
+): { valid: boolean; errors: string[]; validObjects: any[] } => {
   const errors: string[] = [];
 
   const allValid = objects.every((obj, index) => {
@@ -109,5 +109,9 @@ export const validateObjects = (
     return true;
   });
 
-  return { valid: allValid, errors };
+  const validUrls = objects.filter(
+    (obj) => typeof obj.url === "string" && isValidAmazonUrl(obj.url)
+  );
+
+  return { valid: allValid, errors, validObjects: validUrls };
 };

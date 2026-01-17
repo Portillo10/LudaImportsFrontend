@@ -20,7 +20,7 @@ import { useEffect, useState } from "react";
 
 import storeService from "../../services/storeService";
 import Spinner from "../../components/Spinner/Spinner";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useSubscription } from "../../hooks/useSubscription";
 import { getStatusInfo } from "../../utils/statusHelper";
@@ -113,9 +113,14 @@ const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
           ))}
           <div className="w-full flex flex-col items-center justify-center pt-2 gap-2">
             <p>Acciones rápidas</p>
-            <button className="bg-emerald-800 hover:bg-emerald-900 text-sm transition-all px-2 py-1 rounded-md w-full">
-              Publicar pendientes
-            </button>
+            <NavLink
+              to={`/stores/${store_id}/publisher-panel`}
+              className="w-full"
+            >
+              <button className="bg-emerald-800 hover:bg-emerald-900 text-sm transition-all px-2 py-1 rounded-md w-full">
+                Subir links
+              </button>
+            </NavLink>
             <button
               onClick={handleClickDeleteItems}
               disabled={loadingDelete}

@@ -142,12 +142,12 @@ const ScrapingPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     if (selectedFile) {
       const parsedCsv = await parseTSVFromFile(selectedFile);
 
-      const { valid, errors } = validateObjects(parsedCsv);
+      const { valid, errors, validObjects } = validateObjects(parsedCsv);
 
-      if (valid) {
+      if (validObjects.length > 0) {
         await initializeScraping({
           store_id,
-          url_object_list: parsedCsv,
+          url_object_list: validObjects,
         });
       } else {
         console.log("archivo inválido");
