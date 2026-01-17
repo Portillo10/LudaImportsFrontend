@@ -142,7 +142,7 @@ const ScrapingPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     if (selectedFile) {
       const parsedCsv = await parseTSVFromFile(selectedFile);
 
-      const { valid, errors, validObjects } = validateObjects(parsedCsv);
+      const { errors, validObjects } = validateObjects(parsedCsv);
 
       if (validObjects.length > 0) {
         await initializeScraping({
