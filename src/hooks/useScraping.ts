@@ -6,7 +6,7 @@ import { useState } from "react";
 export const useScraping = () => {
   const [toastMsg, setToastMsg] = useState<string>("");
   const [toastType, setToastType] = useState<"success" | "error" | null>(
-    "success"
+    "success",
   );
   const [activeToast, setActiveToast] = useState<boolean>(false);
 
@@ -35,7 +35,7 @@ export const useScraping = () => {
     store_id: string,
     category_id: string,
     defaultWeight?: number,
-    defaultDimensions?: string
+    defaultDimensions?: string,
   ) => {
     try {
       const response: { item: Item; pricing: any } =
@@ -44,7 +44,7 @@ export const useScraping = () => {
           store_id,
           category_id,
           defaultWeight,
-          defaultDimensions
+          defaultDimensions,
         );
       return response;
     } catch (error) {
@@ -87,14 +87,34 @@ export const useScraping = () => {
     }
   };
 
+  const loadTasks = async (data: any, store_id: string) => {
+    try {
+      const response = await scrapeService.loadTasks(data, store_id);
+      return response;
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  const hasPendingTasks = async (store_id: string) => {
+    try {
+      const response = await scrapeService.hasPendingTasks(store_id);
+      return response.hasPending;
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   return {
     activeToast,
     toastType,
     toastMsg,
     runTasks,
+    loadTasks,
     closeToast,
     scrapeBySku,
     pauseScraping,
+    hasPendingTasks,
     initializeScraping,
     getScrapingProgress,
   };

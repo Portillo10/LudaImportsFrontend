@@ -80,7 +80,7 @@ const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
     } catch (error) {
       console.error(
         "Error deleting items:",
-        (error as AxiosError).response?.data
+        (error as AxiosError).response?.data,
       );
     }
     setLoadingDelete(false);
@@ -121,13 +121,13 @@ const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
                 Subir links
               </button>
             </NavLink>
-            <button
-              onClick={handleClickDeleteItems}
-              disabled={loadingDelete}
-              className={`${loadingDelete ? "bg-red-900" : "bg-red-800"} hover:bg-red-900 text-sm transition-all px-2 py-1 rounded-md w-full`}
-            >
-              Barrido de productos
-            </button>
+            <NavLink to={`/stores/${store_id}/items`} className="w-full">
+              <button
+                className={`bg-red-800 hover:bg-red-900 text-sm transition-all px-2 py-1 rounded-md w-full`}
+              >
+                Gestionar publicaciones
+              </button>
+            </NavLink>
           </div>
         </>
       )}

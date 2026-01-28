@@ -7,7 +7,7 @@ const scrape = {
     store_id: string,
     category_id: string,
     defaultWeight?: number,
-    defaultDimensions?: string
+    defaultDimensions?: string,
   ) => {
     const response = await apiClient.post(
       "/scrape",
@@ -19,7 +19,7 @@ const scrape = {
         defaultDimensions,
         post: true,
       },
-      { timeout: 200000 }
+      { timeout: 200000 },
     );
 
     return response.data;
@@ -36,7 +36,7 @@ const scrape = {
 
   async getScrapingProgress(store_id?: string) {
     const response = await apiClient.get(
-      `/scrape/tasks${store_id ? `?store_id=${store_id}` : ""}`
+      `/scrape/tasks${store_id ? `?store_id=${store_id}` : ""}`,
     );
     const responseData: {
       queueInfo: any;
@@ -52,6 +52,24 @@ const scrape = {
 
   async pauseTasks() {
     const response = await apiClient.put("/scrape/tasks/pause");
+    return response.data;
+  },
+
+  async loadTasks(data: any, store_id: string) {
+    const response = await apiClient.post("/scrape/tasks/load", data, {
+      params: {
+        store_id,
+      },
+    });
+    return response.data;
+  },
+
+  async hasPendingTasks(store_id: string) {
+    const response = await apiClient.get("/scrape/tasks/pending", {
+      params: {
+        store_id,
+      },
+    });
     return response.data;
   },
 };

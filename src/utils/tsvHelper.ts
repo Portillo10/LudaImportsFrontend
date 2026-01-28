@@ -45,7 +45,6 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
             };
         })
         .filter((value) => value != null);
-      console.log(lineLenght);
       resolve(data);
     };
     reader.onerror = () => {
@@ -67,7 +66,7 @@ const isValidAmazonUrl = (url: string): boolean => {
 // };
 
 export const validateObjects = (
-  objects: any[]
+  objects: any[],
 ): { valid: boolean; errors: string[]; validObjects: any[] } => {
   const errors: string[] = [];
 
@@ -110,7 +109,7 @@ export const validateObjects = (
   });
 
   const validUrls = objects.filter(
-    (obj) => typeof obj.url === "string" && isValidAmazonUrl(obj.url)
+    (obj) => typeof obj.url === "string" && isValidAmazonUrl(obj.url),
   );
 
   return { valid: allValid, errors, validObjects: validUrls };

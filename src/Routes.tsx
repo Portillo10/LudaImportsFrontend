@@ -46,7 +46,7 @@ const AppRoutes: React.FC = () => {
             />
             <Route
               path="/stores/:store_id/dashboard"
-              element={<StoreDashboard />}
+              element={<StoreDashboard pageIndex={1} />}
             />
             <Route
               path="/stores/:store_id/publisher-panel"
