@@ -18,13 +18,13 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
       // Procesar cada línea
       let data: ParsedData[] = [];
 
-      let lineLenght;
+      // let lineLenght;
       data = lines
         .map((line) => {
           if (line.trim() == "") return null;
 
           const values = line.split("\t");
-          lineLenght = values.length;
+          // lineLenght = values.length;
 
           if (values.length == 4)
             return {

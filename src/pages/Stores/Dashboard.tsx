@@ -21,7 +21,7 @@ import { useEffect, useState } from "react";
 import storeService from "../../services/storeService";
 import Spinner from "../../components/Spinner/Spinner";
 import { NavLink, useParams } from "react-router-dom";
-import { AxiosError } from "axios";
+// import { AxiosError } from "axios";
 import { useSubscription } from "../../hooks/useSubscription";
 import { getStatusInfo } from "../../utils/statusHelper";
 import { useSideBarStore } from "../../store/MenuStore";
@@ -54,7 +54,7 @@ const CARDS_CONFIG = [
 
 const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
+  // const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
   const [itemsInfo, setItemsInfo] = useState<any>({
     active: 0,
     paused: 0,
@@ -73,18 +73,18 @@ const PubsSection: React.FC<{ store_id: string }> = ({ store_id }) => {
     setLoading(false);
   };
 
-  const handleClickDeleteItems = async () => {
-    setLoadingDelete(true);
-    try {
-      await storeService.deleteForbiddenItems(store_id);
-    } catch (error) {
-      console.error(
-        "Error deleting items:",
-        (error as AxiosError).response?.data,
-      );
-    }
-    setLoadingDelete(false);
-  };
+  // const handleClickDeleteItems = async () => {
+  //   setLoadingDelete(true);
+  //   try {
+  //     await storeService.deleteForbiddenItems(store_id);
+  //   } catch (error) {
+  //     console.error(
+  //       "Error deleting items:",
+  //       (error as AxiosError).response?.data,
+  //     );
+  //   }
+  //   setLoadingDelete(false);
+  // };
 
   useEffect(() => {
     getItemsInfo();
