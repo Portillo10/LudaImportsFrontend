@@ -24,7 +24,7 @@ const PublisherPanel: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const { loadTasks, hasPendingTasks, getScrapingProgress } = useScraping();
 
   const [userAction, setUserAction] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const { store_id } = useParams();
 
   const handleFileInputChange = async (
@@ -157,7 +157,7 @@ const PublisherPanel: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     );
   }
 
-  if (userAction.status == "STOPPED") {
+  if (userAction?.status == "STOPPED") {
     return (
       <>
         <div className="flex flex-col items-center justify-center h-64 gap-4 px-6 ">
