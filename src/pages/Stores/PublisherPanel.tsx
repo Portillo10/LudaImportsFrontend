@@ -67,8 +67,10 @@ const PublisherPanel: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
         setUserAction({
           status: "PENDING",
         });
+        return { hasPending };
       }
     }
+    return { hasPending: false };
   };
 
   const initPage = async () => {
@@ -76,7 +78,10 @@ const PublisherPanel: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     const { inProgress } = await loadScrapingProgress();
 
     if (!inProgress) {
-      await checkPendingTasks();
+      const { hasPending } = await checkPendingTasks();
+      if (!hasPending) {
+        setUserAction({ status: "STOPPED" });
+      }
     }
 
     setLoading(false);
@@ -152,7 +157,7 @@ const PublisherPanel: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     );
   }
 
-  if (!userAction) {
+  if (userAction.status == "STOPPED") {
     return (
       <>
         <div className="flex flex-col items-center justify-center h-64 gap-4 px-6 ">
