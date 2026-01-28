@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import { useUserAction } from "../../hooks/useUserAction";
 import { ChangeEvent, useEffect, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner";
 import DropFileInput from "../../components/DropFile/DropFile";
 // import LoadingBar from "../../components/LoadingBar/LoadingBar";
@@ -14,7 +14,7 @@ const PublisherPanel: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const { setCurrentIndexPage } = useSideBarStore();
 
   const {
-    queue,
+    // queue,
     // loadQueue,
     // getStoreAction,
     // pendingActionsCount,
