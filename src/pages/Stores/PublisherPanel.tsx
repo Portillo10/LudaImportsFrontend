@@ -36,7 +36,6 @@ const PublisherPanel: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     if (selectedFile && store_id) {
       const parsedCsv = await parseTSVFromFile(selectedFile);
       const { validObjects } = validateObjects(parsedCsv);
-      console.log(validObjects.length);
       const response = await loadTasks(validObjects, store_id);
       if (response) {
         setUserAction({ status: "PENDING" });
