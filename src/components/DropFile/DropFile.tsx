@@ -44,9 +44,7 @@ const DropFileInput: React.FC<DropFileInputProps> = ({
       <img src={UploadIcon} width={42} alt="" />
       <h2>Sube tus links</h2>
       <p className="">
-        {active
-          ? "Suelta para subir el archivo"
-          : "Selecciona un archivo o arrastralo aquí"}
+        {active ? "Suelta para subir el archivo" : "Selecciona un archivo"}
       </p>
       <input ref={inputRef} hidden type="file" onChange={onChange} />
     </div>
