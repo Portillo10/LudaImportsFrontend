@@ -15,6 +15,7 @@ const defaultFilters = {
   productStore: {
     state: { $in: ["active", "paused"], $nin: ["pending", "error"] },
     subStatus: "",
+    parentCategory: { $in: [] },
   },
   projection: {
     error: 0,
@@ -68,7 +69,7 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
         { ...queryFilters },
         {
           page: currentPage,
-        }
+        },
       );
       if (response) {
         setItems(response.data);
@@ -133,7 +134,7 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
   const onClickDelete = () => {
     setConfirmModalType("delete");
     setModalMessage(
-      `${formatNumberWithSpace(totalItems)} productos serán eliminados, esta acción es irreversible.`
+      `${formatNumberWithSpace(totalItems)} productos serán eliminados, esta acción es irreversible.`,
     );
     setIsConfirmModalOpen(true);
   };
@@ -155,14 +156,14 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
               state: { $in: ["active"] },
             },
           },
-          {}
+          {},
         )
       ).total;
     }
     setConfirmModalType("pause");
     setModalTilte("¿Estás seguro?");
     setModalMessage(
-      `${formatNumberWithSpace(totalActiveItems)} productos serán pausados${hasMoreStates ? ", sólo los productos activos serán pausados." : "."}`
+      `${formatNumberWithSpace(totalActiveItems)} productos serán pausados${hasMoreStates ? ", sólo los productos activos serán pausados." : "."}`,
     );
     setIsConfirmModalLoading(false);
     setIsConfirmModalOpen(true);
@@ -185,14 +186,14 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
               state: { $in: ["paused"] },
             },
           },
-          {}
+          {},
         )
       ).total;
     }
     setConfirmModalType("reactivate");
     setModalTilte("¿Estás seguro?");
     setModalMessage(
-      `${formatNumberWithSpace(totalActiveItems)} productos serán reactivados${hasMoreStates ? ", sólo los productos pausados serán reactivados." : "."}`
+      `${formatNumberWithSpace(totalActiveItems)} productos serán reactivados${hasMoreStates ? ", sólo los productos pausados serán reactivados." : "."}`,
     );
     setIsConfirmModalLoading(false);
     setIsConfirmModalOpen(true);
@@ -215,14 +216,14 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
               state: { $in: ["under_review"] },
             },
           },
-          {}
+          {},
         )
       ).total;
     }
     setConfirmModalType("republish");
     setModalTilte("¿Estás seguro? Pueden haber productos con infracciones");
     setModalMessage(
-      `${formatNumberWithSpace(totalActiveItems)} productos serán publicados de nuevo${hasMoreStates ? ", sólo los productos inactivos serán publicados." : "."}`
+      `${formatNumberWithSpace(totalActiveItems)} productos serán publicados de nuevo${hasMoreStates ? ", sólo los productos inactivos serán publicados." : "."}`,
     );
     setIsConfirmModalLoading(false);
     setIsConfirmModalOpen(true);

@@ -55,10 +55,13 @@ export const parseTSVFromFile = async (file: File): Promise<ParsedData[]> => {
 };
 
 const isValidAmazonUrl = (url: string): boolean => {
-  const amazonUrlPattern = /^https?:\/\/(www\.)?amazon\.[a-z.]+\/.+/;
-  return amazonUrlPattern.test(url);
+  try {
+    const parsed = new URL(url.trim());
+    return parsed.hostname.includes("amazon.");
+  } catch {
+    return false;
+  }
 };
-
 // const isValidDimensions = (dimensions: string): boolean => {
 //   const dimensionsPattern =
 //     /^(\d+([.,]\d+)?\s*x\s*\d+([.,]\d+)?\s*x\s*\d+([.,]\d+)?(\s*pulgadas)?)|\d+\"al\s*x\s*\d+\"prof\s*x\s*\d+\"an\s*pulgadas$/;
@@ -108,9 +111,11 @@ export const validateObjects = (
     return true;
   });
 
-  const validUrls = objects.filter(
-    (obj) => typeof obj.url === "string" && isValidAmazonUrl(obj.url),
-  );
+  const validUrls = objects.filter((obj, i) => {
+    if (typeof obj.url === "string" && isValidAmazonUrl(obj.url)) return true;
+    else console.log(i, "invalid url: ", obj.url);
+    return false;
+  });
 
   return { valid: allValid, errors, validObjects: validUrls };
 };

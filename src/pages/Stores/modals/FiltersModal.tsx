@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "../../../components/Modal/Modal";
 
 interface FiltersModalProps {
@@ -15,6 +15,24 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
   onApply,
 }) => {
   const [newFilters, setNewFilters] = useState(filters);
+  const [categories, setCategories] = useState([]);
+  const [categoriesContainerHeight, setCategoriesContainerHeight] =
+    useState("max-h-24");
+
+  useEffect(() => {
+    fetch("/categories.json")
+      .then(async (resp) => {
+        const parentCategories = (await resp.json()).filter(
+          (cat: any) => cat.root,
+        );
+
+        setCategories(parentCategories);
+      })
+      .catch((err) => {
+        console.log("Error cargando categorias en el filtro");
+        console.log(err);
+      });
+  }, []);
 
   const handleStateChange = (state: string) => {
     setNewFilters((prev: any) => {
@@ -39,17 +57,6 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
       };
     });
   };
-
-  // const setFilterStates = (states: string[]) => {
-  //   const result = {
-  //     ...newFilters,
-  //     productStore: {
-  //       ...newFilters.productStore,
-  //       state: { $in: states },
-  //     },
-  //   };
-  //   setNewFilters(result);
-  // };
 
   const handleChangeFilters = (key: string, value: any) => {
     setNewFilters((prev: any) => {
@@ -82,6 +89,29 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
     });
   };
 
+  const handleChangeCategory = (newCategory: any) => {
+    let currentCategories = newFilters.productStore.parentCategory.$in;
+    const categoryIsInFilter = currentCategories.find(
+      (cat: any) => cat == newCategory.id,
+    );
+
+    if (categoryIsInFilter) {
+      currentCategories = currentCategories.filter(
+        (cat: string) => cat != newCategory.id,
+      );
+    } else {
+      currentCategories.push(newCategory.id);
+    }
+
+    setNewFilters({
+      ...newFilters,
+      productStore: {
+        ...newFilters.productStore,
+        parentCategory: { $in: currentCategories },
+      },
+    });
+  };
+
   const handleClear = () => {
     setNewFilters({
       ...newFilters,
@@ -98,7 +128,7 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
-      <div className="p-6 w-full max-w-md rounded-lg shadow-lg">
+      <div className="p-6 w-full max-w-2xl rounded-lg shadow-lg">
         <h2 className="text-xl mb-4">Filtrar y ordenar</h2>
         {/* Filtros recomendados */}
         <div className="py-3 flex gap-4 border-b border-gray-300">
@@ -126,13 +156,53 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
               <input
                 type="checkbox"
                 checked={newFilters.productStore.state.$in.includes(
-                  "under_review"
+                  "under_review",
                 )}
                 onChange={() => handleStateChange("under_review")}
               />
               Inactivas
             </label>
           </div>
+        </div>
+        {/* Categoría */}
+        <div className="py-3 border-b flex flex-col items-center border-gray-300">
+          <div className="flex gap-4">
+            <label className="block mb-2 max-w-32 min-w-28">Categoría:</label>
+            <div
+              className={`flex flex-wrap gap-3 ${categoriesContainerHeight} overflow-hidden transition-all duration-700`}
+            >
+              {categories.map((cat: any) => (
+                <label key={cat.id} className="flex items-center gap-1">
+                  <input
+                    type="checkbox"
+                    checked={
+                      newFilters.productStore.parentCategory.$in.includes(
+                        cat.id,
+                      )
+                        ? true
+                        : false
+                    }
+                    onChange={() => handleChangeCategory(cat)}
+                  />
+                  {cat.name}
+                </label>
+              ))}
+            </div>
+          </div>
+          <button
+            onClick={() =>
+              setCategoriesContainerHeight((prev: any) => {
+                const newHeight =
+                  prev == "max-h-screen" ? "max-h-24" : "max-h-screen";
+                return newHeight;
+              })
+            }
+            className="text-sm cursor-pointer mt-2"
+          >
+            {categoriesContainerHeight == "max-h-24"
+              ? "Ver más categorías..."
+              : "Ver menos"}
+          </button>
         </div>
         {/* Estado de la publicación */}
         <div className="py-3 flex gap-4">
