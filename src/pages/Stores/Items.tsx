@@ -15,7 +15,7 @@ const defaultFilters = {
   productStore: {
     state: { $in: ["active", "paused"], $nin: ["pending", "error"] },
     subStatus: "",
-    parentCategory: { $in: [] },
+    parentCategoryId: { $in: [] },
   },
   projection: {
     error: 0,

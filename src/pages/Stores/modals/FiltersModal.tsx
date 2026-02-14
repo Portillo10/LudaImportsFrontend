@@ -90,7 +90,7 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
   };
 
   const handleChangeCategory = (newCategory: any) => {
-    let currentCategories = newFilters.productStore.parentCategory.$in;
+    let currentCategories = newFilters.productStore.parentCategoryId.$in;
     const categoryIsInFilter = currentCategories.find(
       (cat: any) => cat == newCategory.id,
     );
@@ -107,7 +107,7 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
       ...newFilters,
       productStore: {
         ...newFilters.productStore,
-        parentCategory: { $in: currentCategories },
+        parentCategoryId: { $in: currentCategories },
       },
     });
   };
@@ -176,7 +176,7 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
                   <input
                     type="checkbox"
                     checked={
-                      newFilters.productStore.parentCategory.$in.includes(
+                      newFilters.productStore.parentCategoryId.$in.includes(
                         cat.id,
                       )
                         ? true
