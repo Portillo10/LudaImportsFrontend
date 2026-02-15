@@ -117,6 +117,7 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
       ...newFilters,
       productStore: {
         state: { $in: [], $nin: ["pending", "error"] },
+        parentCategoryId: { $in: [] },
       },
     });
   };
