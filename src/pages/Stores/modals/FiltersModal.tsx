@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../../../components/Modal/Modal";
+import { ChevronDown } from "lucide-react";
 
 interface FiltersModalProps {
   filters: any;
@@ -20,13 +21,13 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
     useState("max-h-24");
 
   useEffect(() => {
-    setNewFilters({
-      ...filters,
-      productStore: {
-        ...filters.productStore,
-        parentCategoryId: { $in: [] },
-      },
-    });
+    // setNewFilters({
+    //   ...filters,
+    //   productStore: {
+    //     ...filters.productStore,
+    //     parentCategoryId: { $in: [] },
+    //   },
+    // });
     fetch("/categories.json")
       .then(async (resp) => {
         const parentCategories = (await resp.json()).filter(
@@ -173,7 +174,7 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
           </div>
         </div>
         {/* Categoría */}
-        <div className="py-3 border-b flex flex-col items-center border-gray-300">
+        <div className="pt-3 pb-1 flex flex-col items-center border-b border-gray-300">
           <div className="flex gap-4">
             <label className="block mb-2 max-w-32 min-w-28">Categoría:</label>
             <div
@@ -205,15 +206,21 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
                 return newHeight;
               })
             }
-            className="text-sm cursor-pointer mt-2"
+            className="text-xs cursor-pointer mt-2 text-blue-300 flex flex-col items-center"
           >
             {categoriesContainerHeight == "max-h-24"
-              ? "Ver más categorías..."
+              ? "Ver más categorías"
               : "Ver menos"}
+
+            <ChevronDown
+              height={18}
+              width={20}
+              className={`${categoriesContainerHeight == "max-h-24" ? "" : "rotate-180"} transition-all duration-500`}
+            />
           </button>
         </div>
         {/* Estado de la publicación */}
-        <div className="py-3 flex gap-4">
+        <div className="py-3 flex gap-4  border-gray-300">
           <label className="block mb-2 max-w-32 min-w-28">Otros filtros:</label>
           <div className="flex flex-wrap gap-2">
             <label className="flex items-center gap-2">
@@ -257,6 +264,7 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
             </label>
           </div>
         </div>
+
         {/* Condición */}
         <div className="mb-4"></div>
         {/* Envío gratis */}
