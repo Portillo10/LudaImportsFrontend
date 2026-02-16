@@ -234,6 +234,7 @@ const ItemsPage: React.FC<{ pageIndex: number }> = ({ pageIndex }) => {
   }, []);
 
   useEffect(() => {
+    setFilters(defaultFilters);
     loadItems(filters);
   }, [currentPage]);
 

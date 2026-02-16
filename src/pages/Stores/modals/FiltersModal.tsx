@@ -20,6 +20,13 @@ const FiltersModal: React.FC<FiltersModalProps> = ({
     useState("max-h-24");
 
   useEffect(() => {
+    setNewFilters({
+      ...filters,
+      productStore: {
+        ...filters.productStore,
+        parentCategoryId: { $in: [] },
+      },
+    });
     fetch("/categories.json")
       .then(async (resp) => {
         const parentCategories = (await resp.json()).filter(
