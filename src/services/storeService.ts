@@ -37,14 +37,14 @@ const store = {
     const response = await apiClient.put(
       `/api/store/${store_id}/sincronize`,
       {},
-      { params: { all_stores: "true" } }
+      { params: { all_stores: "true" } },
     );
     return response.data;
   },
 
   async transferProducts(origin_store_id: string, target_store_id: string) {
     const response = await apiClient.post(
-      `${prefix}/${origin_store_id}/transfer-to/${target_store_id}`
+      `${prefix}/${origin_store_id}/transfer-to/${target_store_id}`,
     );
 
     return response.data;
@@ -52,7 +52,7 @@ const store = {
   async deleteItems(store_id: string, query: any) {
     const response = await apiClient.post(
       `${prefix}/${store_id}/items/delete`,
-      query
+      query,
     );
     return response.data;
   },
@@ -61,7 +61,7 @@ const store = {
     const response = await apiClient.patch(
       `${prefix}/${store_id}/items`,
       query,
-      { params: { status } }
+      { params: { status } },
     );
     return response.data;
   },
@@ -89,7 +89,7 @@ const store = {
     const response = await apiClient.patch(
       `${prefix}/${store_id}/publications`,
       {},
-      { params: { status } }
+      { params: { status } },
     );
     return response.data;
   },
@@ -121,21 +121,21 @@ const store = {
   async getItemsCount(store_id: string, filter: any) {
     const response = await apiClient.post(
       `${prefix}/${store_id}/items/search/count`,
-      filter
+      filter,
     );
     return response.data;
   },
 
   async getResume(store_id: string, last: number) {
     const response = await apiClient.get(
-      `${prefix}/${store_id}/sales/resume?last=${last}`
+      `${prefix}/${store_id}/sales/resume?last=${last}`,
     );
     return response.data;
   },
 
   async deleteForbiddenItems(store_id: string) {
     const response = await apiClient.post(
-      `${prefix}/${store_id}/items/delete/forbidden`
+      `${prefix}/${store_id}/items/delete/forbidden`,
     );
     return response.data;
   },
@@ -143,7 +143,7 @@ const store = {
   async startPublication(store_id: string, query: any = {}) {
     const response = await apiClient.post(
       `${prefix}/${store_id}/publications`,
-      query
+      query,
     );
     return response.data;
   },
@@ -152,7 +152,7 @@ const store = {
     const response = await apiClient.post(
       `${prefix}/${store_id}/items/search`,
       { query: filter },
-      { params }
+      { params },
     );
     return response.data;
   },

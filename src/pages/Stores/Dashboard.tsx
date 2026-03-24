@@ -9,7 +9,7 @@ import {
   MessageCircleX,
   CircleDollarSign,
   BanknoteArrowUp,
-  ChevronDown,
+  // ChevronDown,
   CalendarX2,
   CalendarCheck2,
   PiggyBank,
@@ -242,10 +242,10 @@ const ResumeSection: React.FC<{ store_id: string }> = ({ store_id }) => {
         <div className="rounded-lg bg-[#18222b] px-4 pb-4 pt-2 flex flex-col gap-2">
           <span className="w-full flex items-center gap-1 justify-between ">
             <div>Resumen de ventas</div>
-            <div className="text-sm text-gray-300 cursor-pointer flex items-center">
+            {/* <div className="text-sm text-gray-300 cursor-pointer flex items-center">
               <p>Últimos {days} días</p>
               <ChevronDown strokeWidth={1.2} />
-            </div>
+            </div> */}
           </span>
           <div className="grid grid-cols-4 w-full">
             <ResumeCard
