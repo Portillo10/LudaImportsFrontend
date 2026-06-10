@@ -12,18 +12,20 @@ const AttributesViewer: React.FC<AttributesViewerProps> = ({
 }) => {
   return (
     <div className="flex flex-wrap gap-4 items-end justify-center">
-      {attributes.map((attr, i) => (
-        <Input
-          key={i}
-          label={attr.label}
-          value={attr.value_name}
-          required={attr.required}
-          name={attr.id}
-          onChange={(value) => {
-            onChangeAttribute({ ...attr, value_name: value });
-          }}
-        />
-      ))}
+      {attributes
+        .filter((attr) => attr.value_name || attr.required)
+        .map((attr, i) => (
+          <Input
+            key={i}
+            label={attr.label}
+            value={attr.value_name}
+            required={attr.required}
+            name={attr.id}
+            onChange={(value) => {
+              onChangeAttribute({ ...attr, value_name: value });
+            }}
+          />
+        ))}
     </div>
   );
 };
