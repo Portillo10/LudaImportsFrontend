@@ -2,8 +2,10 @@ import { isAxiosError } from "axios";
 import scrapeService from "../services/scrapeService";
 import { Item } from "../types/item";
 import { useState } from "react";
+import { useUserStore } from "../store/UserStore";
 
 export const useScraping = () => {
+  const { user } = useUserStore();
   const [toastMsg, setToastMsg] = useState<string>("");
   const [toastType, setToastType] = useState<"success" | "error" | null>(
     "success",
@@ -15,8 +17,10 @@ export const useScraping = () => {
       const {
         response: { data },
       } = error;
-      if (data.message) setToastMsg(data.message);
-      else setToastMsg("Error desconocido");
+      if (data.message) {
+        if (user?.role == "admin") setToastMsg(JSON.stringify(data));
+        else setToastMsg(data.message);
+      } else setToastMsg("Error desconocido");
     } else if (error instanceof Error) {
       setToastMsg(error.message);
     }
