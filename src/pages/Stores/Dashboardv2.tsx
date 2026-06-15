@@ -87,20 +87,20 @@ const StatCard: React.FC<{
 );
 
 // Resume card — used inside sections
-const ResumeCard: React.FC<{
-  icon: React.ReactNode;
-  label: string;
-  value: string;
-  color?: string;
-}> = ({ icon, label, value, color = "text-green-300" }) => (
-  <div className="bg-[#353b40] rounded-lg px-3 py-2 border border-gray-700 transition-all duration-300">
-    <span className={`flex justify-between items-center gap-6 ${color}`}>
-      <p className="text-sm">{label}</p>
-      {icon}
-    </span>
-    <h3 className="text-lg text-white font-semibold">{value}</h3>
-  </div>
-);
+// const ResumeCard: React.FC<{
+//   icon: React.ReactNode;
+//   label: string;
+//   value: string;
+//   color?: string;
+// }> = ({ icon, label, value, color = "text-green-300" }) => (
+//   <div className="bg-[#353b40] rounded-lg px-3 py-2 border border-gray-700 transition-all duration-300">
+//     <span className={`flex justify-between items-center gap-6 ${color}`}>
+//       <p className="text-sm">{label}</p>
+//       {icon}
+//     </span>
+//     <h3 className="text-lg text-white font-semibold">{value}</h3>
+//   </div>
+// );
 
 // Publication row — right sidebar
 const PublicationRow: React.FC<{
