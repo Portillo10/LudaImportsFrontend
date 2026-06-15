@@ -9,8 +9,8 @@ import Spinner from "../../components/Spinner/Spinner";
 import UpdatePricesForm from "./UpdatePricesForm";
 import UpdateProgressPanel from "./UpdateProgressPanel";
 
-import "./styles.css";
 import { useSideBarStore } from "../../store/MenuStore";
+import "./styles.css";
 
 const UpdatePrices: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const { stores, getAllStores, renderSkeletons, loading } = useStores();
@@ -20,7 +20,8 @@ const UpdatePrices: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     getUpdateProgress,
     usdRate,
     loadingProgress,
-    priceUpdatingInfo,
+    taskSyncProgress,
+    productSyncProgress,
   } = usePriceUpdating();
   const { setCurrentIndexPage } = useSideBarStore();
 
@@ -71,20 +72,39 @@ const UpdatePrices: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
             </span>
           </div>
           <hr className="w-full border-none h-px bg-gray-500 my-6" />
-          {loadingProgress && !priceUpdatingInfo ? (
+
+          {productSyncProgress &&
+          taskSyncProgress &&
+          taskSyncProgress.status != "stopped" &&
+          productSyncProgress.status != "stopped" ? (
+            <UpdateProgressPanel
+              refreshUpdatingProgress={getUpdateProgress}
+              productSyncProgress={productSyncProgress}
+              taskSyncProgress={taskSyncProgress}
+            />
+          ) : loadingProgress ? (
             <div className="w-full h-40 flex items-center justify-center">
               <Spinner />
             </div>
-          ) : priceUpdatingInfo &&
-            priceUpdatingInfo.trackingProgress.status == "stopped" &&
-            priceUpdatingInfo.singleProgress.status == "stopped" ? (
+          ) : (
+            <UpdatePricesForm onSubmit={onSubmit} />
+          )}
+          {/* {loadingProgress && !taskSyncProgress && !productSyncProgress ? (
+            <div className="w-full h-40 flex items-center justify-center">
+              <Spinner />
+            </div>
+          ) : taskSyncProgress &&
+            productSyncProgress &&
+            taskSyncProgress.status == "stopped" &&
+            productSyncProgress.status == "stopped" ? (
             <UpdatePricesForm onSubmit={onSubmit} />
           ) : (
             <UpdateProgressPanel
               refreshUpdatingProgress={getUpdateProgress}
-              updatingProgress={priceUpdatingInfo}
+              productSyncProgress={productSyncProgress}
+              taskSyncProgress={taskSyncProgress}
             />
-          )}
+          )} */}
         </section>
       </div>
     </div>

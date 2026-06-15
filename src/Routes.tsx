@@ -17,6 +17,8 @@ import ScrapingPage from "./pages/Scraping/ScrapingPage";
 import UpdatePrices from "./pages/UpdatePrices/UpdatePrices";
 import PendingPosting from "./pages/Publisher/PendingPosting";
 import StoreDashboard from "./pages/Stores/Dashboard";
+import StoreDashboardV2 from "./pages/Stores/Dashboardv2";
+
 import ItemsPage from "./pages/Stores/Items";
 import PublisherPanel from "./pages/Stores/PublisherPanel";
 
@@ -46,7 +48,7 @@ const AppRoutes: React.FC = () => {
             />
             <Route
               path="/stores/:store_id/dashboard"
-              element={<StoreDashboard pageIndex={1} />}
+              element={<StoreDashboardV2 pageIndex={1} />}
             />
             <Route
               path="/stores/:store_id/publisher-panel"

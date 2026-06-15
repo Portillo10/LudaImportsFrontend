@@ -28,7 +28,7 @@ const ImageViewer: React.FC<ImageViewerProps> = ({
   const onDeleteImage = () => {
     if (pictures.length > 1) {
       const newImages = pictures.filter(
-        (picture) => picture.source != currentImg
+        (picture) => picture.source != currentImg,
       );
       deleteImage({ pictures: newImages });
 

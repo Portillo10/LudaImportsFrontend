@@ -30,10 +30,10 @@ const ProductInfoViewer: React.FC<ProductInfoViewerProps> = ({
   });
 
   const [amazonPriceString, setAmazonPriceString] = useState<string>(
-    formatNumber(product.amazonPrice)
+    formatNumber(product.amazonPrice),
   );
   const [shipmentPriceString, setShipmentPriceString] = useState<string>(
-    formatNumber(product.shipmentPrice)
+    formatNumber(product.shipmentPrice),
   );
 
   const submit: SubmitHandler<Inputs> = async (data) => {
@@ -43,7 +43,7 @@ const ProductInfoViewer: React.FC<ProductInfoViewerProps> = ({
   const onChangePrice = (
     price: string,
     name: string,
-    setValue: Dispatch<SetStateAction<string>>
+    setValue: Dispatch<SetStateAction<string>>,
   ) => {
     const value = price.replace(/,/g, "");
     const floatValue = parseFloat(value);
@@ -107,7 +107,7 @@ const ProductInfoViewer: React.FC<ProductInfoViewerProps> = ({
             onChangePrice(
               e.target.value,
               "shipmentPrice",
-              setShipmentPriceString
+              setShipmentPriceString,
             );
           }}
         />
