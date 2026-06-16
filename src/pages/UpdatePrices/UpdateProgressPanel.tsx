@@ -45,7 +45,7 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
           <p className="text-[12px] text-gray-300">Precios actualizados</p>
           <span className="text-2xl">
             {productSyncProgress.processedCount
-              ? productSyncProgress.processedCount.toString()
+              ? productSyncProgress.processedCount.toLocaleString("es-US")
               : 0}
           </span>
         </li>
@@ -53,7 +53,7 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
           <p className="text-[12px] text-gray-300">Créditos gastados</p>
           <span className="text-2xl">
             {taskSyncProgress.usedCredits
-              ? taskSyncProgress.usedCredits.toString()
+              ? taskSyncProgress.usedCredits.toLocaleString("es-US")
               : 0}
           </span>
         </li>
@@ -61,7 +61,7 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
           <p className="text-[12px] text-gray-300">Productos omitidos</p>
           <span className="text-2xl">
             {productSyncProgress.errorCount
-              ? productSyncProgress.errorCount
+              ? productSyncProgress.errorCount.toLocaleString("es-US")
               : 0}
           </span>
         </li>
