@@ -44,8 +44,8 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
         <li>
           <p className="text-[12px] text-gray-300">Precios actualizados</p>
           <span className="text-2xl">
-            {taskSyncProgress.itemsCount
-              ? taskSyncProgress.itemsCount.toString()
+            {productSyncProgress.itemsCount
+              ? productSyncProgress.itemsCount.toString()
               : 0}
           </span>
         </li>

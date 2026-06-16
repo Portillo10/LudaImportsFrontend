@@ -28,8 +28,9 @@ export const usePriceUpdating = () => {
   const updatePrices = async (store_ids: string[], data: any) => {
     setLoadingProgress(true);
     try {
-      const response = await priceService.updatePrices(store_ids, data);
-      setPriceUpdatingInfo(response);
+      await priceService.updatePrices(store_ids, data);
+      await getUpdateProgress();
+      // setPriceUpdatingInfo(response);
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
