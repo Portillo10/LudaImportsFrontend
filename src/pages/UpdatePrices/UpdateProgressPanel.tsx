@@ -71,7 +71,7 @@ const UpdateProgressPanel: React.FC<UpdateProgressPanelProps> = ({
         total={taskSyncProgress.total}
         label="Analizando por link..."
       />
-      {productSyncProgress.status != "stopped" ? (
+      {productSyncProgress.status == "running" ? (
         <LoadingBar
           progress={productSyncProgress.processedCount}
           total={productSyncProgress.total}

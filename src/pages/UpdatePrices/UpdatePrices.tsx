@@ -39,6 +39,8 @@ const UpdatePrices: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     await updatePrices(storesToUpdate, data);
   };
 
+  const allowStatusProgress = ["running", "paused"];
+
   return (
     <div className="basicContainer gap-4 fade-in px-6">
       <span className="titlePageContainer">
@@ -75,8 +77,8 @@ const UpdatePrices: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
 
           {productSyncProgress &&
           taskSyncProgress &&
-          taskSyncProgress.status != "stopped" &&
-          productSyncProgress.status != "stopped" ? (
+          (allowStatusProgress.includes(taskSyncProgress.status) ||
+            allowStatusProgress.includes(productSyncProgress.status)) ? (
             <UpdateProgressPanel
               refreshUpdatingProgress={getUpdateProgress}
               productSyncProgress={productSyncProgress}
