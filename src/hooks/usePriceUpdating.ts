@@ -1,6 +1,6 @@
 import { useState } from "react";
 import priceService from "../services/priceService";
-import { Progress, UpdatingProgressResponse } from "../types/apiResponses";
+import { Progress } from "../types/apiResponses";
 // import { useShopStore } from "../store/ShopStore";
 import processesService from "../services/processesService";
 
@@ -10,9 +10,6 @@ export const usePriceUpdating = () => {
   const [loadingProgress, setLoadingProgress] = useState<boolean>(false);
   const [taskSyncProgress, setTaskSyncProgress] = useState<Progress>();
   const [productSyncProgress, setProductSyncProgress] = useState<Progress>();
-
-  const [priceUpdatingInfo, setPriceUpdatingInfo] =
-    useState<UpdatingProgressResponse | null>(null);
 
   // const { toggleUpdateInProgress } = useShopStore();
 
@@ -85,7 +82,6 @@ export const usePriceUpdating = () => {
     usdRate,
     loadingProgress,
     taskSyncProgress,
-    priceUpdatingInfo,
     productSyncProgress,
   };
 };
