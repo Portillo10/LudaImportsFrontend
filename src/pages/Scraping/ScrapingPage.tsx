@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { ChangeEvent, useEffect, useState } from "react";
 
 import Icon from "../../components/Icon";
@@ -117,7 +117,10 @@ const ScrapingPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   //   scrapingProgress: ScrapingProgress;
   // } | null>(null);
 
-  const { store_id, alias } = useParams();
+  const { store_id } = useParams();
+  const [searchParams] = useSearchParams();
+
+  const alias = searchParams.get("alias");
   const {
     loadAmazonUrls,
     fetchScrapingProgress,
