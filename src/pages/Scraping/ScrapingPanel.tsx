@@ -28,7 +28,7 @@ const ScrapingPanel: React.FC<{
     },
   ];
   const [stats, setStats] = useState<Stat[]>(initialStats);
-  const { runTasks, pauseScraping } = useScraping();
+  const { startScraping, pauseScraping, resumeScraping } = useScraping();
 
   const formatAndSetStats = async (progress: Progress) => {
     const currentStats: Stat[] = [
@@ -50,8 +50,11 @@ const ScrapingPanel: React.FC<{
   };
 
   const run = async () => {
-    if (store_id) {
-      await runTasks(store_id);
+    if (!store_id) return;
+    if (progress.status == "stopped") {
+      await startScraping(store_id);
+    } else if (progress.status == "paused") {
+      await resumeScraping();
     }
   };
 

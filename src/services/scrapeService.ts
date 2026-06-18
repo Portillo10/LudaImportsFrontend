@@ -45,23 +45,41 @@ const scrape = {
     return responseData;
   },
 
-  async runTasks(store_id: string) {
-    const response = await apiClient.put("/scrape/tasks/run", { store_id });
+  async startScraping(store_id: string) {
+    const response = await apiClient.post(
+      "/scrape/start",
+      {},
+      { params: { store_id } },
+    );
     return response.data;
+  },
+
+  async resumeScraping() {
+    const response = await apiClient.patch("/scrape/pause");
+    return { data: response.data, status: response.status };
   },
 
   async pauseTasks() {
-    const response = await apiClient.put("/scrape/tasks/pause");
+    const response = await apiClient.patch("/scrape/pause");
     return response.data;
   },
 
-  async loadTasks(data: any, store_id: string) {
-    const response = await apiClient.post("/scrape/tasks/load", data, {
+  // async loadTasks(data: any, store_id: string) {
+  //   const response = await apiClient.post("/scrape/tasks/load", data, {
+  //     params: {
+  //       store_id,
+  //     },
+  //   });
+  //   return response.data;
+  // },
+
+  async loadAmazonUrls(data: any[], store_id: string) {
+    const response = await apiClient.post("/scrape/load", data, {
       params: {
         store_id,
       },
     });
-    return response.data;
+    return { data: response.data, status: response.status };
   },
 
   async hasPendingTasks(store_id: string) {

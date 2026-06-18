@@ -27,7 +27,6 @@ export const usePriceUpdating = () => {
     try {
       await priceService.updatePrices(store_ids, data);
       await getUpdateProgress();
-      // setPriceUpdatingInfo(response);
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -47,14 +46,6 @@ export const usePriceUpdating = () => {
 
       setTaskSyncProgress(taskSyncProcess);
       setProductSyncProgress(productSyncProcess);
-      // const response = await priceService.getUpdateProgress();
-      // const updateProgressStores = response.updatingProgress.stores;
-      // if (Object.keys(updateProgressStores).length > 0) {
-      //   for (const [_id, progress] of Object.entries(updateProgressStores)) {
-      //     toggleUpdateInProgress(_id, progress.status == "running");
-      //   }
-      // }
-      // setPriceUpdatingInfo(response);
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);

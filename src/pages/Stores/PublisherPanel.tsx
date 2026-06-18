@@ -21,7 +21,8 @@ const PublisherPanel: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     // completedActionsCount,
   } = useUserAction();
 
-  const { loadTasks, hasPendingTasks, getScrapingProgress } = useScraping();
+  const { loadAmazonUrls, hasPendingTasks, getScrapingProgress } =
+    useScraping();
 
   const [userAction, setUserAction] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -36,7 +37,7 @@ const PublisherPanel: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
     if (selectedFile && store_id) {
       const parsedCsv = await parseTSVFromFile(selectedFile);
       const { validObjects } = validateObjects(parsedCsv);
-      const response = await loadTasks(validObjects, store_id);
+      const response = await loadAmazonUrls(validObjects, store_id);
       if (response) {
         setUserAction({ status: "PENDING" });
       }

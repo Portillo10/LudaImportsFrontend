@@ -2,6 +2,9 @@ import { isAxiosError } from "axios";
 import scrapeService from "../services/scrapeService";
 import { Item } from "../types/item";
 import { useState } from "react";
+import { Progress } from "../types/apiResponses";
+import processesService from "../services/processesService";
+import { ScrapingProgress } from "../types/scrapingProgress";
 // import { useUserStore } from "../store/UserStore";
 
 export const useScraping = () => {
@@ -11,6 +14,11 @@ export const useScraping = () => {
     "success",
   );
   const [activeToast, setActiveToast] = useState<boolean>(false);
+  const [extractTasksProgress, setExtractTasksProgress] = useState<Progress>();
+  const [extractProductsProgress, setExtractProductsProgress] =
+    useState<Progress>();
+
+  const [scrapingProgress, setScrapingProgress] = useState<ScrapingProgress>();
 
   const setError = (error: unknown) => {
     if (isAxiosError(error) && error.response?.data) {
@@ -18,10 +26,6 @@ export const useScraping = () => {
         response: { data },
       } = error;
       if (data.message) setToastMsg(data.message);
-      //   {
-      //   if (user?.role == "admin") setToastMsg(JSON.stringify(data));
-      //   else setToastMsg(data.message);
-      // }
       else setToastMsg("Error desconocido");
     } else if (error instanceof Error) {
       setToastMsg(error.message);
@@ -58,19 +62,38 @@ export const useScraping = () => {
     }
   };
 
-  const initializeScraping = async (data: any) => {
+  const startScraping = async (store_id: string) => {
     try {
-      const response = await scrapeService.initializeScraping(data);
-      console.log(response);
+      const response = await scrapeService.startScraping(store_id);
+      return response;
     } catch (error) {
       setError(error);
     }
   };
 
-  const runTasks = async (store_id: string) => {
+  const fetchScrapingProgress = async (store_id?: string) => {
     try {
-      const response = await scrapeService.runTasks(store_id);
-      return response;
+      const { data: taskExtractProgress } = await processesService.getProgress(
+        "task-extract",
+        store_id,
+      );
+
+      const { data: productExtractProgress } =
+        await processesService.getProgress("product-extract", store_id);
+
+      setExtractProductsProgress(productExtractProgress);
+      setExtractTasksProgress(taskExtractProgress);
+      setScrapingProgress({
+        itemsCount: 0,
+        total: extractProductsProgress?.total || 0,
+        errors: extractProductsProgress?.errors || [],
+        errorCount: extractProductsProgress?.errorCount || 0,
+        status: extractProductsProgress?.status || "stopped",
+        usedCredits:
+          (extractProductsProgress?.usedCredits || 0) +
+          (extractTasksProgress?.usedCredits || 0),
+        processedCount: extractProductsProgress?.processedCount || 0,
+      });
     } catch (error) {
       setError(error);
     }
@@ -85,6 +108,15 @@ export const useScraping = () => {
     }
   };
 
+  const resumeScraping = async () => {
+    try {
+      const response = await scrapeService.resumeScraping();
+      return response;
+    } catch (error) {
+      setError(error);
+    }
+  };
+
   const pauseScraping = async () => {
     try {
       await scrapeService.pauseTasks();
@@ -93,9 +125,9 @@ export const useScraping = () => {
     }
   };
 
-  const loadTasks = async (data: any, store_id: string) => {
+  const loadAmazonUrls = async (data: any, store_id: string) => {
     try {
-      const response = await scrapeService.loadTasks(data, store_id);
+      const response = await scrapeService.loadAmazonUrls(data, store_id);
       return response;
     } catch (error) {
       setError(error);
@@ -112,16 +144,18 @@ export const useScraping = () => {
   };
 
   return {
+    scrapingProgress,
     activeToast,
     toastType,
     toastMsg,
-    runTasks,
-    loadTasks,
     closeToast,
     scrapeBySku,
+    startScraping,
     pauseScraping,
+    resumeScraping,
     hasPendingTasks,
-    initializeScraping,
+    loadAmazonUrls,
     getScrapingProgress,
+    fetchScrapingProgress,
   };
 };

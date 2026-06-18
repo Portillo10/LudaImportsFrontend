@@ -10,7 +10,6 @@ import DropFileInput from "../../components/DropFile/DropFile";
 import ScrapingPanel from "./ScrapingPanel";
 import { IconName } from "../../types/iconProps";
 import { useScraping } from "../../hooks/useScraping";
-import { ScrapingProgress } from "../../types/scrapingProgress";
 import { parseTSVFromFile, validateObjects } from "../../utils/tsvHelper";
 
 import "./styles.css";
@@ -114,26 +113,27 @@ const Status: React.FC<{ status: string }> = ({ status }) => {
 };
 
 const ScrapingPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
-  const [progress, setProgress] = useState<{
-    queueInfo: any;
-    scrapingProgress: ScrapingProgress;
-  } | null>(null);
+  // const [progress, setProgress] = useState<{
+  //   scrapingProgress: ScrapingProgress;
+  // } | null>(null);
 
-  const { store_id } = useParams();
-  const { initializeScraping, getScrapingProgress } = useScraping();
+  const { store_id, alias } = useParams();
+  const {
+    loadAmazonUrls,
+    fetchScrapingProgress,
+    scrapingProgress: progress,
+  } = useScraping();
 
   const { setCurrentIndexPage } = useSideBarStore();
 
   useEffect(() => {
     setCurrentIndexPage(pageIndex || 5);
+    fetchScrapingProgress();
+    const intervalId = setInterval(() => {
+      fetchScrapingProgress();
+    }, 5000);
 
-    const init = async () => {
-      const scrapingProgress = await getScrapingProgress(store_id);
-      if (scrapingProgress) {
-        setProgress(scrapingProgress);
-      }
-    };
-    init();
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleFileInput = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -144,11 +144,8 @@ const ScrapingPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
 
       const { errors, validObjects } = validateObjects(parsedCsv);
 
-      if (validObjects.length > 0) {
-        await initializeScraping({
-          store_id,
-          url_object_list: validObjects,
-        });
+      if (validObjects.length > 0 && store_id) {
+        await loadAmazonUrls(validObjects, store_id);
       } else {
         console.log("archivo inválido");
         for (const error of errors) {
@@ -165,16 +162,13 @@ const ScrapingPage: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
       {progress ? (
         <>
           <span className="titlePageContainer fade-in">
-            <h2>{progress.scrapingProgress.storeAlias}</h2>
+            <h2>{alias}</h2>
 
-            <Status status={progress.scrapingProgress.status} />
+            <Status status={progress.status} />
           </span>
           <div className="flex flex-col gap-5 w-full px-8 fade-in">
             <div className="w-full flex justify-between gap-5 ">
-              <ScrapingPanel
-                progress={progress.scrapingProgress}
-                store_id={store_id}
-              />
+              <ScrapingPanel progress={progress} store_id={store_id} />
               <DropFileInput
                 className="shadow-zinc-900 shadow-md"
                 onChange={handleFileInput}
