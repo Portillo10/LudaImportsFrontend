@@ -48,10 +48,7 @@ const PublisherPanel: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
   const loadScrapingProgress = async () => {
     if (store_id) {
       const response = await getScrapingProgress(store_id);
-      if (
-        response?.scrapingProgress.status == "running" &&
-        response?.scrapingProgress.targetStore == store_id
-      ) {
+      if (response?.status == "running" && response?.storeId == store_id) {
         setUserAction({
           status: "IN_PROGRESS",
         });
