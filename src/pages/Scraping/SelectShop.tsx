@@ -62,11 +62,8 @@ const SelectShop: React.FC<{ pageIndex?: number }> = ({ pageIndex }) => {
 
     (async () => {
       const progress = await getScrapingProgress();
-      if (
-        progress?.scrapingProgress.status == "running" &&
-        progress?.scrapingProgress.targetStore
-      ) {
-        navigate(`/scraping/${progress?.scrapingProgress.targetStore}`);
+      if (progress?.status == "running" && progress?.storeId) {
+        navigate(`/scraping/${progress?.storeId}`);
       } else {
         const response = await getUsers();
         if (response) {

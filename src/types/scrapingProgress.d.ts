@@ -1,8 +1,9 @@
 import { Progress } from "./apiResponses";
 
 export interface ScrapingProgress extends Progress {
-  storeAlias?: string;
-  targetStore?: string;
+  storeId?: string;
+  publishedCount: number;
+  step: "sku-extraction" | "product-extraction" | null;
 }
 
 type OmitedProduct = {

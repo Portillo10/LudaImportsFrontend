@@ -10,6 +10,14 @@ export default {
     return { data, status };
   },
 
+  async getChildProcess(processName: string, store_id?: string) {
+    const response = await apiClient.get(
+      `${baseUrl}/${processName}/${store_id}`,
+    );
+    const { data, status } = response;
+    return { data, status };
+  },
+
   async getChildrenProcess(processName: string) {
     const response = await apiClient.get(`${baseUrl}/${processName}/children`);
     const { data, status } = response;
